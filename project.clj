@@ -8,6 +8,7 @@
                  [org.clojure/core.async "0.2.395"]
                  [reagent "0.6.0"]
                  [ring/ring-core "1.5.1"]
+                 [figwheel-sidecar "0.5.9"]
                  [figwheel "0.5.9"]]
   :plugins [[lein-cljsbuild "1.1.5"]
             [lein-externs "0.1.6"]
