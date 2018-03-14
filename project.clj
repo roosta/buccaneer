@@ -9,6 +9,8 @@
                  [reagent "0.8.0-alpha2"]
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.3-SNAPSHOT"]
+                 [re-frisk "0.5.3"]
+                 [soda-ash "0.76.0"]
                  [re-frame "0.10.5"]
                  [binaryage/devtools "0.9.9"]
                  [figwheel-sidecar "0.5.15"]
