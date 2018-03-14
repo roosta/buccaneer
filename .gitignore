@@ -13,3 +13,9 @@ node_modules/*
 *.ipr
 *.iws
 electron/*
+figwheel_server.log
+*/**/out_main/*
+*/**/out_front/*
+.nrepl-port
+cljsbuild-main.js
+front.js
