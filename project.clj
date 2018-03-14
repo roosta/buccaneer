@@ -3,17 +3,20 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.473" :exclusions [org.apache.ant/ant]]
-                 [org.clojure/core.async "0.2.395"]
-                 [reagent "0.6.0"]
-                 [ring/ring-core "1.5.1"]
-                 [figwheel-sidecar "0.5.9"]
-                 [figwheel "0.5.9"]]
-  :plugins [[lein-cljsbuild "1.1.5"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.9.946" :exclusions [org.apache.ant/ant]]
+                 [org.clojure/core.async "0.4.474"]
+                 [reagent "0.8.0-alpha2"]
+                 [ring/ring-core "1.6.3"]
+                 [tincture "0.1.3-SNAPSHOT"]
+                 [re-frame "0.10.5"]
+                 [binaryage/devtools "0.9.9"]
+                 [figwheel-sidecar "0.5.15"]
+                 [figwheel "0.5.15"]]
+  :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
             [lein-shell "0.5.0"]
-            [lein-figwheel "0.5.9" :exclusions [org.clojure/core.cache]]]
+            [lein-figwheel "0.5.15" :exclusions [org.clojure/core.cache]]]
   :source-paths ["src_tools"]
   :aliases {"descjop-help" ["new" "descjop" "help"]
             "descjop-version" ["new" "descjop" "version"]
@@ -81,6 +84,7 @@
                                              :output-wrapper true}}
                        :dev-front {:source-paths ["src_front" "src_front_profile/scrappy_front/dev"]
                                    :incremental true
+                                   :figwheel true
                                    :jar true
                                    :assert true
                                    :compiler {:output-to "app/dev/js/front.js"
