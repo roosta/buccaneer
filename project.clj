@@ -7,6 +7,7 @@
                  [org.clojure/clojurescript "1.9.946" :exclusions [org.apache.ant/ant]]
                  [org.clojure/core.async "0.4.474"]
                  [reagent "0.8.0-alpha2"]
+                 [day8.re-frame/http-fx "0.1.5"]
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.3-SNAPSHOT"]
                  [re-frisk "0.5.3"]
