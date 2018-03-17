@@ -10,6 +10,7 @@
                  [day8.re-frame/http-fx "0.1.5"]
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.3-SNAPSHOT"]
+                 [hodgepodge "0.1.3"]
                  [re-frisk "0.5.3"]
                  [soda-ash "0.76.0"]
                  [re-frame "0.10.5"]
