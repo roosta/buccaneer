@@ -15,6 +15,7 @@
                  [re-frame "0.10.5"]
                  [binaryage/devtools "0.9.9"]
                  [figwheel-sidecar "0.5.15"]
+                 [org.clojure/tools.reader "1.1.0"]
                  [figwheel "0.5.15"]]
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
