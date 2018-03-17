@@ -1,10 +1,13 @@
 (ns scrappy-front.core
   (:require  [reagent.core :as r]
-             [herb.core :as herb :refer [<class]]
+             [herb.core :as herb :refer [<class <id]]
              [garden.units :refer [px]]
+             [soda-ash.core :as sa]
              [scrappy-front.subs]
              [scrappy-front.events]
              [scrappy-front.sidebar :refer [sidebar]]
+             [cljs.nodejs :as nodejs]
+             [scrappy-front.view :refer [view]]
              [re-frame.core :as rf]))
 
 (def global-style
@@ -15,13 +18,23 @@
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
 (defn root-styles
-  []
-  {:height "100vh"}
-  )
+  [component]
+  (with-meta
+    (component
+     {:column {:padding-bottom 0}})
+    {:key component}))
 
 (defn root-component []
-  [:div {:class (<class root-styles)}
-   [sidebar]])
+  (let [path @(rf/subscribe [:path])]
+    [sa/Container {:fluid true}
+     [sa/Grid
+      [sa/GridColumn {:id (<id root-styles :column)
+                      :width 4}
+       [sidebar]]
+      [sa/GridColumn {:width 12}
+       (pr-str path)
+       ]]
+     ]))
 
 (defn mount-root [setting]
   (r/render [root-component]
