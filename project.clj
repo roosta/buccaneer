@@ -57,8 +57,19 @@
             "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "scrappy" "--platform=mas" "--arch=x64" "--electron-version=1.6.6"]
             "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "scrappy" "--platform=linux" "--arch=x64" "--electron-version=1.6.6"]
             "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "scrappy" "--platform=win32" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "scrappy" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]
-            }
+            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "scrappy" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]}
+
+  :clean-targets ^{:protect false}
+  [:target-path
+   [:cljsbuild :builds :dev-main :compiler :output-dir]
+   [:cljsbuild :builds :dev-main :compiler :output-to]
+   [:cljsbuild :builds :dev-front :compiler :output-dir]
+   [:cljsbuild :builds :dev-front :compiler :output-to]
+   [:cljsbuild :builds :prod-main :compiler :output-to]
+   [:cljsbuild :builds :prod-main :compiler :output-dir]
+   [:cljsbuild :builds :prod-front :compiler :output-dir]
+   [:cljsbuild :builds :prod-front :compiler :output-to]]
+
   :hooks [leiningen.cljsbuild]
   :cljsbuild {:builds {:dev-main {:source-paths ["src"]
                                   :incremental true
