@@ -1,6 +1,6 @@
 {
     "name": "scrappy",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "",
     "devDependencies": {
         "grunt": "^1.0.1",
@@ -9,5 +9,5 @@
         "electron-packager": "^8.5.1"
     },
     "license": "MIT",
-    "repository": "YOUR_OWN_REPOSITORY"
+    "repository": "https://github.com/roosta/scrappy"
 }
