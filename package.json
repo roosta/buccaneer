@@ -9,5 +9,8 @@
         "electron-packager": "^8.5.1"
     },
     "license": "MIT",
-    "repository": "https://github.com/roosta/scrappy"
+    "repository": "https://github.com/roosta/scrappy",
+    "dependencies": {
+        "imdb-api": "^3.1.2"
+    }
 }
