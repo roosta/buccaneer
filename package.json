@@ -11,6 +11,7 @@
     "license": "MIT",
     "repository": "https://github.com/roosta/scrappy",
     "dependencies": {
-        "imdb-api": "^3.1.2"
+        "imdb-api": "^3.1.2",
+        "parse-torrent-name": "^0.5.4"
     }
 }

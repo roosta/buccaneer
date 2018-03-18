@@ -13,7 +13,8 @@
             ))
 
 
-(def file-types #"(?i)^.*\.(mkv|avi)$")
+(def file-types-re #"(?i)^.*\.(mkv|avi)$")
+(def file-ext-re )
 
 (def path (nodejs/require "path"))
 
@@ -28,7 +29,7 @@
 (defn file?
   [file]
   (let [stat (.lstatSync fs file)]
-    (and (.isFile stat) (not (nil? (re-matches file-types file))))))
+    (and (.isFile stat) (not (nil? (re-matches file-types-re file))))))
 
 (defn read-dir
   [dir]
@@ -41,10 +42,21 @@
    (fn [d] (read-dir d))
    dir))
 
+(defn files
+  [dir]
+  (let [filtered (filter file? (file-seq dir))]
+    (map (fn [file]
+           (let [ext (first (re-seq #"\.[0-9a-z]+$" file))]
+             {:full file
+              :dirname (.dirname path file)
+              :extension ext
+              :basename (.basename path file ext)}))
+         filtered)))
+
 (defn effect
   [{:keys [dir on-success on-failure]}]
   (if (.existsSync fs dir)
-    (dispatch (conj on-success (filter file? (file-seq dir))))
+    (dispatch (conj on-success (files dir)))
     (dispatch (conj on-failure (str "Failed to read root directory: " dir)))))
 
 #_(defn find-files

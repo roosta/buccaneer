@@ -1,5 +1,5 @@
 (ns scrappy-front.db)
 
 (def default-db
-  {:files nil
+  {:media nil
    :root-dir "/home/roosta/netmedia/files"})

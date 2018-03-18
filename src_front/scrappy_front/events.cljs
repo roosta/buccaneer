@@ -15,12 +15,36 @@
                      reg-cofx]
              :as rf]))
 
-(reg-fx :files fs/effect)
+(def ptn (nodejs/require "parse-torrent-name"))
+
+(reg-fx :media fs/effect)
+
+#_(reg-event-db
+   ::set-media
+   (fn [db [_ files]]
+     (let [media (reduce (fn [acc file]
+                           (let [d (ptn file)]
+                             (assoc ))
+                           )
+                         {}
+                         files)])
+     (assoc db :media files)))
 
 (reg-event-db
- ::set-files
+ ::set-media
  (fn [db [_ files]]
-   (assoc db :files files)))
+   (let [media (doall
+                (map (fn [file]
+                       (let [m (-> (ptn (:basename file))
+                                   (js->clj :keywordize-keys true))]
+                         (into file m)))
+                     files))]
+     (assoc db :media media))))
+
+#_(reg-event-db
+ ::set-media
+ (fn [db [_ files]]
+   (assoc db :media files)))
 
 (reg-event-db
  ::set-error
@@ -36,7 +60,7 @@
  :initialize-db
  (fn []
    {:db db/default-db
-    :files {:dir (:root-dir db/default-db)
-            :on-success [::set-files]
+    :media {:dir (:root-dir db/default-db)
+            :on-success [::set-media]
             :on-failure [::set-error]}}
    ))
