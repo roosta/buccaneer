@@ -29,7 +29,9 @@
 (defn file?
   [file]
   (let [stat (.lstatSync fs file)]
-    (and (.isFile stat) (not (nil? (re-matches file-types-re file))))))
+    (and (.isFile stat)
+         (seq (re-seq file-types-re file))
+         (not (str/includes? file "sample")))))
 
 (defn read-dir
   [dir]
