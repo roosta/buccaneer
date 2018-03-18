@@ -6,3 +6,8 @@
  :root-dir
  (fn [db]
    (:root-dir db)))
+
+(reg-sub
+ :media
+ (fn [db]
+   (:media db)))
