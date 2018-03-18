@@ -11,17 +11,21 @@
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.3-SNAPSHOT"]
                  [hodgepodge "0.1.3"]
-                 [re-frisk "0.5.3"]
                  [soda-ash "0.76.0"]
                  [re-frame "0.10.5"]
-                 [binaryage/devtools "0.9.9"]
-                 [figwheel-sidecar "0.5.15"]
-                 [org.clojure/tools.reader "1.1.0"]
-                 [figwheel "0.5.15"]]
+                 [org.clojure/tools.reader "1.1.0"]]
+
+  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.2.0-react16"]
+                                  [figwheel-sidecar "0.5.15"]
+                                  [figwheel "0.5.15"]
+                                  [binaryage/devtools "0.9.9"]]
+
+                   :plugins [[lein-figwheel "0.5.15" :exclusions [org.clojure/core.cache]]]}}
+
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
-            [lein-shell "0.5.0"]
-            [lein-figwheel "0.5.15" :exclusions [org.clojure/core.cache]]]
+            [lein-shell "0.5.0"]]
+
   :source-paths ["src_tools"]
   :aliases {"descjop-help" ["new" "descjop" "help"]
             "descjop-version" ["new" "descjop" "version"]
@@ -100,14 +104,20 @@
                                              :output-wrapper true}}
                        :dev-front {:source-paths ["src_front" "src_front_profile/scrappy_front/dev"]
                                    :incremental true
-                                   :figwheel true
+                                   :figwheel {:on-jsload scrappy-front.init/on-jsload}
                                    :jar true
                                    :assert true
                                    :compiler {:output-to "app/dev/js/front.js"
                                               :externs ["app/dev/js/externs_front.js"]
+                                              :main scrappy-front.init
                                               :warnings true
                                               :elide-asserts true
                                               ;; :target :nodejs
+
+                                              :asset-path "js/out_front"
+
+                                              :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                                              :preloads [day8.re-frame-10x.preload]
 
                                               ;; no optimize compile (dev)
                                               :optimizations :none
