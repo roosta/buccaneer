@@ -25,7 +25,7 @@
     {:key component}))
 
 (defn root-component []
-  (let [path @(rf/subscribe [:path])]
+  (let [path @(rf/subscribe [:root-dir])]
     [sa/Container {:fluid true}
      [sa/Grid
       [sa/GridColumn {:id (<id root-styles :column)

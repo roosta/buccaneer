@@ -3,6 +3,6 @@
    [re-frame.core :refer [dispatch reg-event-db reg-sub reg-event-fx]]))
 
 (reg-sub
- :path
+ :root-dir
  (fn [db]
-   (:path db)))
+   (:root-dir db)))
