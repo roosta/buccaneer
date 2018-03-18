@@ -19,17 +19,6 @@
 
 (reg-fx :media fs/effect)
 
-#_(reg-event-db
-   ::set-media
-   (fn [db [_ files]]
-     (let [media (reduce (fn [acc file]
-                           (let [d (ptn file)]
-                             (assoc ))
-                           )
-                         {}
-                         files)])
-     (assoc db :media files)))
-
 (reg-event-db
  ::set-media
  (fn [db [_ files]]
@@ -40,11 +29,6 @@
                          (into file m)))
                      files))]
      (assoc db :media media))))
-
-#_(reg-event-db
- ::set-media
- (fn [db [_ files]]
-   (assoc db :media files)))
 
 (reg-event-db
  ::set-error
