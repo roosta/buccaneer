@@ -20,3 +20,4 @@ figwheel_server.log
 cljsbuild-main.js
 front.js
 checkouts
+resources/imdb

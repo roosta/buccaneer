@@ -13,6 +13,7 @@
                  [cljs-ajax "0.7.3"]
                  [hodgepodge "0.1.3"]
                  [soda-ash "0.76.0"]
+                 [clojure-csv/clojure-csv "2.0.1"]
                  [re-frame "0.10.5"]
                  [org.clojure/tools.reader "1.1.0"]]
 
@@ -78,7 +79,7 @@
    [:cljsbuild :builds :prod-front :compiler :output-to]]
 
   :hooks [leiningen.cljsbuild]
-  :cljsbuild {:builds {:dev-main {:source-paths ["src"]
+  :cljsbuild {:builds {:dev-main {:source-paths ["src/cljs"]
                                   :incremental true
                                   :jar true
                                   :assert true
@@ -133,7 +134,7 @@
                                               ;;:source-map "app/dev/js/test.js.map"
                                               :pretty-print true
                                               :output-wrapper true}}
-                       :prod-main {:source-paths ["src"]
+                       :prod-main {:source-paths ["src/cljs"]
                                    :incremental true
                                    :jar true
                                    :assert true
