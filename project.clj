@@ -79,7 +79,7 @@
    [:cljsbuild :builds :prod-front :compiler :output-to]]
 
   :hooks [leiningen.cljsbuild]
-  :cljsbuild {:builds {:dev-main {:source-paths ["src/cljs"]
+  :cljsbuild {:builds {:dev-main {:source-paths ["src"]
                                   :incremental true
                                   :jar true
                                   :assert true
@@ -134,7 +134,7 @@
                                               ;;:source-map "app/dev/js/test.js.map"
                                               :pretty-print true
                                               :output-wrapper true}}
-                       :prod-main {:source-paths ["src/cljs"]
+                       :prod-main {:source-paths ["src"]
                                    :incremental true
                                    :jar true
                                    :assert true
