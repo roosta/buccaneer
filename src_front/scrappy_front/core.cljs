@@ -1,6 +1,6 @@
 (ns scrappy-front.core
   (:require  [reagent.core :as r]
-             [herb.core :as herb :refer [<class <id]]
+             [herb.core :as herb :refer-macros [<class <id]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
              [scrappy-front.subs]
@@ -42,5 +42,5 @@
 
 (defn init! [setting]
   (rf/dispatch [:initialize-db])
-  (herb/set-global-style! global-style)
+  (herb/global-style! global-style)
   (mount-root setting))

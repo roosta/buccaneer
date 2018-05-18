@@ -1,7 +1,7 @@
 (ns scrappy-front.sidebar
   (:require  [reagent.core :as r]
              [garden.units :refer [px percent]]
-             [herb.core :refer [<class]]
+             [herb.core :refer-macros [<class]]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
