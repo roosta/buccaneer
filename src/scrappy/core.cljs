@@ -16,7 +16,7 @@
 (def app (.-app Electron))
 
 (defn -main []
-  (.start crash-reporter (clj->js {:companyName "Monoxie"
+  (.start crash-reporter (clj->js {:companyName "roosta.sh"
                                    :submitURL   "http://example.com/"}))
 
   ;; error listener
