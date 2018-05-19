@@ -1,8 +1,8 @@
-(ns scrappy-front.events
-  (:require [scrappy-front.db :as db]
+(ns qmedia-front.events
+  (:require [qmedia-front.db :as db]
             ;; [ajax.core :as ajax]
             [reagent.debug :refer [log error]]
-            [scrappy-front.fs :as fs]
+            [qmedia-front.fs :as fs]
             [clojure.string :as str]
             [cljs.core :as cljs]
             [cljs.nodejs :as nodejs]

@@ -1,4 +1,4 @@
-(ns scrappy.macros
+(ns qmedia.macros
   (:require [clojure-csv.core :as csv]
             [clojure.java.io :as io]))
 

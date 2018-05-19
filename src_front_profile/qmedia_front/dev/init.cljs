@@ -1,9 +1,9 @@
-(ns ^:figwheel-no-load scrappy-front.init
+(ns ^:figwheel-no-load qmedia-front.init
   (:require
    ;; [figwheel.client :as fw :include-macros true]
-   [scrappy-front.core :as core]
+   [qmedia-front.core :as core]
    [devtools.core :as devtools]
-   [scrappy-front.conf :as conf]))
+   [qmedia-front.conf :as conf]))
 
 (enable-console-print!)
 

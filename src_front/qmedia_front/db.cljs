@@ -1,4 +1,4 @@
-(ns scrappy-front.db)
+(ns qmedia-front.db)
 
 (def default-db
   {:media nil

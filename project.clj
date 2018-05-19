@@ -1,6 +1,6 @@
-(defproject scrappy "0.1.0-SNAPSHOT"
+(defproject qmedia "0.1.0-SNAPSHOT"
   :description "View media meta data"
-  :url "https://github.com/roosta/scrappy"
+  :url "https://github.com/roosta/qmedia"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
@@ -61,11 +61,11 @@
                                  ["cljsbuild" "once" "prod-main"]
                                  ["cljsbuild" "once" "prod-front"]]
             ;; electron packager for production
-            "descjop-uberapp-osx" ["shell" "electron-packager" "./app/prod" "scrappy" "--platform=darwin" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "scrappy" "--platform=mas" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "scrappy" "--platform=linux" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "scrappy" "--platform=win32" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "scrappy" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]}
+            "descjop-uberapp-osx" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=darwin" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=mas" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=linux" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "qmedia" "--platform=win32" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "qmedia" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]}
 
   :clean-targets ^{:protect false}
   [:target-path
@@ -104,14 +104,14 @@
                                              ;;:source-map "app/dev/js/test.js.map"
                                              :pretty-print true
                                              :output-wrapper true}}
-                       :dev-front {:source-paths ["src_front" "src_front_profile/scrappy_front/dev"]
+                       :dev-front {:source-paths ["src_front" "src_front_profile/qmedia_front/dev"]
                                    :incremental true
-                                   :figwheel {:on-jsload scrappy-front.init/on-jsload}
+                                   :figwheel {:on-jsload qmedia-front.init/on-jsload}
                                    :jar true
                                    :assert true
                                    :compiler {:output-to "app/dev/js/front.js"
                                               :externs ["app/dev/js/externs_front.js"]
-                                              :main scrappy-front.init
+                                              :main qmedia-front.init
                                               :warnings true
                                               :elide-asserts true
                                               ;; :target :nodejs
@@ -159,7 +159,7 @@
                                               ;;:source-map "app/prod/js/test.js.map"
                                               :pretty-print true
                                               :output-wrapper true}}
-                       :prod-front {:source-paths ["src_front" "src_front_profile/scrappy_front/prod"]
+                       :prod-front {:source-paths ["src_front" "src_front_profile/qmedia_front/prod"]
                                     :incremental true
                                     :jar true
                                     :assert true

@@ -1,4 +1,4 @@
-(ns scrappy-front.subs
+(ns qmedia-front.subs
   (:require
    [re-frame.core :refer [dispatch reg-event-db reg-sub reg-event-fx]]))
 

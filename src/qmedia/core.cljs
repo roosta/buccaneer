@@ -1,4 +1,4 @@
-(ns scrappy.core
+(ns qmedia.core
     (:require [cljs.nodejs :as nodejs]))
 
 (def path (nodejs/require "path"))

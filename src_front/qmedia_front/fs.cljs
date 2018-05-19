@@ -1,4 +1,4 @@
-(ns scrappy-front.fs
+(ns qmedia-front.fs
   (:require [reagent.debug :refer [log]]
             [re-frame.core
              :refer [reg-fx

@@ -1,13 +1,13 @@
-(ns scrappy-front.core
+(ns qmedia-front.core
   (:require  [reagent.core :as r]
              [herb.core :as herb :refer-macros [<class <id]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
-             [scrappy-front.subs]
-             [scrappy-front.events]
-             [scrappy-front.sidebar :refer [sidebar]]
+             [qmedia-front.subs]
+             [qmedia-front.events]
+             [qmedia-front.sidebar :refer [sidebar]]
              [cljs.nodejs :as nodejs]
-             [scrappy-front.view :refer [view]]
+             [qmedia-front.view :refer [view]]
              [re-frame.core :as rf]))
 
 (def global-style

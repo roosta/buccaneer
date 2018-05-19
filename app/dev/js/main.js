@@ -8,5 +8,5 @@ require('./cljsbuild-main');
 // var goog = {};
 // require('./out/goog/base');
 // require('./cljsbuild-main');
-// require('./out/scrappy/core');
-// scrappy.core._main();
+// require('./out/qmedia/core');
+// qmedia.core._main();
