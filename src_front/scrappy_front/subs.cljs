@@ -11,3 +11,9 @@
  :media
  (fn [db]
    (:media db)))
+
+(reg-sub
+ :media/titles
+ :<- [:media]
+ (fn [media]
+   (set (map :title media))))

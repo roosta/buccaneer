@@ -2,6 +2,7 @@
   (:require  [reagent.core :as r]
              [garden.units :refer [px percent]]
              [herb.core :refer-macros [<class]]
+             [reagent.debug :refer [log]]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
@@ -16,5 +17,7 @@
 
 (defn sidebar
   []
-  [:div {:class (<class sidebar-style :container)}
-   "asd"])
+  (let [titles @(rf/subscribe [:media/titles])]
+    (log titles)
+    [:div {:class (<class sidebar-style :container)}
+     "asd"]))
