@@ -82,107 +82,48 @@
 
   :hooks [leiningen.cljsbuild]
   :cljsbuild {:builds {:dev-main {:source-paths ["src"]
-                                  :incremental true
                                   :jar true
-                                  :assert true
                                   :compiler {:output-to "app/dev/js/cljsbuild-main.js"
                                              :externs ["app/dev/js/externs.js"
                                                        "node_modules/closurecompiler-externs/path.js"
                                                        "node_modules/closurecompiler-externs/process.js"]
-                                             :warnings true
-                                             :elide-asserts true
                                              :target :nodejs
-
-                                             ;; no optimize compile (dev)
-                                             ;; :optimizations :none
                                              :output-dir "app/dev/js/out_main"
-
-                                             ;; simple compile (dev)
                                              :optimizations :simple
-
-                                             ;; advanced compile (prod)
-                                             ;;:optimizations :advanced
-
                                              ;;:source-map "app/dev/js/test.js.map"
-                                             :pretty-print true
-                                             :output-wrapper true}}
+                                             :pretty-print true}}
                        :dev-front {:source-paths ["src_front" "src_front_profile/qmedia_front/dev"]
-                                   :incremental true
                                    :figwheel {:on-jsload qmedia-front.init/on-jsload}
                                    :jar true
-                                   :assert true
                                    :compiler {:output-to "app/dev/js/front.js"
                                               :externs ["app/dev/js/externs_front.js"]
                                               :main qmedia-front.init
-                                              :warnings true
-                                              :elide-asserts true
-                                              ;; :target :nodejs
-
                                               :asset-path "js/out_front"
-
                                               :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                                               :preloads [day8.re-frame-10x.preload]
-
-                                              ;; no optimize compile (dev)
                                               :optimizations :none
                                               :output-dir "app/dev/js/out_front"
-
-                                              ;; simple compile (dev)
-                                              ;;:optimizations :simple
-
-                                              ;; advanced compile (prod)
-                                              ;;:optimizations :advanced
-
                                               ;;:source-map "app/dev/js/test.js.map"
-                                              :pretty-print true
-                                              :output-wrapper true}}
+                                              :pretty-print true}}
                        :prod-main {:source-paths ["src"]
-                                   :incremental true
                                    :jar true
-                                   :assert true
                                    :compiler {:output-to "app/prod/js/cljsbuild-main.js"
                                               :externs ["app/prod/js/externs.js"
                                                         "node_modules/closurecompiler-externs/path.js"
                                                         "node_modules/closurecompiler-externs/process.js"]
-                                              :warnings true
                                               :elide-asserts true
                                               :target :nodejs
-
-                                              ;; no optimize compile (dev)
-                                              ;;:optimizations :none
                                               :output-dir "app/prod/js/out_main"
-
-                                              ;; simple compile (dev)
                                               :optimizations :simple
-
-                                              ;; advanced compile (prod)
-                                              ;;:optimizations :advanced
-
-                                              ;;:source-map "app/prod/js/test.js.map"
-                                              :pretty-print true
                                               :output-wrapper true}}
                        :prod-front {:source-paths ["src_front" "src_front_profile/qmedia_front/prod"]
-                                    :incremental true
                                     :jar true
-                                    :assert true
                                     :compiler {:output-to "app/prod/js/front.js"
                                                :externs ["app/prod/js/externs_front.js"]
-                                               :warnings true
                                                :elide-asserts true
-                                               ;; :target :nodejs
-
-                                               ;; no optimize compile (dev)
-                                               ;;:optimizations :none
                                                :output-dir "app/prod/js/out_front"
-
-                                               ;; simple compile (dev)
                                                :optimizations :simple
-
-                                               ;; advanced compile (prod)
-                                               ;;:optimizations :advanced
-
                                                ;;:source-map "app/prod/js/test.js.map"
-                                               :pretty-print true
                                                :output-wrapper true}}}}
   :figwheel {:http-server-root "public"
              :ring-handler figwheel-middleware/app
