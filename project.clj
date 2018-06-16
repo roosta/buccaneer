@@ -4,25 +4,25 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.9.946" :exclusions [org.apache.ant/ant]]
+                 [org.clojure/clojurescript "1.10.312" :exclusions [org.apache.ant/ant]]
                  [org.clojure/core.async "0.4.474"]
-                 [reagent "0.8.0-alpha2"]
-                 [day8.re-frame/http-fx "0.1.5"]
+                 [reagent "0.8.1"]
+                 [day8.re-frame/http-fx "0.1.6"]
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.5-SNAPSHOT"]
                  [cljs-ajax "0.7.3"]
                  [hodgepodge "0.1.3"]
-                 [soda-ash "0.76.0"]
-                 [clojure-csv/clojure-csv "2.0.1"]
+                 [soda-ash "0.79.1"]
+                 [clojure-csv/clojure-csv "2.0.2"]
                  [re-frame "0.10.5"]
-                 [org.clojure/tools.reader "1.1.0"]]
+                 [org.clojure/tools.reader "1.2.2"]]
 
-  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.2.0-react16"]
-                                  [figwheel-sidecar "0.5.15"]
-                                  [figwheel "0.5.15"]
-                                  [binaryage/devtools "0.9.9"]]
+  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.3-react16"]
+                                  [figwheel-sidecar "0.5.16"]
+                                  [figwheel "0.5.16"]
+                                  [binaryage/devtools "0.9.10"]]
 
-                   :plugins [[lein-figwheel "0.5.15" :exclusions [org.clojure/core.cache]]]}}
+                   :plugins [[lein-figwheel "0.5.16" :exclusions [org.clojure/core.cache]]]}}
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
