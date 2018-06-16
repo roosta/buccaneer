@@ -21,3 +21,4 @@ cljsbuild-main.js
 front.js
 checkouts
 resources/imdb
+config.edn

@@ -11,6 +11,7 @@
                  [ring/ring-core "1.6.3"]
                  [tincture "0.1.5-SNAPSHOT"]
                  [cljs-ajax "0.7.3"]
+                 [philoskim/debux-stubs "0.4.8"]
                  [hodgepodge "0.1.3"]
                  [soda-ash "0.79.1"]
                  [clojure-csv/clojure-csv "2.0.2"]
@@ -20,6 +21,7 @@
   :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.3-react16"]
                                   [figwheel-sidecar "0.5.16"]
                                   [figwheel "0.5.16"]
+                                  [philoskim/debux "0.4.8"]
                                   [binaryage/devtools "0.9.10"]]
 
                    :plugins [[lein-figwheel "0.5.16" :exclusions [org.clojure/core.cache]]]}}

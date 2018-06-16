@@ -1,12 +1,14 @@
 (ns qmedia-front.core
+  (:require-macros [qmedia-front.macros :refer [env]])
   (:require  [reagent.core :as r]
              [herb.core :as herb :refer-macros [<class <id]]
+             [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
              [qmedia-front.subs]
              [qmedia-front.events]
              [qmedia-front.sidebar :refer [sidebar]]
-             [cljs.nodejs :as nodejs]
+             ;; [cljs.nodejs :as nodejs]
              [qmedia-front.view :refer [view]]
              [re-frame.core :as rf]))
 
