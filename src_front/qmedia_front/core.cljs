@@ -34,9 +34,7 @@
                       :width 4}
        [sidebar]]
       [sa/GridColumn {:width 12}
-       (pr-str path)
-       ]]
-     ]))
+       (pr-str path)]]]))
 
 (defn mount-root [setting]
   (r/render [root-component]

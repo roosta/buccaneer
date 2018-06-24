@@ -9,17 +9,12 @@
                      reg-cofx]
              :as rf]
             [clojure.string :as str]
-            [cljs.nodejs :as nodejs]
-            ))
-
+            [cljs.nodejs :as nodejs]))
 
 (def file-types-re #"(?i)^.*\.(mkv|avi)$")
 (def file-ext-re )
-
 (def path (nodejs/require "path"))
-
 (def fs (nodejs/require "fs"))
-
 
 (defn directory?
   [file]
