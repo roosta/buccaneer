@@ -11,8 +11,9 @@
             [clojure.string :as str]
             [cljs.nodejs :as nodejs]))
 
-(def file-types-re #"(?i)^.*\.(mkv|avi)$")
-(def file-ext-re )
+;; Match files that does not include sample in filename, and have the file
+;; extension mkv or avi
+(def file-types-re #"(?i)^(?!.*(sample)).*\.(mkv|avi)$")
 (def path (nodejs/require "path"))
 (def fs (nodejs/require "fs"))
 
@@ -25,8 +26,7 @@
   [file]
   (let [stat (.lstatSync fs file)]
     (and (.isFile stat)
-         (seq (re-seq file-types-re file))
-         (not (str/includes? file "sample")))))
+         (seq (re-seq file-types-re file)))))
 
 (defn read-dir
   [dir]
