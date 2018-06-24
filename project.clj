@@ -30,7 +30,7 @@
             [lein-externs "0.1.6"]
             [lein-shell "0.5.0"]]
 
-  :source-paths ["src_tools"]
+  :source-paths ["src_tools" "src_front"]
   :aliases {"descjop-help" ["new" "descjop" "help"]
             "descjop-version" ["new" "descjop" "version"]
             "descjop-init" ["do"
