@@ -14,6 +14,7 @@
 ;; Match files that does not include sample in filename, and have the file
 ;; extension mkv or avi
 (def file-types-re #"(?i)^(?!.*(sample)).*\.(mkv|avi)$")
+(def ignore-re #"(?i)trailer")
 (def path (nodejs/require "path"))
 (def fs (nodejs/require "fs"))
 
@@ -28,6 +29,10 @@
     (and (.isFile stat)
          (seq (re-seq file-types-re file)))))
 
+(defn ignore?
+  [file]
+  (not (seq (re-seq ignore-re file))))
+
 (defn read-dir
   [dir]
   (map #(.join path dir %) (.readdirSync fs dir)))
@@ -41,7 +46,7 @@
 
 (defn files
   [dir]
-  (let [filtered (filter file? (file-seq dir))]
+  (let [filtered (filter (every-pred file? ignore?) (file-seq dir))]
     (map (fn [file]
            (let [ext (str (first (re-seq #"\.[0-9a-z]+$" file)))]
              {:full file
