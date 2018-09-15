@@ -43,7 +43,7 @@
   [dir]
   (let [filtered (filter file? (file-seq dir))]
     (map (fn [file]
-           (let [ext (first (re-seq #"\.[0-9a-z]+$" file))]
+           (let [ext (str (first (re-seq #"\.[0-9a-z]+$" file)))]
              {:full file
               :dirname (.dirname path file)
               :extension ext

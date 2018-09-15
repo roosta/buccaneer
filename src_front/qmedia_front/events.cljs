@@ -4,7 +4,6 @@
             [reagent.debug :refer [log error]]
             [qmedia-front.fs :as fs]
             [clojure.string :as str]
-            [cljs.core :as cljs]
             [cljs.nodejs :as nodejs]
             [re-frame.core
              :refer [reg-fx
@@ -46,5 +45,4 @@
    {:db db/default-db
     :media {:dir (:root-dir db/default-db)
             :on-success [::set-media]
-            :on-failure [::set-error]}}
-   ))
+            :on-failure [::set-error]}}))
