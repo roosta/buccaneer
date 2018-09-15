@@ -1,13 +1,7 @@
 (ns qmedia-front.fs
   (:require [reagent.debug :refer [log]]
-            [re-frame.core
-             :refer [reg-fx
-                     dispatch
-                     reg-event-db
-                     reg-sub
-                     reg-event-fx
-                     reg-cofx]
-             :as rf]
+            [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
+            [re-frame.core :refer [reg-fx dispatch reg-event-db reg-sub reg-event-fx reg-cofx] :as rf]
             [clojure.string :as str]
             [cljs.nodejs :as nodejs]))
 
@@ -15,6 +9,7 @@
 ;; extension mkv or avi
 (def file-types-re #"(?i)^(?!.*(sample)).*\.(mkv|avi)$")
 (def ignore-re #"(?i)trailer")
+(def anime-re #"\[(.*?)\]")
 (def path (nodejs/require "path"))
 (def fs (nodejs/require "fs"))
 
@@ -33,6 +28,10 @@
   [file]
   (not (seq (re-seq ignore-re file))))
 
+(defn anime?
+  [file]
+  (some? (seq (re-seq anime-re file))))
+
 (defn read-dir
   [dir]
   (map #(.join path dir %) (.readdirSync fs dir)))
@@ -46,7 +45,8 @@
 
 (defn files
   [dir]
-  (let [filtered (filter (every-pred file? ignore?) (file-seq dir))]
+  (let [not-anime? #(not (anime? %))
+        filtered (filter (every-pred file? not-anime? ignore?) (file-seq dir))]
     (map (fn [file]
            (let [ext (str (first (re-seq #"\.[0-9a-z]+$" file)))]
              {:full file
