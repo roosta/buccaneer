@@ -1,7 +1,8 @@
 (ns qmedia-front.core
   (:require-macros [qmedia-front.macros :refer [env]])
   (:require  [reagent.core :as r]
-             [herb.core :as herb :refer-macros [<class <id]]
+             [herb.core :as herb :refer-macros [<class <id defgroup]]
+             [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
@@ -19,12 +20,8 @@
                 :font-size (px 14)
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
-(defn root-styles
-  [component]
-  (with-meta
-    (component
-     {:column {:padding-bottom 0}})
-    {:key component}))
+(defgroup root-styles
+  {:column {:padding-bottom 0}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
