@@ -45,9 +45,8 @@
       {:key open?})))
 
 (defn group-item
-  [title]
-  (let [open? (r/atom false)
-        obj @(rf/subscribe [:media/map title])]
+  [title obj]
+  (let [open? (r/atom false)]
     (fn []
       [:div {:class (<class group-item-style :container)}
         [sa/MenuItem {:class (<class group-item-style :title)
@@ -76,7 +75,7 @@
         (let [obj @(rf/subscribe [:media/map title])]
           (if (> (count obj) 1)
             ^{:key title}
-            [group-item title]
+            [group-item title obj]
             ^{:key title}
             [sa/MenuItem {:name title}]))
         ))]))
