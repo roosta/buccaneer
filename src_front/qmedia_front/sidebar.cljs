@@ -32,12 +32,14 @@
   (let [base {:max-height "0px"
               :overflow "hidden"
               :transition (t/create-transition {:properties ["max-height"]
+                                                :durations ["400ms"]
                                                 :easings [:ease-out-cubic]})
               :border "none"}]
     (with-meta
       (if open?
         (merge base {:max-height "5000px"
-                     :transition (t/create-transition {:properties ["max-height"]})
+                     :transition (t/create-transition {:properties ["max-height"]
+                                                       :durations ["400ms"]})
                      :border-top "1px solid rgba(34,36,38,.1)"})
         base)
       {:key open?})))
