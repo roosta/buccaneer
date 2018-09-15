@@ -4,24 +4,24 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.10.312" :exclusions [org.apache.ant/ant]]
+                 [org.clojure/clojurescript "1.10.339" :exclusions [org.apache.ant/ant]]
                  [org.clojure/core.async "0.4.474"]
                  [reagent "0.8.1"]
                  [day8.re-frame/http-fx "0.1.6"]
-                 [ring/ring-core "1.6.3"]
+                 [ring/ring-core "1.7.0"]
                  [tincture "0.1.5-SNAPSHOT"]
-                 [cljs-ajax "0.7.3"]
-                 [philoskim/debux-stubs "0.4.8"]
+                 [cljs-ajax "0.7.4"]
+                 [philoskim/debux-stubs "0.5.1"]
                  [hodgepodge "0.1.3"]
-                 [soda-ash "0.79.1"]
+                 [soda-ash "0.82.2"]
                  [clojure-csv/clojure-csv "2.0.2"]
-                 [re-frame "0.10.5"]
-                 [org.clojure/tools.reader "1.2.2"]]
+                 [re-frame "0.10.6"]
+                 [org.clojure/tools.reader "1.3.0"]]
 
   :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.3-react16"]
                                   [figwheel-sidecar "0.5.16"]
                                   [figwheel "0.5.16"]
-                                  [philoskim/debux "0.4.8"]
+                                  [philoskim/debux "0.5.1"]
                                   [binaryage/devtools "0.9.10"]]
 
                    :plugins [[lein-figwheel "0.5.16" :exclusions [org.clojure/core.cache]]]}}
