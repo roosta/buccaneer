@@ -1,3 +1,4 @@
 * TODO Follow links
 * [[https://www.imdb.com/interfaces/][IMDb datasets]]
 * TODO Finds only S4 of brooklyn
+* TODO Display an item that is just raw files that couldn't be parsed, to at least allow for starting it
