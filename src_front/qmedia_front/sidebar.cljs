@@ -31,10 +31,12 @@
   (let [base {:max-height "0px"
               :overflow "hidden"
               :border "none"}]
-    (if open?
-      (merge base {:max-height "auto"
-                   :border-top "1px solid rgba(34,36,38,.1)"})
-      base)))
+    (with-meta
+      (if open?
+        (merge base {:max-height "auto"
+                     :border-top "1px solid rgba(34,36,38,.1)"})
+        base)
+      {:key open?})))
 
 (defn group-item
   [title]
