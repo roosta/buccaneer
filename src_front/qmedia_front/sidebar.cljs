@@ -2,6 +2,7 @@
   (:require  [reagent.core :as r]
              [garden.units :refer [px percent]]
              [herb.core :refer-macros [<class defgroup]]
+             [tincture.core :as t]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [soda-ash.core :as sa]
              [reagent.debug :refer [log]]
@@ -30,10 +31,13 @@
   [open?]
   (let [base {:max-height "0px"
               :overflow "hidden"
+              :transition (t/create-transition {:properties ["max-height"]
+                                                :easings [:ease-out-cubic]})
               :border "none"}]
     (with-meta
       (if open?
-        (merge base {:max-height "auto"
+        (merge base {:max-height "5000px"
+                     :transition (t/create-transition {:properties ["max-height"]})
                      :border-top "1px solid rgba(34,36,38,.1)"})
         base)
       {:key open?})))
