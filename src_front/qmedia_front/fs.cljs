@@ -60,13 +60,3 @@
   (if (.existsSync fs dir)
     (dispatch (conj on-success (files dir)))
     (dispatch (conj on-failure (str "Failed to read root directory: " dir)))))
-
-#_(defn find-files
-    [paths result]
-    (if (seq paths)
-      (let [files (read-dir (first paths))
-            f (filter file? files)
-            d (filter directory? files)]
-        (recur (into (rest paths) d)
-               (into result f)))
-      result))
