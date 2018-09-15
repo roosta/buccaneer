@@ -9,7 +9,7 @@
                  [reagent "0.8.1"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [ring/ring-core "1.7.0"]
-                 [tincture "0.1.5-SNAPSHOT"]
+                 [tincture "0.1.7-SNAPSHOT"]
                  [cljs-ajax "0.7.4"]
                  [philoskim/debux-stubs "0.5.1"]
                  [hodgepodge "0.1.3"]
