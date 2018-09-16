@@ -61,8 +61,7 @@
           (let [sub-title (str (:title o) " - S" (:season o) "E" (:episode o))]
             ^{:key sub-title}
             [sa/MenuItem {:class (<class group-item-style :nested-item)}
-             sub-title]))]]))
-  )
+             sub-title]))]])))
 
 (defn sidebar
   []
@@ -77,5 +76,4 @@
             ^{:key title}
             [group-item title obj]
             ^{:key title}
-            [sa/MenuItem {:name title}]))
-        ))]))
+            [sa/MenuItem {:name title}]))))]))
