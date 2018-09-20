@@ -46,3 +46,9 @@
     :media {:dir (:root-dir db/default-db)
             :on-success [::set-media]
             :on-failure [::set-error]}}))
+
+(reg-event-db
+ :set-active-title
+ (fn [db [_ obj]]
+   (assoc db :active-title obj))
+ )

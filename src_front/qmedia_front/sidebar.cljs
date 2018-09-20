@@ -44,6 +44,10 @@
         base)
       {:key open?})))
 
+(defn on-click
+  [obj]
+  (rf/dispatch [:set-active-title obj]))
+
 (defn group-item
   [title obj]
   (let [open? (r/atom false)]
@@ -76,4 +80,5 @@
             ^{:key title}
             [group-item title obj]
             ^{:key title}
-            [sa/MenuItem {:name title}]))))]))
+            [sa/MenuItem {:on-click #(on-click obj)
+                          :name title}]))))]))
