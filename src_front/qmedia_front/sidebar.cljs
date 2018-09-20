@@ -59,7 +59,7 @@
        [:div {:class (<class collapse @open?)}
         (for [o obj]
           (let [sub-title (str (:title o) " - S" (:season o) "E" (:episode o))]
-            ^{:key sub-title}
+            ^{:key (:full o)}
             [sa/MenuItem {:class (<class group-item-style :nested-item)}
              sub-title]))]])))
 
