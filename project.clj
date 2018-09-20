@@ -15,6 +15,7 @@
                  [hodgepodge "0.1.3"]
                  [soda-ash "0.82.2"]
                  [clojure-csv/clojure-csv "2.0.2"]
+                 [day8.re-frame/http-fx "0.1.6"]
                  [re-frame "0.10.6"]
                  [org.clojure/tools.reader "1.3.0"]]
 
