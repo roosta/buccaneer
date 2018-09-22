@@ -28,9 +28,10 @@
 (reg-event-db
  ::save
  (fn [db [_ query-result]]
-   (let [result (:result query-result)]
+   (let [results (:results query-result)]
      (if (= (:total_results query-result) 1)
-       (.log js/console query-result)))
+       (.log js/console (first results))
+       (.log js/console (last (sort-by :vote_count results)))))
    db
    )
  )
