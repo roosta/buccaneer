@@ -80,11 +80,11 @@
 
 (reg-event-fx
  :set-active-title
- (fn [{:keys [db]} [_ obj]]
-   (let [m {:db (assoc db :active-title obj)}]
+ (fn [{:keys [db]} [_ title obj]]
+   (let [m {:db (assoc db :active-title title)}]
      (cond
        (= (count obj) 1)
-       (let [{:keys [year title]} (first obj)]
+       (let [{year :year} (first obj)]
          (assoc m ::search-movie {:title title
                                   :year year}))
        :else m)))
