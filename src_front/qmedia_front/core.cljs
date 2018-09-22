@@ -8,6 +8,7 @@
              [soda-ash.core :as sa]
              [qmedia-front.subs]
              [qmedia-front.events]
+             [qmedia-front.content :refer [content]]
              [qmedia-front.sidebar :refer [sidebar]]
              ;; [cljs.nodejs :as nodejs]
              [qmedia-front.view :refer [view]]
@@ -31,7 +32,7 @@
                       :width 4}
        [sidebar]]
       [sa/GridColumn {:width 12}
-       (pr-str path)]]]))
+       [content]]]]))
 
 (defn mount-root [setting]
   (r/render [root-component]
