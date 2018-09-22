@@ -41,6 +41,7 @@
                         :query title
                         :year year}
                :response-format :json
+               :error-handler #(rf/dispatch [::set-error %])
                :keywords? true
                :handler #(rf/dispatch [::store-movie title %])}))))
 
@@ -56,6 +57,7 @@
      (GET url {:params {:api_key (env :api-key)}
                :response-format :json
                :keywords? true
+               :error-handler #(rf/dispatch [::set-error %])
                :handler #(rf/dispatch [::write-to :config %])}))))
 
 (reg-event-db
