@@ -10,15 +10,14 @@
              [re-frame.core :as rf]))
 
 (defgroup sidebar-style
-  {:container
+  {:menu
    {:background-color "#333"
     :overflow-y "auto"
     :color "#eee"
     :height "100vh"}
+   :column {}})
 
-   :column {:padding-bottom "0 !important"}})
-
-(defgroup group-item-style
+(defgroup series-style
   {:title {:position "relative"
            :display "flex"
            :align-items "center"}
@@ -49,11 +48,11 @@
   (rf/dispatch [:media.active/set-title title data]))
 
 (defn series-item
-  [title {:keys [fs]}]
+  [title {:keys [parsed]}]
   (let [open? (r/atom false)]
     (fn []
-      [:div {:class (<class group-item-style :container)}
-        [sa/MenuItem {:class (<class group-item-style :title)
+      [:div {:class (<class series-style :container)}
+        [sa/MenuItem {:class (<class series-style :title)
                       :on-click #(swap! open? not)}
          title
          [sa/Icon {:style {:color "black"
@@ -61,10 +60,10 @@
                            :right "0"}
                    :name (if @open? "caret down" "caret right")}]]
        [:div {:class (<class collapse @open?)}
-        (for [f fs]
-          (let [sub-title (str (:title f) " - S" (:season f) "E" (:episode f))]
-            ^{:key (:full f)}
-            [sa/MenuItem {:class (<class group-item-style :nested-item)}
+        (for [p parsed]
+          (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
+            ^{:key (:full p)}
+            [sa/MenuItem {:class (<class series-style :nested-item)}
              sub-title]))]])))
 
 (defn movie-item
@@ -78,7 +77,7 @@
     [sa/GridColumn {:class (<class sidebar-style :column)
                     :width 4}
      [sa/Menu {:vertical true
-               :class (<class sidebar-style :container)
+               :class (<class sidebar-style :menu)
                :fluid true}
       (for [[title data] media]
         (if (:movie? data)
