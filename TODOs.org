@@ -4,3 +4,4 @@
 * TODO Display an item that is just raw files that couldn't be parsed, to at least allow for starting it
 * TODO Trim the from titles and sort that way
 * TODO When more than one match use the one with most votes
+* TODO Handle errors

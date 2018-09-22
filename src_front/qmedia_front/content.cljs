@@ -9,6 +9,16 @@
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
+(defgroup root-style
+  {:container {:height "100vh"
+               :overflow-y "auto"}
+   :column {:padding-bottom "0 !important"}})
+
 (defn content
   []
-  [:div "hello"])
+  (let [active @(rf/subscribe [:media/active])]
+    [sa/GridColumn {:class (<class root-style :column)
+                    :width 12}
+     [:div {:class (<class root-style :container)}
+      [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]])
+  )

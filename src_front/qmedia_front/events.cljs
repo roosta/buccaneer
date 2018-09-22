@@ -51,14 +51,14 @@
    (assoc db kw data)))
 
 (reg-fx
- ::moviedb-config
+ ::themoviedb-config
  (fn []
    (let [url (str base-url "configuration")]
      (GET url {:params {:api_key (env :api-key)}
                :response-format :json
                :keywords? true
                :error-handler #(rf/dispatch [::set-error %])
-               :handler #(rf/dispatch [::write-to :moviedb-config %])}))))
+               :handler #(rf/dispatch [::write-to :themoviedb/config %])}))))
 
 (reg-event-db
  ::set-media
@@ -94,15 +94,15 @@
  :initialize-db
  (fn []
    {:db db/default-db
-    ::moviedb-config nil
+    ::themoviedb-config nil
     ::media {:dir (:root-dir db/default-db)
              :on-success [::set-media]
              :on-failure [::set-error]}}))
 
 (reg-event-fx
- :set-active-title
+ :media.active/set-title
  (fn [{:keys [db]} [_ title data]]
-   (let [m {:db (assoc db :active-title title)}]
+   (let [m {:db (assoc db :media.active/title title)}]
      (cond
        (:movie? data)
        (assoc m ::search-movie {:title title

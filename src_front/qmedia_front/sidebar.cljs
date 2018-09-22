@@ -16,7 +16,7 @@
     :color "#eee"
     :height "100vh"}
 
-   })
+   :column {:padding-bottom "0 !important"}})
 
 (defgroup group-item-style
   {:title {:position "relative"
@@ -44,13 +44,11 @@
         base)
       {:key open?})))
 
-(+ 1 2)
-
 (defn on-click
   [title data]
-  (rf/dispatch [:set-active-title title data]))
+  (rf/dispatch [:media.active/set-title title data]))
 
-(defn group-item
+(defn series-item
   [title {:keys [fs]}]
   (let [open? (r/atom false)]
     (fn []
@@ -77,13 +75,15 @@
 (defn sidebar
   []
   (let [media @(rf/subscribe [:media])]
-    [sa/Menu {:vertical true
-              :class (<class sidebar-style :container)
-              :fluid true}
-     (for [[title data] media]
-       (if (:movie? data)
-         ^{:key title}
-         [movie-item title data]
-         ^{:key title}
-         [group-item title data]
-         ))]))
+    [sa/GridColumn {:class (<class sidebar-style :column)
+                    :width 4}
+     [sa/Menu {:vertical true
+               :class (<class sidebar-style :container)
+               :fluid true}
+      (for [[title data] media]
+        (if (:movie? data)
+          ^{:key title}
+          [movie-item title data]
+          ^{:key title}
+          [series-item title data]
+          ))]]))
