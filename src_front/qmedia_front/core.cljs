@@ -21,12 +21,17 @@
                 :font-size (px 14)
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
+(defgroup root-styles
+  {:row {:padding-bottom "0 !important"}})
+
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
     [sa/Container {:fluid true}
-     [sa/Grid
-      [sidebar]
-      [content]]]))
+     [sa/Grid {:padded false
+               :columns 2}
+      [sa/GridRow {:class (<class root-styles :row)}
+       [sidebar]
+       [content]]]]))
 
 (defn mount-root [setting]
   (r/render [root-component]
