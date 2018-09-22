@@ -13,15 +13,3 @@
  :media
  (fn [db]
    (:media db)))
-
-(reg-sub
- :media/titles
- :<- [:media]
- (fn [media]
-   (set (map :title media))))
-
-(reg-sub
- :media/map
- :<- [:media]
- (fn [media [_ title]]
-   (filter #(= title (:title %)) media)))

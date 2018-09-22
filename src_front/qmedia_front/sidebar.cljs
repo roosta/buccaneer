@@ -69,16 +69,15 @@
 
 (defn sidebar
   []
-  (let [titles @(rf/subscribe [:media/titles])]
+  (let [media @(rf/subscribe [:media])]
     [sa/Menu {:vertical true
               :class (<class sidebar-style :container)
               :fluid true}
      (doall
-      (for [title (sort titles)]
-        (let [obj @(rf/subscribe [:media/map title])]
-          (if (> (count obj) 1)
-            ^{:key title}
-            [group-item title obj]
-            ^{:key title}
-            [sa/MenuItem {:on-click #(on-click obj)
-                          :name title}]))))]))
+      (for [[title obj] media]
+        (if (> (count obj) 1)
+          ^{:key title}
+          [group-item title obj]
+          ^{:key title}
+          [sa/MenuItem {:on-click #(on-click obj)
+                        :name title}])))]))

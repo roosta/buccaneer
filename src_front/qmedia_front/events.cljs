@@ -3,7 +3,6 @@
   (:require [qmedia-front.db :as db]
             [ajax.core :refer [GET POST]]
             [reagent.debug :refer [log error]]
-            [clojure.walk :refer [keywordize-keys]]
             [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
             [qmedia-front.fs :as fs]
             [clojure.string :as str]
@@ -23,12 +22,15 @@
 
 (reg-fx ::media fs/effect)
 
+(defn get-best-match
+  [])
 
 (reg-event-db
  ::save
  (fn [db [_ query-result]]
-   (let [m (keywordize-keys query-result)])
-
+   (let [result (:result query-result)]
+     (if (= (:total_results query-result) 1)
+       (.log js/console query-result)))
    db
    )
  )
@@ -41,17 +43,21 @@
                              :query title
                              :year year}
                     :response-format :json
+                    :keywords? true
                     :handler #(rf/dispatch [::save %])})))
 
 (reg-event-db
  ::set-media
  (fn [db [_ files]]
-   (let [media (doall
+   (let [media (->>
                 (map (fn [file]
                        (let [m (-> (ptn (:basename file))
                                    (js->clj :keywordize-keys true))]
                          (into file m)))
-                     files))]
+                     files)
+                doall
+                (group-by :title)
+                sort)]
      (assoc db :media media))))
 
 (reg-event-db
@@ -69,8 +75,8 @@
  (fn []
    {:db db/default-db
     ::media {:dir (:root-dir db/default-db)
-            :on-success [::set-media]
-            :on-failure [::set-error]}}))
+             :on-success [::set-media]
+             :on-failure [::set-error]}}))
 
 (reg-event-fx
  :set-active-title
