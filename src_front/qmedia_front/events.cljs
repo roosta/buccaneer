@@ -18,12 +18,9 @@
 
 (def ptn (nodejs/require "parse-torrent-name"))
 
-(def search-url "https://api.themoviedb.org/3/search/movie")
+(def base-url "https://api.themoviedb.org/3/")
 
 (reg-fx ::media fs/effect)
-
-(defn get-best-match
-  [])
 
 (reg-event-db
  ::store-movie
@@ -34,16 +31,32 @@
                (last (sort-by :vote_count results)))]
        (assoc-in db [:media title :meta] m)))))
 
+
 (reg-fx
  ::search-movie
  (fn [{:keys [title year]
        :or {year false}}]
-   (GET search-url {:params {:api_key (env :api-key)
-                             :query title
-                             :year year}
-                    :response-format :json
-                    :keywords? true
-                    :handler #(rf/dispatch [::store-movie title %])})))
+   (let [url (str base-url "search/movie")]
+     (GET url {:params {:api_key (env :api-key)
+                        :query title
+                        :year year}
+               :response-format :json
+               :keywords? true
+               :handler #(rf/dispatch [::store-movie title %])}))))
+
+(reg-event-db
+ ::write-to
+ (fn [db [_ kw data]]
+   (assoc db kw data)))
+
+(reg-fx
+ ::moviedb-config
+ (fn []
+   (let [url (str base-url "configuration")]
+     (GET url {:params {:api_key (env :api-key)}
+               :response-format :json
+               :keywords? true
+               :handler #(rf/dispatch [::write-to :config %])}))))
 
 (reg-event-db
  ::set-media
@@ -79,6 +92,7 @@
  :initialize-db
  (fn []
    {:db db/default-db
+    ::moviedb-config nil
     ::media {:dir (:root-dir db/default-db)
              :on-success [::set-media]
              :on-failure [::set-error]}}))
