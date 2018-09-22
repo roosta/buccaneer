@@ -29,7 +29,7 @@
      (let [m (if (= (:total_results query-result) 1)
                (first results)
                (last (sort-by :vote_count results)))]
-       (assoc-in db [:media title :meta] m)))))
+       (assoc-in db [:media title :search-result] m)))))
 
 
 (reg-fx
@@ -58,7 +58,7 @@
                :response-format :json
                :keywords? true
                :error-handler #(rf/dispatch [::set-error %])
-               :handler #(rf/dispatch [::write-to :config %])}))))
+               :handler #(rf/dispatch [::write-to :moviedb-config %])}))))
 
 (reg-event-db
  ::set-media
@@ -73,9 +73,9 @@
                 (group-by :title)
                 (map (fn [[k v]]
                        (if (= (count v) 1)
-                         {k {:fs (first v)
+                         {k {:parsed (first v)
                              :movie? true}}
-                         {k {:fs v
+                         {k {:parsed v
                              :movie? false}})))
                 (into {}))]
      (assoc db :media media))))
@@ -106,6 +106,5 @@
      (cond
        (:movie? data)
        (assoc m ::search-movie {:title title
-                                :year (-> data :fs :year)})
-       :else m)))
- )
+                                :year (-> data :parsed :year)})
+       :else m))))
