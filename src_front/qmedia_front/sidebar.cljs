@@ -44,12 +44,14 @@
         base)
       {:key open?})))
 
+(+ 1 2)
+
 (defn on-click
-  [title obj]
-  (rf/dispatch [:set-active-title title obj]))
+  [title data]
+  (rf/dispatch [:set-active-title title data]))
 
 (defn group-item
-  [title obj]
+  [title {:keys [fs]}]
   (let [open? (r/atom false)]
     (fn []
       [:div {:class (<class group-item-style :container)}
@@ -61,11 +63,16 @@
                            :right "0"}
                    :name (if @open? "caret down" "caret right")}]]
        [:div {:class (<class collapse @open?)}
-        (for [o obj]
-          (let [sub-title (str (:title o) " - S" (:season o) "E" (:episode o))]
-            ^{:key (:full o)}
+        (for [f fs]
+          (let [sub-title (str (:title f) " - S" (:season f) "E" (:episode f))]
+            ^{:key (:full f)}
             [sa/MenuItem {:class (<class group-item-style :nested-item)}
              sub-title]))]])))
+
+(defn movie-item
+  [title data]
+  [sa/MenuItem {:on-click #(on-click title data)
+                :name title}])
 
 (defn sidebar
   []
@@ -73,11 +80,10 @@
     [sa/Menu {:vertical true
               :class (<class sidebar-style :container)
               :fluid true}
-     (doall
-      (for [[title obj] media]
-        (if (> (count obj) 1)
-          ^{:key title}
-          [group-item title obj]
-          ^{:key title}
-          [sa/MenuItem {:on-click #(on-click title obj)
-                        :name title}])))]))
+     (for [[title data] media]
+       (if (:movie? data)
+         ^{:key title}
+         [movie-item title data]
+         ^{:key title}
+         [group-item title data]
+         ))]))

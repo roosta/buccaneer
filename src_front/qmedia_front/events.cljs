@@ -26,15 +26,13 @@
   [])
 
 (reg-event-db
- ::save
- (fn [db [_ query-result]]
+ ::store-movie
+ (fn [db [_ title query-result]]
    (let [results (:results query-result)]
-     (if (= (:total_results query-result) 1)
-       (.log js/console (first results))
-       (.log js/console (last (sort-by :vote_count results)))))
-   db
-   )
- )
+     (let [m (if (= (:total_results query-result) 1)
+               (first results)
+               (last (sort-by :vote_count results)))]
+       (assoc-in db [:media title :meta] m)))))
 
 (reg-fx
  ::search-movie
@@ -45,7 +43,7 @@
                              :year year}
                     :response-format :json
                     :keywords? true
-                    :handler #(rf/dispatch [::save %])})))
+                    :handler #(rf/dispatch [::store-movie title %])})))
 
 (reg-event-db
  ::set-media
@@ -58,7 +56,13 @@
                      files)
                 doall
                 (group-by :title)
-                sort)]
+                (map (fn [[k v]]
+                       (if (= (count v) 1)
+                         {k {:fs (first v)
+                             :movie? true}}
+                         {k {:fs v
+                             :movie? false}})))
+                (into {}))]
      (assoc db :media media))))
 
 (reg-event-db
@@ -81,12 +85,11 @@
 
 (reg-event-fx
  :set-active-title
- (fn [{:keys [db]} [_ title obj]]
+ (fn [{:keys [db]} [_ title data]]
    (let [m {:db (assoc db :active-title title)}]
      (cond
-       (= (count obj) 1)
-       (let [{year :year} (first obj)]
-         (assoc m ::search-movie {:title title
-                                  :year year}))
+       (:movie? data)
+       (assoc m ::search-movie {:title title
+                                :year (-> data :fs :year)})
        :else m)))
  )
