@@ -10,9 +10,9 @@
              [re-frame.core :as rf]))
 
 (defgroup root-style
-  {:container {:height "100vh"
-               :overflow-y "auto"}
-   :column {:padding-bottom "0 !important"}})
+  {:column {}
+   :container {:height "100vh"
+               :overflow-y "auto"}})
 
 (defn content
   []
@@ -20,5 +20,4 @@
     [sa/GridColumn {:class (<class root-style :column)
                     :width 12}
      [:div {:class (<class root-style :container)}
-      [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]])
-  )
+      [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]))
