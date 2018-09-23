@@ -15,7 +15,7 @@
             :justify-content "center"
             :align-items "center"}
    :container {:height "100%"
-               :width "100%"
+               :flex-basis "80%"
                :display "flex"
                :overflow-y "auto"}})
 
