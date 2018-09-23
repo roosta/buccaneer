@@ -11,12 +11,18 @@
 
 (defgroup sidebar-style
   {:menu
-   {:background-color "#333"
-    :overflow-y "auto"
-    :border-radius "0 !important"
-    :color "#eee"
-    :height "100vh"}
-   :column {}})
+   {:overflow-y "auto"
+    :height "100%"
+    :border-radius "0 !important"}
+   :column {:height "100%"
+            :flex-basis "20%"}})
+
+(defn border-color
+  []
+  (let [theme @(rf/subscribe [:theme])]
+    (case theme
+      :dark "1px solid rgba(255,255,255,.08)"
+      :light "1px solid rgba(34,36,38,.1)")))
 
 (defgroup series-style
   (let [theme @(rf/subscribe [:theme])
@@ -31,7 +37,7 @@
                       :light "black")
              :position "absolute"
              :right "0"}
-     :container {:border-top (str "1px solid " line-color)}
+     :container {:border-top (border-color)}
      :nested-item {:padding-left "24px !important"}
      :collapsing-container {:height 0
                             :overflow "hidden"}}))
@@ -49,7 +55,7 @@
         (merge base {:max-height "5000px"
                      :transition (t/create-transition {:properties ["max-height"]
                                                        :durations ["400ms"]})
-                     :border-top "1px solid rgba(34,36,38,.1)"})
+                     :border-top (border-color)})
         base)
       {:key open?})))
 
@@ -86,8 +92,7 @@
   []
   (let [media @(rf/subscribe [:media])
         theme @(rf/subscribe [:theme])]
-    [sa/GridColumn {:class (<class sidebar-style :column)
-                    :width 3}
+    [:div {:class (<class sidebar-style :column)}
      [sa/Menu {:vertical true
                :inverted (= theme :dark)
                :class (<class sidebar-style :menu)

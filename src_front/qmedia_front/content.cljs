@@ -10,8 +10,11 @@
              [re-frame.core :as rf]))
 
 (defgroup root-style
-  {:column {}
-   :container {:height "100vh"
+  {
+   :column {:height "100%"
+            :flex-basis "80%"
+            }
+   :container {:height "100%"
                :overflow-y "auto"}})
 
 (defn content
