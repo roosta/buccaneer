@@ -5,3 +5,4 @@
 * TODO Trim the from titles and sort that way
 * TODO When more than one match use the one with most votes
 * TODO Handle errors
+* TOOD Cards view
