@@ -6,3 +6,4 @@
 * TODO When more than one match use the one with most votes
 * TODO Handle errors
 * TOOD Cards view
+* TODO Only search for movie if data isn't present
