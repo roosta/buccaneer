@@ -77,8 +77,10 @@
 
 (defn movie-item
   [title data]
-  [sa/MenuItem {:on-click #(on-click title data)
-                :name title}])
+  (let [active-title @(rf/subscribe [:media.active/title])]
+    [sa/MenuItem {:on-click #(on-click title data)
+                  :active (= active-title title)
+                  :name title}]))
 
 (defn sidebar
   []
