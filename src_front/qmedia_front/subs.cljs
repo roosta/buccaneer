@@ -21,12 +21,6 @@
    (:themoviedb/config db)))
 
 (reg-sub
- :themoviedb.images/base-url
- :<- [:themoviedb/config]
- (fn [config]
-   (-> config :images :base_url)))
-
-(reg-sub
  :media.active/title
  (fn [db]
    (:media.active/title db)))
@@ -41,23 +35,23 @@
 (reg-sub
  :media.active/poster-url
  :<- [:media/active]
- :<- [:themoviedb.images/base-url]
  :<- [:themoviedb/config]
- (fn [[data base-url config] [_ width]]
-   (let [path (-> data :search-result :poster_path)
+ (fn [[data config] [_ width]]
+   (let [base-url (-> config :images :base_url)
+         path (-> data :search-result :poster_path)
          sizes (into #{} (-> config :images :poster_sizes))
          size (get sizes width)]
-     (when (and path size)
+     (when (and base-url path size)
        (str base-url size path)))))
 
 (reg-sub
  :media.active/backdrop-url
  :<- [:media/active]
- :<- [:themoviedb.images/base-url]
  :<- [:themoviedb/config]
- (fn [[data base-url config] [_ width]]
-   (let [path (-> data :search-result :backdrop_path)
+ (fn [[data config] [_ width]]
+   (let [base-url (-> config :images :base_url)
+         path (-> data :search-result :backdrop_path)
          sizes (into #{} (-> config :images :backdrop_sizes))
          size (get sizes width)]
-     (when (and path size)
+     (when (and base-url path size)
        (str base-url size path)))))
