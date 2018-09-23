@@ -44,8 +44,8 @@
  :<- [:themoviedb.images/base-url]
  :<- [:themoviedb/config]
  (fn [[data base-url config] [_ width]]
-   (when (and data config base-url)
-     (let [path (-> data :search-result :poster_path)
-           poster-sizes (into #{} (-> config :images :poster_sizes))]
-       (when-let [size (get poster-sizes width)]
-         (str base-url size (-> data :search-result :poster_path)))))))
+   (let [path (-> data :search-result :poster_path)
+         poster-sizes (into #{} (-> config :images :poster_sizes))
+         size (get poster-sizes width)]
+     (when (and path poster-sizes size)
+       (str base-url size (-> data :search-result :poster_path))))))
