@@ -15,14 +15,14 @@
              [re-frame.core :as rf]))
 
 (def global-style
-  (list [:body {:background "#eee"
-                :box-sizing "border-box"
+  (list [:body {:box-sizing "border-box"
                 :margin 0
                 :font-size (px 14)
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
 (defgroup root-styles
-  {:container {:height "100vh"}
+  {:container {:height "100vh"
+               :background-color "#262626"}
    :grid {:height "100%"
           :display "flex"}})
 

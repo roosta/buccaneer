@@ -10,17 +10,19 @@
              [re-frame.core :as rf]))
 
 (defgroup root-style
-  {
-   :column {:height "100%"
-            :flex-basis "80%"
-            }
+  {:column {:flex-basis "50%"
+            :display "flex"
+            :justify-content "center"
+            :align-items "center"}
    :container {:height "100%"
+               :width "100%"
+               :display "flex"
                :overflow-y "auto"}})
 
 (defn content
   []
   (let [active @(rf/subscribe [:media/active])]
-    [sa/GridColumn {:class (<class root-style :column)
-                    :width 13}
-     [:div {:class (<class root-style :container)}
+    [:div {:class (<class root-style :container)}
+     [:div {:class (<class root-style :column)}]
+     [:div {:class (<class root-style :column)}
       [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]))
