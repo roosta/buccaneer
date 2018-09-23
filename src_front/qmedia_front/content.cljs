@@ -18,6 +18,6 @@
   []
   (let [active @(rf/subscribe [:media/active])]
     [sa/GridColumn {:class (<class root-style :column)
-                    :width 12}
+                    :width 13}
      [:div {:class (<class root-style :container)}
       [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]))

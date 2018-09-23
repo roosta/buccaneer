@@ -13,18 +13,28 @@
   {:menu
    {:background-color "#333"
     :overflow-y "auto"
+    :border-radius "0 !important"
     :color "#eee"
     :height "100vh"}
    :column {}})
 
 (defgroup series-style
-  {:title {:position "relative"
-           :display "flex"
-           :align-items "center"}
-   :container {:border-top "1px solid rgba(34,36,38,.1)"}
-   :nested-item {:padding-left "24px !important"}
-   :collapsing-container {:height 0
-                          :overflow "hidden"}})
+  (let [theme @(rf/subscribe [:theme])
+        line-color (case theme
+                     :dark "rgba(255,255,255,.08)"
+                     :light "rgba(34,36,38,.1)")]
+    {:title {:position "relative"
+             :display "flex"
+             :align-items "center"}
+     :icon  {:color (case theme
+                      :dark "white"
+                      :light "black")
+             :position "absolute"
+             :right "0"}
+     :container {:border-top (str "1px solid " line-color)}
+     :nested-item {:padding-left "24px !important"}
+     :collapsing-container {:height 0
+                            :overflow "hidden"}}))
 
 (defn collapse
   [open?]
@@ -52,19 +62,18 @@
   (let [open? (r/atom false)]
     (fn []
       [:div {:class (<class series-style :container)}
-        [sa/MenuItem {:class (<class series-style :title)
-                      :on-click #(swap! open? not)}
-         title
-         [sa/Icon {:style {:color "black"
-                           :position "absolute"
-                           :right "0"}
-                   :name (if @open? "caret down" "caret right")}]]
+       [sa/MenuItem {:class (<class series-style :title)
+                     :on-click #(swap! open? not)}
+        title
+        [sa/Icon {:class (<class series-style :icon)
+                  :name (if @open? "caret down" "caret right")}]]
        [:div {:class (<class collapse @open?)}
-        (for [p parsed]
-          (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
-            ^{:key (:full p)}
-            [sa/MenuItem {:class (<class series-style :nested-item)}
-             sub-title]))]])))
+        (doall
+         (for [p parsed]
+           (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
+             ^{:key (:full p)}
+             [sa/MenuItem {:class (<class series-style :nested-item)}
+              sub-title])))]])))
 
 (defn movie-item
   [title data]
@@ -73,16 +82,19 @@
 
 (defn sidebar
   []
-  (let [media @(rf/subscribe [:media])]
+  (let [media @(rf/subscribe [:media])
+        theme @(rf/subscribe [:theme])]
     [sa/GridColumn {:class (<class sidebar-style :column)
-                    :width 4}
+                    :width 3}
      [sa/Menu {:vertical true
+               :inverted (= theme :dark)
                :class (<class sidebar-style :menu)
                :fluid true}
-      (for [[title data] media]
-        (if (:movie? data)
-          ^{:key title}
-          [movie-item title data]
-          ^{:key title}
-          [series-item title data]
-          ))]]))
+      (doall
+       (for [[title data] media]
+         (if (:movie? data)
+           ^{:key title}
+           [movie-item title data]
+           ^{:key title}
+           [series-item title data]
+           )))]]))

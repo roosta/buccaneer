@@ -26,6 +26,11 @@
    (:media.active/title db)))
 
 (reg-sub
+ :theme
+ (fn [db]
+   (:theme db)))
+
+(reg-sub
  :media/active
  :<- [:media]
  :<- [:media.active/title]
