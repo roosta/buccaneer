@@ -48,4 +48,16 @@
          poster-sizes (into #{} (-> config :images :poster_sizes))
          size (get poster-sizes width)]
      (when (and path poster-sizes size)
-       (str base-url size (-> data :search-result :poster_path))))))
+       (str base-url size path)))))
+
+(reg-sub
+ :media.active/backdrop-url
+ :<- [:media/active]
+ :<- [:themoviedb.images/base-url]
+ :<- [:themoviedb/config]
+ (fn [[data base-url config] [_ width]]
+   (let [path (-> data :search-result :backdrop_path)
+         poster-sizes (into #{} (-> config :images :backdrop_sizes))
+         size (get poster-sizes width)]
+     (when (and path poster-sizes size)
+       (str base-url size path)))))
