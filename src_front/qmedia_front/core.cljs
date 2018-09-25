@@ -39,6 +39,6 @@
                   (.getElementById js/document "app")))
 
 (defn init! [setting]
-  (rf/dispatch [:initialize-db])
+  (rf/dispatch-sync [:initialize-db])
   (herb/global-style! global-style)
   (mount-root setting))
