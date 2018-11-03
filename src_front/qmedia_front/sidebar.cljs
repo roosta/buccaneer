@@ -12,10 +12,8 @@
 (defgroup sidebar-style
   {:menu
    {:overflow-y "auto"
-    :height "100%"
-    :border-radius "0 !important"}
-   :column {:height "100%"
-            :flex-basis "20%"}})
+    :height "100vh"
+    :border-radius "0 !important"}})
 
 (defn border-color
   []
@@ -92,16 +90,15 @@
   []
   (let [media @(rf/subscribe [:media])
         theme @(rf/subscribe [:theme])]
-    [:div {:class (<class sidebar-style :column)}
-     [sa/Menu {:vertical true
-               :inverted (= theme :dark)
-               :class (<class sidebar-style :menu)
-               :fluid true}
-      (doall
-       (for [[title data] media]
-         (if (:movie? data)
-           ^{:key title}
-           [movie-item title data]
-           ^{:key title}
-           [series-item title data]
-           )))]]))
+    [sa/Menu {:vertical true
+              :inverted (= theme :dark)
+              :class (<class sidebar-style :menu)
+              :fluid true}
+     (doall
+      (for [[title data] media]
+        (if (:movie? data)
+          ^{:key title}
+          [movie-item title data]
+          ^{:key title}
+          [series-item title data]
+          )))]))

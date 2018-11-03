@@ -21,18 +21,18 @@
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
 (defgroup root-styles
-  {:container {:height "100vh"
-               :background-color "#262626"}
-   :grid {:height "100%"
-          :display "flex"}})
+  {:container {:background-color "#262626"}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
     [sa/Container {:fluid true
                    :class (<class root-styles :container)}
-     [:div {:class (<class root-styles :grid)}
-      [sidebar]
-      [content]]]))
+     [sa/Grid
+      [sa/GridRow {:style {:padding-bottom 0}}
+       [sa/GridColumn {:width 4}
+        [sidebar]]
+       [sa/GridColumn {:width 12}
+        [content]]]]]))
 
 (defn mount-root [setting]
   (r/render [root-component]

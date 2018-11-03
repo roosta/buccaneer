@@ -18,16 +18,9 @@
       :light "rgba(0,0,0,.95)")))
 
 (defgroup root-style
-  {:column {:flex-basis "50%"
-            :display "flex"
-            :justify-content "center"
-            :flex-direction "column"
-            :align-items "center"}
-   :container {:height "100%"
-               :color (text-color)
-               :flex-basis "80%"
-               :display "flex"
-               :overflow-y "auto"}})
+  {:grid {:color (text-color)
+          :height "100vh"
+          :overflow-y "auto"}})
 
 (defn title
   []
@@ -47,11 +40,10 @@
 (defn content
   []
   (let [active @(rf/subscribe [:media/active])]
-    [:div {:class (<class root-style :container)}
-     [:div {:class (<class root-style :column)}
-      [title]
-      [ratings]
-
-      ]
-     [:div {:class (<class root-style :column)}
-      [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]))
+    [sa/Grid {:class (<class root-style :grid)}
+     [sa/GridRow {:vertical-align "middle"}
+      [sa/GridColumn {:width 8}
+       [title]
+       [ratings]]
+      [sa/GridColumn {:width 8}
+       [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]]))
