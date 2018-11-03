@@ -40,10 +40,13 @@
 (defn content
   []
   (let [active @(rf/subscribe [:media/active])]
-    [sa/Grid {:class (<class root-style :grid)}
-     [sa/GridRow {:vertical-align "middle"}
-      [sa/GridColumn {:width 8}
-       [title]
-       [ratings]]
-      [sa/GridColumn {:width 8}
-       [sa/Image {:src @(rf/subscribe [:media.active/poster-url "w500"])}]]]]))
+    (when active
+      [sa/Grid {:class (<class root-style :grid)}
+       [sa/GridRow {:vertical-align "middle"}
+        [sa/GridColumn {:width 8
+                        :text-align "center"}
+         [title]
+         [ratings]]
+        [sa/GridColumn {:width 8}
+         [sa/Image {:centered true
+                    :src @(rf/subscribe [:media.active/poster-url "w500"])}]]]])))
