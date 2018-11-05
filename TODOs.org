@@ -9,3 +9,4 @@
 * TODO Handle errors
 * TOOD Cards view
 * TODO Only search for movie if data isn't present
+* TODO https://upload.wikimedia.org/wikipedia/commons/5/5b/Rotten_Tomatoes.svg
