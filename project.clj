@@ -19,7 +19,7 @@
                  [re-frame "0.10.6"]
                  [org.clojure/tools.reader "1.3.2"]]
 
-  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.6"]
+  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.6-react16"]
                                   [figwheel-sidecar "0.5.18"]
                                   [figwheel "0.5.18"]
                                   [philoskim/debux "0.5.2"]
