@@ -12,3 +12,4 @@
 * TODO https://upload.wikimedia.org/wikipedia/commons/5/5b/Rotten_Tomatoes.svg
 * TODO Set correct CSP in prod build
 * [[https://electronjs.org/docs/tutorial/security][Security, Native Capabilities, and Your Responsibility | Electron]]
+* [[https://github.com/electron/electron/blob/master/docs/api/menu.md][electron/menu.md at master · electron/electron]]
