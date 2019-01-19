@@ -3,15 +3,15 @@
     "version": "0.1.0",
     "description": "",
     "devDependencies": {
-        "grunt": "^1.0.1",
+        "grunt": "^1.0.3",
         "grunt-download-electron": "^2.1.4",
         "closurecompiler-externs": "^1.0.4",
-        "electron-packager": "^8.5.1"
+        "electron-packager": "^13.0.1"
     },
     "license": "MIT",
     "repository": "https://github.com/roosta/qmedia",
     "dependencies": {
-        "imdb-api": "^3.1.2",
+        "imdb-api": "^4.0.2",
         "parse-torrent-name": "^0.5.4"
     }
 }
