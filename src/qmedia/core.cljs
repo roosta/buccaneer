@@ -11,7 +11,7 @@
 
 (def Os (nodejs/require "os"))
 
-(def *win* (atom nil))
+(def win (atom nil))
 
 (def app (.-app Electron))
 
@@ -31,14 +31,15 @@
   ;; ready listener
   (.on app "ready"
        (fn []
-         (reset! *win* (BrowserWindow. (clj->js {:width 800 :height 600})))
+         (reset! win (BrowserWindow. (clj->js {:width 800 :height 600
+                                               :webPreferences {:nodeIntegration true}})))
 
          ;; when no optimize comment out
-         (.loadURL @*win* (str "file://" (.resolve path (js* "__dirname") "../index.html")))
+         (.loadURL @win (str "file://" (.resolve path (js* "__dirname") "../index.html")))
          ;; when no optimize uncomment
-         ;; (.loadURL @*win* (str "file://" (.resolve path (js* "__dirname") "../../../index.html")))
+         ;; (.loadURL @win (str "file://" (.resolve path (js* "__dirname") "../../../index.html")))
 
-         (.on @*win* "closed" (fn [] (reset! *win* nil))))))
+         (.on @win "closed" (fn [] (reset! win nil))))))
 
 (nodejs/enable-util-print!)
 
