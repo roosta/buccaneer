@@ -10,3 +10,5 @@
 * TOOD Cards view
 * TODO Only search for movie if data isn't present
 * TODO https://upload.wikimedia.org/wikipedia/commons/5/5b/Rotten_Tomatoes.svg
+* TODO Set correct CSP in prod build
+* [[https://electronjs.org/docs/tutorial/security][Security, Native Capabilities, and Your Responsibility | Electron]]
