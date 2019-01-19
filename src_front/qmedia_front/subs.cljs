@@ -5,7 +5,6 @@
    [reagent.debug :refer [log error]]
    [re-frame.core :refer [dispatch reg-event-db reg-sub reg-event-fx]]))
 
-
 (reg-sub
  :root-dir
  (fn [db]

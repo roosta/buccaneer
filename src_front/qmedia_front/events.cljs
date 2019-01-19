@@ -37,7 +37,7 @@
  (fn [{:keys [title year]
        :or {year false}}]
    (let [url (str base-url "search/movie")]
-     (GET url {:params {:api_key (env :api-key)
+     (GET url {:params {:api_key (env :moviedb-api-key)
                         :query title
                         :year year}
                :response-format :json
@@ -54,7 +54,7 @@
  ::themoviedb-config
  (fn []
    (let [url (str base-url "configuration")]
-     (GET url {:params {:api_key (env :api-key)}
+     (GET url {:params {:api_key (env :moviedb-api-key)}
                :response-format :json
                :keywords? true
                :error-handler #(rf/dispatch [::set-error %])
