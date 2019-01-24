@@ -42,9 +42,9 @@
  :<- [:media/active]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
-   (when (and (:search-result data) config)
+   (when (and (:moviedb/search-result data) config)
      (let [base-url (-> config :images :base_url)
-           path (-> data :search-result :poster_path)
+           path (-> data :moviedb/search-result :poster_path)
            sizes (into #{} (-> config :images :poster_sizes))
            size (get sizes width)]
        (if size
@@ -57,9 +57,9 @@
  :<- [:media/active]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
-   (when (and (:search-result data) config)
+   (when (and (:moviedb/search-result data) config)
      (let [base-url (-> config :images :base_url)
-           path (-> data :search-result :backdrop_path)
+           path (-> data :moviedb/search-result :backdrop_path)
            sizes (into #{} (-> config :images :backdrop_sizes))
            size (get sizes width)]
        (if size

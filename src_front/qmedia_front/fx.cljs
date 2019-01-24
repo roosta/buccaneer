@@ -31,7 +31,7 @@
                :response-format :json
                :error-handler #(rf/dispatch [::set-error %])
                :keywords? true
-               :handler #(rf/dispatch [:store-movie title %])}))))
+               :handler #(rf/dispatch [:moviedb/store-movie title %])}))))
 
 (reg-fx
  :moviedb/config

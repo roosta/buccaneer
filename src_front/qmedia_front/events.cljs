@@ -15,13 +15,13 @@
 (def ptn (nodejs/require "parse-torrent-name"))
 
 (reg-event-db
- :store-movie
+ :moviedb/store-movie
  (fn [db [_ title query-result]]
    (let [results (:results query-result)]
      (let [m (if (= (:total_results query-result) 1)
                (first results)
                (last (sort-by :vote_count results)))]
-       (assoc-in db [:media title :search-result] m)))))
+       (assoc-in db [:media title :moviedb/search-result] m)))))
 
 (reg-event-db
  :write-to
