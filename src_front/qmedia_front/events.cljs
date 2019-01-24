@@ -24,6 +24,17 @@
        (assoc-in db [:media title :moviedb/search-result] m)))))
 
 (reg-event-db
+ :imdb/store-movie
+ (fn [db [_ title query-result]]
+   (.log js/console query-result)
+   db
+   #_(let [results (:results query-result)]
+     (let [m (if (= (:total_results query-result) 1)
+               (first results)
+               (last (sort-by :vote_count results)))]
+       (assoc-in db [:media title :moviedb/search-result] m)))))
+
+(reg-event-db
  :write-to
  (fn [db [_ kw data]]
    (assoc db kw data)))
@@ -70,9 +81,11 @@
 (reg-event-fx
  :media.active/set-title
  (fn [{:keys [db]} [_ title data]]
-   (let [m {:db (assoc db :media.active/title title)}]
+   (let [m {:db (assoc db :media.active/title title)}
+         year (-> data :parsed :year)]
      (cond
        (:movie? data)
-       (assoc m :moviedb/search-movie {:title title
-                                       :year (-> data :parsed :year)})
+       (-> m
+           (assoc :moviedb/search-movie {:title title :year year})
+           (assoc :imdb/get-movie {:title title :year year}))
        :else m))))
