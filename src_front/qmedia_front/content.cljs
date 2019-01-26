@@ -40,7 +40,7 @@
 (defn ratings
   []
   (let [active @(rf/subscribe [:media/active])]
-    (clog active)
+    ;; (clog active)
     [:div
      [icons/imdb {:class (<class rating-style :icon)}]]
     #_[typography {:align :center

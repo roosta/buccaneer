@@ -45,7 +45,7 @@
                :handler #(rf/dispatch [:write-to :themoviedb/config %])}))))
 
 (reg-fx
- :omdb/get-movie
+ :omdb/search-movie
  (fn [{:keys [title year]}]
    (GET omdb-base-url {:params {:apikey (env :omdb-api-key)
                                 :t title

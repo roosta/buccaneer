@@ -26,13 +26,7 @@
 (reg-event-db
  :omdb/store-movie
  (fn [db [_ title query-result]]
-   (.log js/console query-result)
-   db
-   #_(let [results (:results query-result)]
-     (let [m (if (= (:total_results query-result) 1)
-               (first results)
-               (last (sort-by :vote_count results)))]
-       (assoc-in db [:media title :moviedb/search-result] m)))))
+   (assoc-in db [:media title :omdb/search-result] query-result)))
 
 (reg-event-db
  :write-to
@@ -82,10 +76,20 @@
  :media.active/set-title
  (fn [{:keys [db]} [_ title data]]
    (let [m {:db (assoc db :media.active/title title)}
-         year (-> data :parsed :year)]
-     (cond
-       (:movie? data)
-       (-> m
-           (assoc :moviedb/search-movie {:title title :year year})
-           (assoc :omdb/get-movie {:title title :year year}))
-       :else m))))
+         year (-> data :parsed :year)
+         moviedb (get-in db [:media title :moviedb/search-result])
+         omdb (get-in db [:media title :omdb/search-result])]
+     (if (:movie? data)
+       (cond
+         (and (not moviedb) (not omdb))
+         (-> m
+             (assoc :moviedb/search-movie {:title title :year year})
+             (assoc :omdb/search-movie {:title title :year year}))
+
+         (and (not moviedb) omdb)
+         (assoc m :omdb/search-movie {:title title :year year})
+
+         (and moviedb (not omdb))
+         (assoc m :moviedb/search-movie {:title title :year year})
+         :else m)
+       m))))
