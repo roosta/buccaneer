@@ -43,17 +43,20 @@
   (let [active @(rf/subscribe [:media/active])]
     [sa/Grid {:centered true}
      [sa/GridRow
-      [sa/Label {:as "a" :color "yellow" :image true}
-       [sa/Image {:src "img/imdb.jpg"}]
-       @(rf/subscribe [:media.active/imdb-rating])
-       [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]]
-      [sa/Label {:as "a" :color "orange" :image true}
-       [sa/Image {:src "img/rotten-tomatoes.png"}]
-       @(rf/subscribe [:media.active/rotten-tomato-rating])]
-      [sa/Label {:as "a" :color "green" :image true}
-       [sa/Image {:src "img/tmdb.png"}]
-       @(rf/subscribe [:media.active/moviedb-rating])
-       [sa/LabelDetail @(rf/subscribe [:media.active/moviedb-votes])]]
+      (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
+        [sa/Label {:as "a" :color "yellow" :image true}
+         [sa/Image {:src "img/imdb.jpg"}]
+         rating
+         [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]])
+      (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
+        [sa/Label {:as "a" :color "orange" :image true}
+         [sa/Image {:src "img/rotten-tomatoes.png"}]
+         rating])
+      (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
+        [sa/Label {:as "a" :color "green" :image true}
+         [sa/Image {:src "img/tmdb.png"}]
+         rating
+         [sa/LabelDetail @(rf/subscribe [:media.active/moviedb-votes])]])
       ]]))
 
 (defn content
