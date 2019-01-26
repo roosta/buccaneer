@@ -21,6 +21,7 @@
 (defgroup root-style
   {:grid {:color (text-color)
           :height "100vh"
+          :margin "0 !important"
           :overflow-y "auto"}
    :subheading {:margin 0}})
 
