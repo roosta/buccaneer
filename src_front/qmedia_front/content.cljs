@@ -41,15 +41,17 @@
 (defn ratings
   []
   (let [active @(rf/subscribe [:media/active])]
-    ;; (clog active)
-    [:div
-     [icons/imdb {:class (<class rating-style :icon)}]]
-    #_[typography {:align :center
-                 :class (<class root-style :subheading)
-                 :variant :subheading}]
-    )
-
-  )
+    [sa/Grid {:centered true}
+     [sa/GridRow
+      [sa/Label {:as "a" :color "yellow" :image true}
+       [sa/Image {:src "img/imdb.jpg"}]
+       @(rf/subscribe [:media.active/imdb-rating])
+       [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]
+       ]
+      [sa/Label {:as "a" :color "orange" :image true}
+       [sa/Image {:src "img/rotten-tomatoes.png"}]
+       @(rf/subscribe [:media.active/rotten-tomato-rating])]
+      ]]))
 
 (defn content
   []

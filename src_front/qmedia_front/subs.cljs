@@ -65,3 +65,28 @@
        (if size
          (str base-url size path)
          (error "Unsupported backdrop width, pick one of these: " (str/join ", " sizes)))))))
+
+(reg-sub
+ :media.active/imdb-rating
+ :<- [:media/active]
+ (fn [data]
+   (let [data (:omdb/search-result data)]
+     (when data
+       (-> data :imdbRating)))))
+
+(reg-sub
+ :media.active/imdb-votes
+ :<- [:media/active]
+ (fn [data]
+   (let [data (:omdb/search-result data)]
+     (when data
+       (-> data :imdbVotes)))))
+
+(reg-sub
+ :media.active/rotten-tomato-rating
+ :<- [:media/active]
+ (fn [data]
+   (let [data (:omdb/search-result data)]
+     (when data
+       (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
+       ))))
