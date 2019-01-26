@@ -70,23 +70,34 @@
  :media.active/imdb-rating
  :<- [:media/active]
  (fn [data]
-   (let [data (:omdb/search-result data)]
-     (when data
-       (-> data :imdbRating)))))
+   (when-let [data (:omdb/search-result data)]
+     (-> data :imdbRating))))
 
 (reg-sub
  :media.active/imdb-votes
  :<- [:media/active]
  (fn [data]
-   (let [data (:omdb/search-result data)]
-     (when data
-       (-> data :imdbVotes)))))
+   (when-let [data (:omdb/search-result data)]
+     (-> data :imdbVotes))))
 
 (reg-sub
  :media.active/rotten-tomato-rating
  :<- [:media/active]
  (fn [data]
-   (let [data (:omdb/search-result data)]
-     (when data
-       (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
-       ))))
+   (when-let [data (:omdb/search-result data)]
+     (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
+     )))
+
+(reg-sub
+ :media.active/moviedb-rating
+ :<- [:media/active]
+ (fn [data]
+   (when-let [data (:moviedb/search-result data)]
+     (:vote_average data))))
+
+(reg-sub
+ :media.active/moviedb-votes
+ :<- [:media/active]
+ (fn [data]
+   (when-let [data (:moviedb/search-result data)]
+     (:vote_count data))))

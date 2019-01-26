@@ -46,11 +46,14 @@
       [sa/Label {:as "a" :color "yellow" :image true}
        [sa/Image {:src "img/imdb.jpg"}]
        @(rf/subscribe [:media.active/imdb-rating])
-       [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]
-       ]
+       [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]]
       [sa/Label {:as "a" :color "orange" :image true}
        [sa/Image {:src "img/rotten-tomatoes.png"}]
        @(rf/subscribe [:media.active/rotten-tomato-rating])]
+      [sa/Label {:as "a" :color "green" :image true}
+       [sa/Image {:src "img/tmdb.png"}]
+       @(rf/subscribe [:media.active/moviedb-rating])
+       [sa/LabelDetail @(rf/subscribe [:media.active/moviedb-votes])]]
       ]]))
 
 (defn content
