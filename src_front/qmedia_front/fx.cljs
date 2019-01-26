@@ -17,7 +17,7 @@
              :as rf]))
 
 (def moviedb-base-url "https://api.themoviedb.org/3/")
-(def imdb (nodejs/require "imdb-api"))
+(def omdb-base-url "http://www.omdbapi.com/")
 
 (reg-fx :fs/media fs/effect)
 
@@ -30,7 +30,7 @@
                         :query title
                         :year year}
                :response-format :json
-               :error-handler #(rf/dispatch [::set-error %])
+               :error-handler #(rf/dispatch [:set-error %])
                :keywords? true
                :handler #(rf/dispatch [:moviedb/store-movie title %])}))))
 
@@ -41,14 +41,16 @@
      (GET url {:params {:api_key (env :moviedb-api-key)}
                :response-format :json
                :keywords? true
-               :error-handler #(rf/dispatch [::set-error %])
+               :error-handler #(rf/dispatch [:set-error %])
                :handler #(rf/dispatch [:write-to :themoviedb/config %])}))))
 
 (reg-fx
- :imdb/get-movie
+ :omdb/get-movie
  (fn [{:keys [title year]}]
-   (-> (.get imdb
-             #js {:name title :year year}
-             #js {:apiKey (env :omdb-api-key) :timeout 30000})
-       (.then #(rf/dispatch [:imdb/store-movie title %]))
-       (.catch #(rf/dispatch [::set-error %])))))
+   (GET omdb-base-url {:params {:apikey (env :omdb-api-key)
+                                :t title
+                                :y year}
+                       :response-format :json
+                       :keywords? true
+                       :error-handler #(rf/dispatch [:set-error %])
+                       :handler #(rf/dispatch [:omdb/store-movie title %])})))

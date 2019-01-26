@@ -24,7 +24,7 @@
        (assoc-in db [:media title :moviedb/search-result] m)))))
 
 (reg-event-db
- :imdb/store-movie
+ :omdb/store-movie
  (fn [db [_ title query-result]]
    (.log js/console query-result)
    db
@@ -60,7 +60,7 @@
      (assoc db :media media))))
 
 (reg-event-db
- ::set-error
+ :set-error
  (fn [db [_ e]]
    (error e)
    (assoc db :error e)))
@@ -87,5 +87,5 @@
        (:movie? data)
        (-> m
            (assoc :moviedb/search-movie {:title title :year year})
-           (assoc :imdb/get-movie {:title title :year year}))
+           (assoc :omdb/get-movie {:title title :year year}))
        :else m))))

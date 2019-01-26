@@ -11,7 +11,6 @@
     "license": "MIT",
     "repository": "https://github.com/roosta/qmedia",
     "dependencies": {
-        "imdb-api": "^4.0.2",
         "parse-torrent-name": "^0.5.4"
     }
 }
