@@ -11,7 +11,6 @@
                  [ring/ring-core "1.7.1"]
                  [tincture "0.1.7-SNAPSHOT"]
                  [cljs-ajax "0.8.0"]
-                 [philoskim/debux-stubs "0.5.2"]
                  [hodgepodge "0.1.3"]
                  [soda-ash "0.83.0"]
                  [clojure-csv/clojure-csv "2.0.2"]
