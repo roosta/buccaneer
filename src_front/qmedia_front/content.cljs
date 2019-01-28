@@ -75,7 +75,7 @@
     [sa/Grid
      [sa/GridRow
       (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
-        [sa/GridColumn
+        [sa/GridColumn {:width 4}
          [:div {:style {:display "flex"
                         :align-items "center"}}
           [icons/imdb {:class (<class rating-style :icon)}]
@@ -87,8 +87,16 @@
            [sa/Image {:src "img/imdb.jpg"}]
            rating
            [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]])
-      #_(when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
-          [sa/Label {:as "a" :color "orange" :image true}
+      (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
+        [sa/GridColumn {:width 4}
+         [:div {:style {:display "flex"
+                        :align-items "center"}}
+          [icons/tomato {:class (<class rating-style :icon)}]
+          [typography {:variant :subheading
+                       :class (<class rating-style :rating)}
+           rating
+           ]]]
+          #_[sa/Label {:as "a" :color "orange" :image true}
            [sa/Image {:src "img/rotten-tomatoes.png"}]
            rating])
       #_(when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
