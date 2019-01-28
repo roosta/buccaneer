@@ -3,6 +3,7 @@
   (:require  [reagent.core :as r]
              [herb.core :as herb :refer-macros [<class <id defgroup defglobal]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
+             [tincture.core :as t]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
@@ -44,4 +45,5 @@
 
 (defn init! [setting]
   (rf/dispatch-sync [:initialize-db])
-  (mount-root setting))
+  (mount-root setting)
+  (r/init!))
