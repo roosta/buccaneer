@@ -1,4 +1,5 @@
 (ns qmedia-front.content
+  (:require-macros [garden.def :refer [defcssfn]])
   (:require  [reagent.core :as r]
              [garden.units :refer [px percent]]
              [qmedia-front.icons :as icons]
@@ -11,6 +12,8 @@
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
+(defcssfn url)
+
 (defn text-color
   []
   (let [theme @(rf/subscribe [:theme])]
@@ -19,7 +22,16 @@
       :light "rgba(0,0,0,.95)")))
 
 (defgroup root-style
-  {:grid {:color (text-color)
+  {:background {:position "absolute"
+                :left 0
+                :background-size "contain"
+                :background-repeat "no-repeat"
+                :right 0
+                :bottom 0
+                :top 0
+                :background-image (url @(rf/subscribe [:media.active/backdrop-url "original"]))}
+   :gradient {}
+   :grid {:color (text-color)
           :height "100vh"
           :margin "0 !important"
           :overflow-y "auto"}
@@ -63,12 +75,14 @@
   []
   (let [active @(rf/subscribe [:media/active])]
     (when active
-      [sa/Grid {:class (<class root-style :grid)}
-       [sa/GridRow {:vertical-align "middle"}
-        [sa/GridColumn {:width 8
-                        :text-align "center"}
-         [title]
-         [ratings]]
-        [sa/GridColumn {:width 8}
-         [sa/Image {:centered true
-                    :src @(rf/subscribe [:media.active/poster-url "w500"])}]]]])))
+       [:div {:class (<class root-style :background)}
+        [:div {:class (<class root-style :gradient)}]
+        [sa/Grid {:class (<class root-style :grid)}
+         [sa/GridRow {:vertical-align "middle"}
+          [sa/GridColumn {:width 8
+                          :text-align "center"}
+           [title]
+           #_[ratings]]
+          [sa/GridColumn {:width 8}
+           #_[sa/Image {:centered true
+                        :src @(rf/subscribe [:media.active/poster-url "original"])}]]]]])))

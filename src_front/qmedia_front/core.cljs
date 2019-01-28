@@ -22,15 +22,18 @@
                 :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
 
 (defgroup root-styles
-  {:container {:background-color "#262626"}})
+  {:container {:background-color "#262626"}
+   :row {:padding-bottom "0 !important"}
+   :sidebar-column {:padding-right "0 !important"}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
     [sa/Container {:fluid true
                    :class (<class root-styles :container)}
      [sa/Grid
-      [sa/GridRow {:style {:padding-bottom 0}}
-       [sa/GridColumn {:width 4}
+      [sa/GridRow {:class (<class root-styles :row)}
+       [sa/GridColumn {:width 4
+                       :class (<class root-styles :sidebar-column)}
         [sidebar]]
        [sa/GridColumn {:width 12}
         [content]]]]]))
