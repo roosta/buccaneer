@@ -12,6 +12,14 @@
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
+(defcssfn linear-gradient
+  [dir c1 p1 c2 p2]
+  [dir [c1 p1] [c2 p2]])
+
+(defcssfn rgba
+  [c1 c2 c3 a]
+  [c1 c2 c3 a])
+
 (defcssfn url)
 
 (defn text-color
@@ -30,7 +38,13 @@
                 :bottom 0
                 :top 0
                 :background-image (url @(rf/subscribe [:media.active/backdrop-url "original"]))}
-   :gradient {}
+   :gradient {:position "absolute"
+              :background (linear-gradient "to bottom" (rgba 0 0 0 0) "0%" (rgba 38 38 38 1) "70%")
+              :left 0
+              :right 0
+              :top 0
+              :bottom 0}
+   :container {:position "relative"}
    :grid {:color (text-color)
           :height "100vh"
           :margin "0 !important"
@@ -75,14 +89,15 @@
   []
   (let [active @(rf/subscribe [:media/active])]
     (when active
-       [:div {:class (<class root-style :background)}
-        [:div {:class (<class root-style :gradient)}]
-        [sa/Grid {:class (<class root-style :grid)}
-         [sa/GridRow {:vertical-align "middle"}
-          [sa/GridColumn {:width 8
-                          :text-align "center"}
-           [title]
-           #_[ratings]]
-          [sa/GridColumn {:width 8}
-           #_[sa/Image {:centered true
-                        :src @(rf/subscribe [:media.active/poster-url "original"])}]]]]])))
+      [:div {:class (<class root-style :container)}
+       [:div {:class (<class root-style :background)}]
+       [:div {:class (<class root-style :gradient)}]
+       [sa/Grid {:class (<class root-style :grid)}
+        [sa/GridRow {:vertical-align "middle"}
+         [sa/GridColumn {:width 8
+                         :text-align "center"}
+          [title]
+          #_[ratings]]
+         [sa/GridColumn {:width 8}
+          #_[sa/Image {:centered true
+                       :src @(rf/subscribe [:media.active/poster-url "original"])}]]]]])))

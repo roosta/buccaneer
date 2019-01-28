@@ -22,21 +22,23 @@
           :font-size (px 14)
           :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}])
 
-(defgroup root-styles
+(defgroup root-style
   {:container {:background-color "#262626"}
    :row {:padding-bottom "0 !important"}
+   :content-column {:padding-left "0 !important"}
    :sidebar-column {:padding-right "0 !important"}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
     [sa/Container {:fluid true
-                   :class (<class root-styles :container)}
+                   :class (<class root-style :container)}
      [sa/Grid
-      [sa/GridRow {:class (<class root-styles :row)}
+      [sa/GridRow {:class (<class root-style :row)}
        [sa/GridColumn {:width 4
-                       :class (<class root-styles :sidebar-column)}
+                       :class (<class root-style :sidebar-column)}
         [sidebar]]
-       [sa/GridColumn {:width 12}
+       [sa/GridColumn {:width 12
+                       :class (<class root-style :content-column)}
         [content]]]]]))
 
 (defn mount-root [setting]
@@ -46,4 +48,4 @@
 (defn init! [setting]
   (rf/dispatch-sync [:initialize-db])
   (mount-root setting)
-  (r/init!))
+  (t/init!))
