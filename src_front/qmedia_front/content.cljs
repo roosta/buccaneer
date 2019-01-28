@@ -5,6 +5,7 @@
              [qmedia-front.icons :as icons]
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
+             [tincture.typography :refer [typography]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [soda-ash.core :as sa]
              [tincture.typography :refer [typography]]
@@ -52,13 +53,17 @@
    :subheading {:margin 0}})
 
 (defgroup rating-style
-  {:icon {:width (px 32)
-          :height (px 32)}})
+  {:icon {:margin-right (px 12)
+          :width (px 32)
+          :height (px 32)}
+   :rating {:margin 0}})
 
 (defn title
   []
   (let [theme @(rf/subscribe [:theme])]
-    [sa/Header {:inverted (= theme :dark)
+    [typography {:variant :display3}
+     @(rf/subscribe [:media.active/title])]
+    #_[sa/Header {:inverted (= theme :dark)
                 :text-align "center"
                 :size "huge"}
      @(rf/subscribe [:media.active/title])])
@@ -67,22 +72,30 @@
 (defn ratings
   []
   (let [active @(rf/subscribe [:media/active])]
-    [sa/Grid {:centered true}
+    [sa/Grid
      [sa/GridRow
       (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
-        [sa/Label {:as "a" :color "yellow" :image true}
-         [sa/Image {:src "img/imdb.jpg"}]
-         rating
-         [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]])
-      (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
-        [sa/Label {:as "a" :color "orange" :image true}
-         [sa/Image {:src "img/rotten-tomatoes.png"}]
-         rating])
-      (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
-        [sa/Label {:as "a" :color "green" :image true}
-         [sa/Image {:src "img/tmdb.png"}]
-         rating
-         [sa/LabelDetail @(rf/subscribe [:media.active/moviedb-votes])]])
+        [sa/GridColumn
+         [:div {:style {:display "flex"
+                        :align-items "center"}}
+          [icons/imdb {:class (<class rating-style :icon)}]
+          [typography {:class (<class rating-style :rating)
+                       :variant :subheading}
+           (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]]]
+
+        #_[sa/Label {:as "a" :color "yellow" :image true}
+           [sa/Image {:src "img/imdb.jpg"}]
+           rating
+           [sa/LabelDetail @(rf/subscribe [:media.active/imdb-votes])]])
+      #_(when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
+          [sa/Label {:as "a" :color "orange" :image true}
+           [sa/Image {:src "img/rotten-tomatoes.png"}]
+           rating])
+      #_(when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
+          [sa/Label {:as "a" :color "green" :image true}
+           [sa/Image {:src "img/tmdb.png"}]
+           rating
+           [sa/LabelDetail @(rf/subscribe [:media.active/moviedb-votes])]])
       ]]))
 
 (defn content
@@ -97,7 +110,7 @@
          [sa/GridColumn {:width 8
                          :text-align "center"}
           [title]
-          #_[ratings]]
+          [ratings]]
          [sa/GridColumn {:width 8}
           #_[sa/Image {:centered true
                        :src @(rf/subscribe [:media.active/poster-url "original"])}]]]]])))
