@@ -1,7 +1,7 @@
 (ns qmedia-front.core
   (:require-macros [qmedia-front.macros :refer [env]])
   (:require  [reagent.core :as r]
-             [herb.core :as herb :refer-macros [<class <id defgroup]]
+             [herb.core :as herb :refer-macros [<class <id defgroup defglobal]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
@@ -15,11 +15,11 @@
              [qmedia-front.view :refer [view]]
              [re-frame.core :as rf]))
 
-(def global-style
-  (list [:body {:box-sizing "border-box"
-                :margin 0
-                :font-size (px 14)
-                :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}]))
+(defglobal global-style
+  [:body {:box-sizing "border-box"
+          :margin 0
+          :font-size (px 14)
+          :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}])
 
 (defgroup root-styles
   {:container {:background-color "#262626"}
@@ -44,5 +44,4 @@
 
 (defn init! [setting]
   (rf/dispatch-sync [:initialize-db])
-  (herb/global-style! global-style)
   (mount-root setting))
