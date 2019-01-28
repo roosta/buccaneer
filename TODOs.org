@@ -1,5 +1,7 @@
 * Inspiration
 ** [[https://dribbble.com/shots/3910033-Multiplex][Multiplex by Max Shevchuk - Dribbble]]
+** [[https://dribbble.com/shots/4934084-Plex-Media-Center-Redesign][Plex Media Center Redesign by Etienne Chevalier | Dribbble | Dribbble]]
+** [[https://dribbble.com/shots/3011060-Plex-Home-Theatre-Skin][Plex Home Theatre Skin by Will Beeching | Dribbble | Dribbble]]
 * TODO Follow links
 * [[https://www.imdb.com/interfaces/][IMDb datasets]]
 * TODO Finds only S4 of brooklyn
@@ -15,3 +17,6 @@
 * [[https://github.com/electron/electron/blob/master/docs/api/menu.md][electron/menu.md at master · electron/electron]]
 * TODO Delete files
 * TODO Debux Stubs
+* TODO Søke function
+* TODO Card view
+* TODO Update herb
