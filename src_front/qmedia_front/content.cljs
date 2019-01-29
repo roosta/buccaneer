@@ -31,21 +31,17 @@
       :light "rgba(0,0,0,.95)")))
 
 (defgroup root-style
-  {:background {:position "absolute"
-                :left 0
-                :background-size "contain"
-                :background-repeat "no-repeat"
-                :right 0
-                :bottom 0
-                :top 0
-                :background-image (url @(rf/subscribe [:media.active/backdrop-url "original"]))}
-   :gradient {:position "absolute"
+  {:gradient {:position "absolute"
               :background (linear-gradient "to bottom" (rgba 0 0 0 0) "0%" (rgba 38 38 38 1) "70%")
               :left 0
               :right 0
               :top 0
               :bottom 0}
-   :container {:position "relative"}
+   :image {:position "absolute !important"
+           :left 0
+           :top 0}
+   :container {:position "relative"
+               :overflow-y "auto"}
    :grid {:color (text-color)
           :height "100vh"
           :margin "0 !important"
@@ -111,7 +107,8 @@
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
-       [:div {:class (<class root-style :background)}]
+       [sa/Image {:class (<class root-style :image)
+                  :src @(rf/subscribe [:media.active/backdrop-url "original"])}]
        [:div {:class (<class root-style :gradient)}]
        [sa/Grid {:class (<class root-style :grid)}
         [sa/GridRow {:vertical-align "middle"}
