@@ -64,11 +64,16 @@
    :container {:display :flex}
    :rating {:margin 0}})
 
-(defn title
-  []
-  (let [theme @(rf/subscribe [:theme])]
-    [typography {:variant :display3}
-     @(rf/subscribe [:media.active/title])]))
+(defn title []
+  [sa/Grid {:vertical-align "middle"}
+   [sa/GridRow
+    [sa/GridColumn {:width 12}
+     [typography {:variant :display3}
+      @(rf/subscribe [:media.active/title])]]
+    [sa/GridColumn {:width 4}
+     [typography {:variant :display1}
+      @(rf/subscribe [:media.active/year])]
+     ]]])
 
 (defn ratings
   []

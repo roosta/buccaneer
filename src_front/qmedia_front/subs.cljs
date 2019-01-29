@@ -101,3 +101,9 @@
  (fn [data]
    (when-let [data (:moviedb/search-result data)]
      (:vote_count data))))
+
+(reg-sub
+ :media.active/year
+ :<- [:media/active]
+ (fn [data]
+   (-> data :parsed :year)))
