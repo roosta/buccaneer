@@ -110,8 +110,11 @@
       [sa/GridColumn {:width 4}
        [typography {:variant :subheading}
         runtime]])
-    ]]
-  )
+    (when-let [genre @(rf/subscribe [:media.active/genre])]
+      [sa/GridColumn {:width 4}
+       [typography {:variant :subheading
+                    :align :right}
+        genre]])]])
 
 (defn content []
   (let [active @(rf/subscribe [:media/active])]

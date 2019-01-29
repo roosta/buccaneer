@@ -124,3 +124,11 @@
          (let [hours (.floor js/Math (/ n 60))
                minutes (mod n 60)]
            (str hours " hr " minutes " min")))))))
+
+(reg-sub
+ :media.active/genre
+ :<- [:media/active]
+ (fn [data]
+   (when-let [data (:omdb/search-result data)]
+     (when-let [genre (:Genre data)]
+       genre))))
