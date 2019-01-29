@@ -64,6 +64,9 @@
    :container {:display :flex}
    :rating {:margin 0}})
 
+(defgroup info-styles
+  {:grid {:margin-top "0 !important"}})
+
 (defn title []
   [sa/Grid {:vertical-align "middle"}
    [sa/GridRow
@@ -75,32 +78,42 @@
       @(rf/subscribe [:media.active/year])]
      ]]])
 
-(defn ratings
-  []
-  (let [active @(rf/subscribe [:media/active])]
-    [:div {:class (<class rating-style :container)}
-     (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
-       [:div {:class (<class rating-style :column)}
-        [icons/imdb {:class (<class rating-style :icon)}]
-        [typography {:class (<class rating-style :rating)
-                     :variant :subheading}
-         (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
-     (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
-       [:div {:class (<class rating-style :column)}
-        [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
-        [typography {:variant :subheading
-                     :class (<class rating-style :rating)}
-         (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
-     (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
-       [:div {:class (<class rating-style :column)}
-        [icons/tomato {:class (<class rating-style :icon)}]
-        [typography {:variant :subheading
-                     :class (<class rating-style :rating)}
-         rating]])
-     ]))
+(defn ratings []
+  [:div {:class (<class rating-style :container)}
+   (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
+     [:div {:class (<class rating-style :column)}
+      [icons/imdb {:class (<class rating-style :icon)}]
+      [typography {:class (<class rating-style :rating)
+                   :variant :subheading}
+       (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
+   (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
+     [:div {:class (<class rating-style :column)}
+      [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
+      [typography {:variant :subheading
+                   :class (<class rating-style :rating)}
+       (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
+   (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
+     [:div {:class (<class rating-style :column)}
+      [icons/tomato {:class (<class rating-style :icon)}]
+      [typography {:variant :subheading
+                   :class (<class rating-style :rating)}
+       rating]])
+   ])
 
-(defn content
-  []
+(defn info []
+  [sa/Grid {:vertical-align "middle"
+            :class (<class info-styles :grid)}
+   [sa/GridRow
+    [sa/GridColumn {:width 6}
+     [ratings]]
+    (when-let [runtime @(rf/subscribe [:media.active/runtime])]
+      [sa/GridColumn {:width 4}
+       [typography {:variant :subheading}
+        runtime]])
+    ]]
+  )
+
+(defn content []
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
@@ -112,4 +125,4 @@
         [sa/GridRow {:vertical-align "middle"}
          [sa/GridColumn {:width 12}
           [title]
-          [ratings]]]]])))
+          [info]]]]])))

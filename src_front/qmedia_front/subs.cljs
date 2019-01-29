@@ -5,6 +5,12 @@
    [reagent.debug :refer [log error]]
    [re-frame.core :refer [dispatch reg-event-db reg-sub reg-event-fx]]))
 
+(defn parse-number [input]
+  (when-not (str/blank? input)
+    (let [n (js/parseInt input)]
+      (when-not (js/isNaN n)
+        (when-not (neg? n) n)))))
+
 (reg-sub
  :root-dir
  (fn [db]
@@ -107,3 +113,14 @@
  :<- [:media/active]
  (fn [data]
    (-> data :parsed :year)))
+
+(reg-sub
+ :media.active/runtime
+ :<- [:media/active]
+ (fn [data]
+   (when-let [data (:omdb/search-result data)]
+     (when-let [runtime (:Runtime data)]
+       (when-let [n (parse-number (re-find #"\d+" runtime))]
+         (let [hours (.floor js/Math (/ n 60))
+               minutes (mod n 60)]
+           (str hours " hr " minutes " min")))))))
