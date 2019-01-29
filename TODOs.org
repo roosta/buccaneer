@@ -20,3 +20,4 @@
 * TODO Søke function
 * TODO Card view
 * TODO Update herb
+* TODO Old man and the gun
