@@ -19,5 +19,7 @@
 * TODO Debux Stubs
 * TODO Søke function
 * TODO Card view
-* TODO Update herb
+* DONE Update herb
+  CLOSED: [2019-01-29 Tue 18:43]
 * TODO Old man and the gun
+* TODO Get runtime, genre from tmdb instead of imdb
