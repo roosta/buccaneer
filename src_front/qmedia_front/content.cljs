@@ -17,9 +17,9 @@
   [dir c1 p1 c2 p2]
   [dir [c1 p1] [c2 p2]])
 
-(defcssfn rgba
-  [c1 c2 c3 a]
-  [c1 c2 c3 a])
+(defcssfn rgb
+  ([c1 c2 c3] [c1 c2 c3])
+  ([c1 c2 c3 a] [c1 c2 c3 a]))
 
 (defcssfn url)
 
@@ -27,8 +27,8 @@
   []
   (let [theme @(rf/subscribe [:theme])]
     (case theme
-      :dark "rgba(255,255,255,.9)"
-      :light "rgba(0,0,0,.95)")))
+      :dark (rgb 255 255 255 0.9)
+      :light (rgb 0 0 0 0.95))))
 
 (defgroup root-style
   {:image
@@ -38,7 +38,7 @@
                       :top 0
                       :bottom 0
                       :right 0
-                      :background-image (linear-gradient "to bottom" (rgba 0 0 0 0) "0%" (rgba 38 38 38 1) "100%")}}}
+                      :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0%" (rgb 38 38 38 1) "100%")}}}
    {:position "absolute !important"
     :left 0
     :right 0
