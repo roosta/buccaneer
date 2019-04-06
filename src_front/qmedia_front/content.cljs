@@ -6,22 +6,13 @@
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
              [tincture.typography :refer [typography]]
+             [tincture.cssfns :refer [linear-gradient rgb url]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [soda-ash.core :as sa]
              [tincture.typography :refer [typography]]
              [reagent.debug :refer [log]]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
-
-(defcssfn linear-gradient
-  [dir c1 p1 c2 p2]
-  [dir [c1 p1] [c2 p2]])
-
-(defcssfn rgb
-  ([c1 c2 c3] [c1 c2 c3])
-  ([c1 c2 c3 a] [c1 c2 c3 a]))
-
-(defcssfn url)
 
 (defn text-color
   []
