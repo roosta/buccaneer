@@ -18,9 +18,7 @@
 
 (defglobal global-style
   [:body {:box-sizing "border-box"
-          :margin 0
-          :font-size (px 14)
-          :font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}])
+          :margin 0}])
 
 (defgroup root-style
   {:container {:background-color "#262626"}
