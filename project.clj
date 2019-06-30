@@ -3,28 +3,28 @@
   :url "https://github.com/roosta/qmedia"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [org.clojure/clojurescript "1.10.439" :exclusions [org.apache.ant/ant]]
-                 [org.clojure/core.async "0.4.490"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [org.clojure/clojurescript "1.10.520" :exclusions [org.apache.ant/ant]]
+                 [org.clojure/core.async "0.4.500"]
                  [reagent "0.8.1"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [ring/ring-core "1.7.1"]
-                 [tincture "0.3.0-SNAPSHOT"]
+                 [tincture "0.3.2"]
                  [cljs-ajax "0.8.0"]
                  [hodgepodge "0.1.3"]
                  [soda-ash "0.83.0"]
                  [clojure-csv/clojure-csv "2.0.2"]
                  [day8.re-frame/http-fx "0.1.6"]
-                 [re-frame "0.10.6"]
+                 [re-frame "0.10.7"]
                  [org.clojure/tools.reader "1.3.2"]]
 
-  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.3.6-react16"]
-                                  [figwheel-sidecar "0.5.18"]
-                                  [figwheel "0.5.18"]
-                                  [philoskim/debux "0.5.2"]
+  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.4.1"]
+                                  [figwheel-sidecar "0.5.19"]
+                                  [figwheel "0.5.19"]
+                                  [philoskim/debux "0.5.6"]
                                   [binaryage/devtools "0.9.10"]]
 
-                   :plugins [[lein-figwheel "0.5.18" :exclusions [org.clojure/core.cache]]]}}
+                   :plugins [[lein-figwheel "0.5.19" :exclusions [org.clojure/core.cache]]]}}
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
