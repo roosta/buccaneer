@@ -4,6 +4,7 @@
              [herb.core :as herb :refer-macros [<class <id defgroup defglobal]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [tincture.core :as t]
+             [tincture.grid :refer [Grid]]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
@@ -22,22 +23,20 @@
 
 (defgroup root-style
   {:container {:background-color "#262626"}
-   :row {:padding-bottom "0 !important"}
-   :content-column {:padding-left "0 !important"}
-   :sidebar-column {:padding-right "0 !important"}})
+   :row {}
+   :content-column {}
+   :sidebar-column {}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]
-    [sa/Container {:fluid true
-                   :class (<class root-style :container)}
-     [sa/Grid
-      [sa/GridRow {:class (<class root-style :row)}
-       [sa/GridColumn {:width 4
-                       :class (<class root-style :sidebar-column)}
-        [sidebar]]
-       [sa/GridColumn {:width 12
-                       :class (<class root-style :content-column)}
-        [content]]]]]))
+    [Grid {:container true
+           :class (<class root-style :container)}
+     [Grid {:item true
+            :xs 2}
+      [sidebar]]
+     [Grid {:item true
+            :xs 10}
+      [content]]]))
 
 (defn mount-root [setting]
   (r/render [root-component]
