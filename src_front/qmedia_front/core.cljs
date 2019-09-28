@@ -22,10 +22,7 @@
           :margin 0}])
 
 (defgroup root-style
-  {:container {:background-color "#262626"}
-   :row {}
-   :content-column {}
-   :sidebar-column {}})
+  {:container {:background-color "#262626"}})
 
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])]

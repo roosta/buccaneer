@@ -3,17 +3,15 @@
              [garden.units :refer [px percent]]
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
+             [tincture.grid :refer [Grid]]
+             [tincture.typography :refer [Typography]]
+             [tincture.cssfns :refer [rgb]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [soda-ash.core :as sa]
              [reagent.debug :refer [log]]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
-(defgroup sidebar-style
-  {:menu
-   {:overflow-y "auto"
-    :height "100vh"
-    :border-radius "0 !important"}})
 
 (defn border-color
   []
@@ -21,6 +19,32 @@
     (case theme
       :dark "1px solid rgba(255,255,255,.08)"
       :light "1px solid rgba(34,36,38,.1)")))
+
+(defgroup sidebar-style
+  {:menu
+   {:overflow-y "auto"
+    :height "100vh"
+    :border-radius "0 !important"}})
+
+(defn active-background-color []
+  (let [theme @(rf/subscribe [:theme])]
+    (case theme
+      :dark (rgb 255 255 255 0.15)
+      :light (rgb 0 0 0 0.05))))
+
+(defgroup menu-item-style
+  (let [theme @(rf/subscribe [:theme])]
+    {:container
+     ^{:pseudo {:hover {:cursor "pointer"
+                        :background (case theme
+                                      :dark (rgb 255 255 255 0.08)
+                                      :light (rgb 0 0 0 0.03))}}}
+     {:border-top (border-color)
+      :background (if (first args)
+                    (active-background-color)
+                    "inherit")}
+     :title {:padding [[(px 13) (px 16)]]}})
+  )
 
 (defgroup series-style
   (let [theme @(rf/subscribe [:theme])
@@ -57,6 +81,20 @@
         base)
       {:key open?})))
 
+
+(defn menu-item [{:keys [title on-click active]}]
+  (let [theme @(rf/subscribe [:theme])]
+    [Grid {:item true
+           :on-click on-click
+           :xs 12
+           :class (<class menu-item-style :container active)}
+     [Typography {:color theme
+                  :variant :subtitle1
+                  :class (<class menu-item-style :title)}
+      title]
+     ])
+
+  )
 (defn on-click
   [title data]
   (rf/dispatch [:media.active/set-title title data]))
@@ -82,9 +120,9 @@
 (defn movie-item
   [title data]
   (let [active-title @(rf/subscribe [:media.active/title])]
-    [sa/MenuItem {:on-click #(on-click title data)
-                  :active (= active-title title)
-                  :name title}]))
+    [menu-item {:on-click #(on-click title data)
+                :active (= active-title title)
+                :title title}]))
 
 (defn sidebar
   []
