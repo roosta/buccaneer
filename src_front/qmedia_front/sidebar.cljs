@@ -4,6 +4,7 @@
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
+             [tincture.icons :as icons]
              [tincture.typography :refer [Typography]]
              [tincture.cssfns :refer [rgb]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
@@ -21,10 +22,15 @@
       :light "1px solid rgba(34,36,38,.1)")))
 
 (defgroup sidebar-style
-  {:menu
-   {:overflow-y "auto"
-    :height "100vh"
-    :border-radius "0 !important"}})
+  (let [theme @(rf/subscribe [:theme])]
+    {:menu
+     {:overflow-y "auto"
+      :height "100vh"
+      :background (case theme
+                    :dark "#1B1C1D"
+                    :light "#fff")
+
+      :border-radius "0 !important"}}))
 
 (defn active-background-color []
   (let [theme @(rf/subscribe [:theme])]
@@ -57,6 +63,8 @@
      :icon  {:color (case theme
                       :dark "white"
                       :light "black")
+             :width (px 24)
+             :height (px 24)
              :position "absolute"
              :right "0"}
      :container {:border-top (border-color)}
@@ -105,8 +113,9 @@
        [menu-item {:class (<class series-style :title)
                    :on-click #(swap! open? not)}
         title
-        [sa/Icon {:class (<class series-style :icon)
-                  :name (if @open? "caret down" "caret right")}]]
+        (if @open?
+          [icons/ExpandLess {:class (<class series-style :icon)}]
+          [icons/ExpandMore {:class (<class series-style :icon)}])]
        [Grid {:container true
               :class (<class collapse @open?)}
         (doall
@@ -125,12 +134,9 @@
 
 (defn sidebar
   []
-  (let [media @(rf/subscribe [:media])
-        theme @(rf/subscribe [:theme])]
-    [sa/Menu {:vertical true
-              :inverted (= theme :dark)
-              :class (<class sidebar-style :menu)
-              :fluid true}
+  (let [media @(rf/subscribe [:media])]
+    [Grid {:container true
+           :class (<class sidebar-style :menu)}
      (doall
       (for [[title data] media]
         (if (:movie? data)
