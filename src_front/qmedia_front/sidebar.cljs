@@ -43,7 +43,7 @@
       :background (if (first args)
                     (active-background-color)
                     "inherit")}
-     :title {:padding [[(px 13) (px 16)]]}})
+     :title {:padding [[(px 10) (px 16)]]}})
   )
 
 (defgroup series-style
@@ -82,18 +82,16 @@
       {:key open?})))
 
 
-(defn menu-item [{:keys [title on-click active]}]
+(defn menu-item [{:keys [on-click active class]}]
   (let [theme @(rf/subscribe [:theme])]
     [Grid {:item true
            :on-click on-click
            :xs 12
-           :class (<class menu-item-style :container active)}
-     [Typography {:color theme
+           :class [(<class menu-item-style :container active) class]}
+     (into [Typography {:color theme
                   :variant :subtitle1
-                  :class (<class menu-item-style :title)}
-      title]
-     ])
-
+                  :class (<class menu-item-style :title)}]
+           (r/children (r/current-component)))])
   )
 (defn on-click
   [title data]
@@ -104,25 +102,26 @@
   (let [open? (r/atom false)]
     (fn []
       [:div {:class (<class series-style :container)}
-       [sa/MenuItem {:class (<class series-style :title)
-                     :on-click #(swap! open? not)}
+       [menu-item {:class (<class series-style :title)
+                   :on-click #(swap! open? not)}
         title
         [sa/Icon {:class (<class series-style :icon)
                   :name (if @open? "caret down" "caret right")}]]
-       [:div {:class (<class collapse @open?)}
+       [Grid {:container true
+              :class (<class collapse @open?)}
         (doall
          (for [p parsed]
            (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
              ^{:key (:full p)}
-             [sa/MenuItem {:class (<class series-style :nested-item)}
+             [menu-item {:class (<class series-style :nested-item)}
               sub-title])))]])))
 
 (defn movie-item
   [title data]
   (let [active-title @(rf/subscribe [:media.active/title])]
     [menu-item {:on-click #(on-click title data)
-                :active (= active-title title)
-                :title title}]))
+                :active (= active-title title)}
+     title]))
 
 (defn sidebar
   []
