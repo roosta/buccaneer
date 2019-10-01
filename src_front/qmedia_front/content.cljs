@@ -96,23 +96,18 @@
 (defn info []
   (let [theme @(rf/subscribe [:theme])]
     [Grid {:container true
+           :justify :space-between
            :class (<class info-styles :grid)}
-     [Grid {:item true
-            :xs 4}
-      [ratings]]
+     [ratings]
      (when-let [runtime @(rf/subscribe [:media.active/runtime])]
-       [Grid {:item true
-              :xs 4}
-        [Typography {:variant :h6
-                     :color theme}
-         runtime]])
+       [Typography {:variant :h6
+                    :color theme}
+        runtime])
      (when-let [genre @(rf/subscribe [:media.active/genre])]
-       [Grid {:item true
-              :xs 4}
-        [Typography {:variant :h6
-                     :align :right
-                     :color theme}
-         genre]])]))
+       [Typography {:variant :h6
+                    :align :right
+                    :color theme}
+        genre])]))
 
 (defn content []
   (let [active @(rf/subscribe [:media/active])]
