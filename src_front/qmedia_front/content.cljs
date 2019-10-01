@@ -5,6 +5,7 @@
              [qmedia-front.icons :as icons]
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
+             [tincture.grid :refer [Grid]]
              [tincture.typography :refer [typography]]
              [tincture.cssfns :refer [linear-gradient rgb url]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
@@ -117,9 +118,11 @@
        [:div {:class (<class root-style :image-container)}
         [:img {:class (<class root-style :image)
                :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
-       [sa/Grid {:class (<class root-style :grid)
-                 :centered true}
-        [sa/GridRow {:vertical-align "middle"}
-         [sa/GridColumn {:width 12}
-          [title]
-          [info]]]]])))
+       [Grid {:container true
+              :justify :center
+              :align-items :center
+              :class (<class root-style :grid)}
+        [Grid {:item true
+               :xs 9}
+         [title]
+         [info]]]])))
