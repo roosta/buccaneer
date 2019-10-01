@@ -6,7 +6,7 @@
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
-             [tincture.typography :refer [typography]]
+             [tincture.typography :refer [Typography]]
              [tincture.cssfns :refer [linear-gradient rgb url]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [soda-ash.core :as sa]
@@ -58,12 +58,12 @@
            :justify :space-between}
      [Grid {:item true
             :xs 9}
-      [typography {:variant :h1
+      [Typography {:variant :h1
                    :color :dark}
        @(rf/subscribe [:media.active/title])]]
      [Grid {:item true
             :x 3}
-      [typography {:variant :h3
+      [Typography {:variant :h3
                    :color theme}
        @(rf/subscribe [:media.active/year])]
       ]]))
@@ -74,21 +74,21 @@
      (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/imdb {:class (<class rating-style :icon)}]
-        [typography {:class (<class rating-style :rating)
+        [Typography {:class (<class rating-style :rating)
                      :variant :h6
                      :color theme}
          (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
      (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
-        [typography {:variant :h6
+        [Typography {:variant :h6
                      :color theme
                      :class (<class rating-style :rating)}
          (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
      (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tomato {:class (<class rating-style :icon)}]
-        [typography {:variant :h6
+        [Typography {:variant :h6
                      :color theme
                      :class (<class rating-style :rating)}
          rating]])
@@ -103,12 +103,12 @@
        [ratings]]
       (when-let [runtime @(rf/subscribe [:media.active/runtime])]
         [sa/GridColumn {:width 4}
-         [typography {:variant :h6
+         [Typography {:variant :h6
                       :color theme}
           runtime]])
       (when-let [genre @(rf/subscribe [:media.active/genre])]
         [sa/GridColumn {:width 4}
-         [typography {:variant :h6
+         [Typography {:variant :h6
                       :align :right
                       :color theme}
           genre]])]]))
@@ -117,7 +117,7 @@
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
-       [:div {:class (<class root-style :image-container)}
+       #_[:div {:class (<class root-style :image-container)}
         [:img {:class (<class root-style :image)
                :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
        [Grid {:container true
