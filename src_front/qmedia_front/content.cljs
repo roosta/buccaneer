@@ -75,6 +75,7 @@
         [icons/imdb {:class (<class rating-style :icon)}]
         [Typography {:class (<class rating-style :rating)
                      :variant :h6
+                     :no-wrap true
                      :color theme}
          (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
      (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
@@ -82,6 +83,7 @@
         [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
         [Typography {:variant :h6
                      :color theme
+                     :no-wrap true
                      :class (<class rating-style :rating)}
          (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
      (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
@@ -89,6 +91,7 @@
         [icons/tomato {:class (<class rating-style :icon)}]
         [Typography {:variant :h6
                      :color theme
+                     :no-wrap true
                      :class (<class rating-style :rating)}
          rating]])]))
 
