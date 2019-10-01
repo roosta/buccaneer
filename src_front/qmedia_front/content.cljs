@@ -57,12 +57,12 @@
            :justify :space-between}
      [Grid {:item true
             :xs 9}
-      [Typography {:variant :h1
+      [Typography {:variant :h2
                    :color :dark}
        @(rf/subscribe [:media.active/title])]]
      [Grid {:item true
             :x 3}
-      [Typography {:variant :h3
+      [Typography {:variant :h4
                    :color theme}
        @(rf/subscribe [:media.active/year])]
       ]]))
@@ -96,17 +96,22 @@
   (let [theme @(rf/subscribe [:theme])]
     [Grid {:container true
            :justify :space-between
+           :align-items :center
            :class (<class info-styles :grid)}
-     [ratings]
+     [Grid {:item true
+            :xs 5}
+      [ratings]]
      (when-let [runtime @(rf/subscribe [:media.active/runtime])]
        [Typography {:variant :h6
                     :color theme}
         runtime])
      (when-let [genre @(rf/subscribe [:media.active/genre])]
-       [Typography {:variant :h6
-                    :align :right
-                    :color theme}
-        genre])]))
+       [Grid {:item true
+              :xs 3}
+        [Typography {:variant :h6
+                     :align :right
+                     :color theme}
+         genre]])]))
 
 (defn content []
   (let [active @(rf/subscribe [:media/active])]
