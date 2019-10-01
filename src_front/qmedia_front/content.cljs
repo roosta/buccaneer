@@ -14,7 +14,7 @@
              [re-frame.core :as rf]))
 
 (defgroup root-style
-  {:image
+  {:image-container
    ^{:pseudo {:after {:content "''"
                       :position "absolute"
                       :left 0
@@ -26,6 +26,7 @@
     :left 0
     :right 0
     :top 0}
+   :image {:max-width "100%"}
    :container {:position "relative"
                :overflow-y "hidden"}
    :grid {:height "100vh"
@@ -113,9 +114,9 @@
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
-       [:div {:class (<class root-style :image)}
-        [sa/Image {:fluid true
-                   :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
+       [:div {:class (<class root-style :image-container)}
+        [:img {:class (<class root-style :image)
+               :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
        [sa/Grid {:class (<class root-style :grid)
                  :centered true}
         [sa/GridRow {:vertical-align "middle"}
