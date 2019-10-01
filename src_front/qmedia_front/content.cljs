@@ -23,7 +23,7 @@
                       :bottom 0
                       :right 0
                       :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0%" (rgb 38 38 38 1) "100%")}}}
-   {:position "absolute !important"
+   {:position "absolute"
     :left 0
     :right 0
     :top 0}
@@ -31,7 +31,6 @@
    :container {:position "relative"
                :overflow-y "hidden"}
    :grid {:height "100vh"
-          :margin "0 !important"
           :overflow-y "auto"}
    :subheading {:margin 0}})
 
@@ -54,17 +53,20 @@
 
 (defn title []
   (let [theme @(rf/subscribe [:theme])]
-    [sa/Grid {:vertical-align "middle"}
-     [sa/GridRow
-      [sa/GridColumn {:width 12}
-       [typography {:variant :h1
-                    :color :dark}
-        @(rf/subscribe [:media.active/title])]]
-      [sa/GridColumn {:width 4}
-       [typography {:variant :h3
-                    :color theme}
-        @(rf/subscribe [:media.active/year])]
-       ]]]))
+    [Grid {:container true
+           :align-items :flex-end
+           :justify :space-between}
+     [Grid {:item true
+            :xs 9}
+      [typography {:variant :h1
+                   :color :dark}
+       @(rf/subscribe [:media.active/title])]]
+     [Grid {:item true
+            :x 3}
+      [typography {:variant :h3
+                   :color theme}
+       @(rf/subscribe [:media.active/year])]
+      ]]))
 
 (defn ratings []
   (let [theme @(rf/subscribe [:theme])]
