@@ -5,6 +5,7 @@
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
+             [tincture.cssfns :refer [rgb]]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [soda-ash.core :as sa]
@@ -19,7 +20,16 @@
 
 (defglobal global-style
   [:body {:box-sizing "border-box"
-          :margin 0}])
+          :margin 0}]
+  ["::-webkit-scrollbar" {:-webkit-appearance "none"
+                          :width "10px"
+                          :height "10px"}]
+  ["::-webkit-scrollbar-track" {:background (rgb 255 255 255 0.1)
+                                :border-radius "0px"}]
+  ["::-webkit-scrollbar-thumb" {:cursor "pointer"
+                                :border-radius (px 5)
+                                :background (rgb 255 255 255 0.25)
+                                :transition "color 0.2sec ease"}])
 
 (defgroup root-style
   {:container {:background-color "#262626"}})
