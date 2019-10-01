@@ -67,7 +67,7 @@
              :height (px 24)
              :position "absolute"
              :right "0"}
-     :container {:border-top (border-color)}
+     :container {}
      :nested-item {:padding-left "24px !important"}
      :collapsing-container {:height 0
                             :overflow "hidden"}}))
@@ -84,8 +84,7 @@
       (if open?
         (merge base {:max-height "5000px"
                      :transition (t/create-transition {:properties ["max-height"]
-                                                       :durations ["400ms"]})
-                     :border-top (border-color)})
+                                                       :durations ["400ms"]})})
         base)
       {:key open?})))
 
