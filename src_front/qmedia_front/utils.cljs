@@ -1,6 +1,5 @@
 (ns qmedia-front.utils
-  (:require [soda-ash.core :as sa]
-            [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
+  (:require [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
             [re-frame.core :as rf]))
 
 

@@ -13,7 +13,6 @@
                  [herb "0.10.1-SNAPSHOT"]
                  [cljs-ajax "0.8.0"]
                  [hodgepodge "0.1.3"]
-                 [soda-ash "0.83.0"]
                  [clojure-csv/clojure-csv "2.0.2"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [re-frame "0.10.9"]

@@ -8,7 +8,6 @@
              [tincture.cssfns :refer [rgb]]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
-             [soda-ash.core :as sa]
              [qmedia-front.subs]
              [qmedia-front.events]
              [qmedia-front.fx]

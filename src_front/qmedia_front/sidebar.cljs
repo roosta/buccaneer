@@ -8,7 +8,6 @@
              [tincture.typography :refer [Typography]]
              [tincture.cssfns :refer [rgb]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
-             [soda-ash.core :as sa]
              [reagent.debug :refer [log]]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
