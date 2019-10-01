@@ -49,7 +49,7 @@
    :rating {:margin 0}})
 
 (defgroup info-styles
-  {:grid {:margin-top "0 !important"}})
+  {:grid {:padding [[(px 16) 0]]}})
 
 (defn title []
   (let [theme @(rf/subscribe [:theme])]
@@ -91,27 +91,28 @@
         [Typography {:variant :h6
                      :color theme
                      :class (<class rating-style :rating)}
-         rating]])
-     ]))
+         rating]])]))
 
 (defn info []
   (let [theme @(rf/subscribe [:theme])]
-    [sa/Grid {:vertical-align "middle"
-              :class (<class info-styles :grid)}
-     [sa/GridRow
-      [sa/GridColumn {:width 6}
-       [ratings]]
-      (when-let [runtime @(rf/subscribe [:media.active/runtime])]
-        [sa/GridColumn {:width 4}
-         [Typography {:variant :h6
-                      :color theme}
-          runtime]])
-      (when-let [genre @(rf/subscribe [:media.active/genre])]
-        [sa/GridColumn {:width 4}
-         [Typography {:variant :h6
-                      :align :right
-                      :color theme}
-          genre]])]]))
+    [Grid {:container true
+           :class (<class info-styles :grid)}
+     [Grid {:item true
+            :xs 4}
+      [ratings]]
+     (when-let [runtime @(rf/subscribe [:media.active/runtime])]
+       [Grid {:item true
+              :xs 4}
+        [Typography {:variant :h6
+                     :color theme}
+         runtime]])
+     (when-let [genre @(rf/subscribe [:media.active/genre])]
+       [Grid {:item true
+              :xs 4}
+        [Typography {:variant :h6
+                     :align :right
+                     :color theme}
+         genre]])]))
 
 (defn content []
   (let [active @(rf/subscribe [:media/active])]
