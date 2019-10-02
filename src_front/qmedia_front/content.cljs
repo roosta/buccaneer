@@ -16,16 +16,14 @@
 (def colorthief (nodejs/require "colorthief"))
 
 (defn backdrop-container-style [primary-rgb]
-  (let [color (if-let [[r g b] primary-rgb]
-                (rgb r g b 1)
-                (rgb 38 38 38 1))]
+  (let [[r g b] primary-rgb]
     ^{:pseudo {:after {:content "''"
                        :position "absolute"
                        :left 0
                        :top 0
                        :bottom 0
                        :right 0
-                       :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" color "85%")}}}
+                       :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" (rgb r g b 1) "85%")}}}
     {:position "absolute"
      :left 0
      :height "100%"
@@ -137,13 +135,12 @@
    )
 
 (defn backdrop []
-  (let [url-l @(rf/subscribe [:media.active/backdrop-url "original"])
-        url-s @(rf/subscribe [:media.active/backdrop-url "w300"])
-        color-rgb @(rf/subscribe [:media.active/primary-color url-s])]
-    (when color-rgb
-      [:div {:class (<class backdrop-container-style color-rgb)}
+  (let [url @(rf/subscribe [:media.active/backdrop-url "original"])
+        rgb @(rf/subscribe [:color/primary])]
+    (when rgb
+      [:div {:class (<class backdrop-container-style rgb)}
        [:img {:class (<class image-style)
-              :src url-l}]])))
+              :src url}]])))
 
 (defn content []
   (let [active @(rf/subscribe [:media/active])]

@@ -15,6 +15,14 @@
       (when-not (js/isNaN n)
         (when-not (neg? n) n)))))
 
+(defn brightness
+  "http://www.w3.org/TR/AERT#color-contrast"
+  [[r g b]]
+  (-> (+ (* r 299)
+         (* g 587)
+         (* b 114))
+      (/ 1000)))
+
 (reg-sub
  :root-dir
  (fn [db]
@@ -145,13 +153,29 @@
      (when-let [plot (:Plot data)]
        plot))))
 
-(reg-sub-raw
- :media.active/primary-color
- (fn [app-db [_ url]]
-   (when url
-     (-> (.getColor colorthief url)
-         (.then #(rf/dispatch [:write-to :media.active/primary-color (js->clj %)]))
-         (.catch #(rf/dispatch [:set-error %]))))
-   (make-reaction
-    (fn [] (get @app-db :media.active/primary-color))
-    :on-dispose #(dispatch [:cleanup [:media.active/primary-color]]))))
+(reg-sub
+ :color/primary
+ :<- [:media/active]
+ (fn [data]
+   (-> data :color/primary)))
+
+(reg-sub
+ :color.primary/brightness
+ :<- [:color/primary]
+ (fn [rgb _]
+   (when rgb
+     (brightness rgb))))
+
+(reg-sub
+ :color.primary/dark?
+ :<- [:color.primary/brightness]
+ (fn [b]
+   (when b
+     (< b 128))))
+
+(reg-sub
+ :color.primary/light?
+ :<- [:color.primary/brightness]
+ (fn [b]
+   (when b
+     (>= b 128))))

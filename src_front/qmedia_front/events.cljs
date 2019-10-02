@@ -14,14 +14,15 @@
 
 (def ptn (nodejs/require "parse-torrent-name"))
 
-(reg-event-db
+(reg-event-fx
  :moviedb/store-movie
- (fn [db [_ title query-result]]
+ (fn [{:keys [db]} [_ title query-result]]
    (let [results (:results query-result)]
      (let [m (if (= (:total_results query-result) 1)
                (first results)
                (last (sort-by :vote_count results)))]
-       (assoc-in db [:media title :moviedb/search-result] m)))))
+       {:db (assoc-in db [:media title :moviedb/search-result] m)
+        :color/primary [(:backdrop_path m) title]}))))
 
 (reg-event-db
  :omdb/store-movie
@@ -32,6 +33,11 @@
  :write-to
  (fn [db [_ kw data]]
    (assoc db kw data)))
+
+(reg-event-db
+ :write-color
+ (fn [db [_ title rgb]]
+   (assoc-in db [:media title :color/primary] rgb)))
 
 (reg-event-db
  :cleanup
