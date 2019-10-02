@@ -34,6 +34,11 @@
    (assoc db kw data)))
 
 (reg-event-db
+ :cleanup
+ (fn [db [_ path]]
+   (assoc-in db path nil)))
+
+(reg-event-db
  ::set-media
  (fn [db [_ files]]
    (let [media (->>

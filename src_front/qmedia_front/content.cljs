@@ -9,27 +9,35 @@
              [tincture.typography :refer [Typography]]
              [tincture.cssfns :refer [linear-gradient rgb url]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
-             [reagent.debug :refer [log]]
              [cljs.nodejs :as nodejs]
+             [reagent.debug :refer [log]]
              [re-frame.core :as rf]))
 
+(def colorthief (nodejs/require "colorthief"))
+
+(defn backdrop-container-style [primary-rgb]
+  (let [color (if-let [[r g b] primary-rgb]
+                (rgb r g b 1)
+                (rgb 38 38 38 1))]
+    ^{:pseudo {:after {:content "''"
+                       :position "absolute"
+                       :left 0
+                       :top 0
+                       :bottom 0
+                       :right 0
+                       :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" color "95%")}}}
+    {:position "absolute"
+     :left 0
+     :right 0
+     :z-index 1
+     :top 0}))
+
+(defn image-style []
+  {:max-width "100%"
+   :z-index 1})
+
 (defgroup root-style
-  {:image-container
-   ^{:pseudo {:after {:content "''"
-                      :position "absolute"
-                      :left 0
-                      :top 0
-                      :bottom 0
-                      :right 0
-                      :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" (rgb 38 38 38 1) "95%")}}}
-   {:position "absolute"
-    :left 0
-    :right 0
-    :z-index 1
-    :top 0}
-   :image {:max-width "100%"
-           :z-index 1}
-   :container {:position "relative"
+  {:container {:position "relative"
                :overflow-y "hidden"}
    :grid {:height "100vh"
           :overflow-y "auto"}
@@ -127,13 +135,20 @@
        description]))
    )
 
+(defn backdrop []
+  (let [url-l @(rf/subscribe [:media.active/backdrop-url "original"])
+        url-s @(rf/subscribe [:media.active/backdrop-url "w300"])
+        color-rgb @(rf/subscribe [:media.active/primary-color url-s])]
+    (when color-rgb
+      [:div {:class (<class backdrop-container-style color-rgb)}
+       [:img {:class (<class image-style)
+              :src url-l}]])))
+
 (defn content []
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
-       [:div {:class (<class root-style :image-container)}
-        [:img {:class (<class root-style :image)
-               :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
+       [backdrop]
        [Grid {:container true
               :justify :center
               :align-items :center

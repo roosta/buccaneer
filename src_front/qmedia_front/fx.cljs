@@ -19,6 +19,8 @@
 (def moviedb-base-url "https://api.themoviedb.org/3/")
 (def omdb-base-url "http://www.omdbapi.com/")
 
+(def colorthief (nodejs/require "colorthief"))
+
 (reg-fx :fs/media fs/effect)
 
 (reg-fx
@@ -54,3 +56,11 @@
                        :keywords? true
                        :error-handler #(rf/dispatch [:set-error %])
                        :handler #(rf/dispatch [:omdb/store-movie title %])})))
+
+(reg-fx
+ :color/primary
+ (fn [{:keys [url]}]
+   (-> (.getColor colorthief url)
+       (.then #(rf/dispatch [:write-to :media.active/primary-color %]))
+       (.catch #(rf/dispatch [:set-error %])))
+   ))

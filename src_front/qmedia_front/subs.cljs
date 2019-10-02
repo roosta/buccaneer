@@ -3,7 +3,11 @@
    [clojure.string :as str]
    [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
    [reagent.debug :refer [log error]]
-   [re-frame.core :refer [dispatch reg-event-db reg-sub reg-event-fx]]))
+   [reagent.ratom :refer [make-reaction]]
+   [cljs.nodejs :as nodejs]
+   [re-frame.core :as rf :refer [dispatch reg-event-db reg-sub reg-event-fx reg-sub-raw]]))
+
+(def colorthief (nodejs/require "colorthief"))
 
 (defn parse-number [input]
   (when-not (str/blank? input)
@@ -140,3 +144,14 @@
    (when-let [data (:omdb/search-result data)]
      (when-let [plot (:Plot data)]
        plot))))
+
+(reg-sub-raw
+ :media.active/primary-color
+ (fn [app-db [_ url]]
+   (when url
+     (-> (.getColor colorthief url)
+         (.then #(rf/dispatch [:write-to :media.active/primary-color (js->clj %)]))
+         (.catch #(rf/dispatch [:set-error %]))))
+   (make-reaction
+    (fn [] (get @app-db :media.active/primary-color))
+    :on-dispose #(dispatch [:cleanup [:media.active/primary-color]]))))
