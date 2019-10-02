@@ -28,12 +28,13 @@
                        :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" color "95%")}}}
     {:position "absolute"
      :left 0
+     :height "100%"
      :right 0
      :z-index 1
      :top 0}))
 
 (defn image-style []
-  {:max-width "100%"
+  {:width "100%"
    :z-index 1})
 
 (defgroup root-style
