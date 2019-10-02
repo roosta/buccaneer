@@ -25,12 +25,15 @@
    {:position "absolute"
     :left 0
     :right 0
+    :z-index 1
     :top 0}
-   :image {:max-width "100%"}
+   :image {:max-width "100%"
+           :z-index 1}
    :container {:position "relative"
                :overflow-y "hidden"}
    :grid {:height "100vh"
           :overflow-y "auto"}
+   :column {:z-index 2}
    :subheading {:margin 0}})
 
 (defgroup rating-style
@@ -120,7 +123,7 @@
   (let [active @(rf/subscribe [:media/active])]
     (when active
       [:div {:class (<class root-style :container)}
-       #_[:div {:class (<class root-style :image-container)}
+       [:div {:class (<class root-style :image-container)}
         [:img {:class (<class root-style :image)
                :src @(rf/subscribe [:media.active/backdrop-url "original"])}]]
        [Grid {:container true
@@ -128,6 +131,7 @@
               :align-items :center
               :class (<class root-style :grid)}
         [Grid {:item true
+               :class (<class root-style :column)
                :xs 9}
          [title]
          [info]]]])))
