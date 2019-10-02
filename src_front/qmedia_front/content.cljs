@@ -119,6 +119,14 @@
                      :color theme}
          genre]])]))
 
+(defn description []
+  (let [theme @(rf/subscribe [:theme])]
+    (when-let [description @(rf/subscribe [:media.active/description])]
+      [Typography {:variant :subtitle1
+                   :color theme}
+       description]))
+   )
+
 (defn content []
   (let [active @(rf/subscribe [:media/active])]
     (when active
@@ -134,4 +142,5 @@
                :class (<class root-style :column)
                :xs 9}
          [title]
-         [info]]]])))
+         [info]
+         [description]]]])))

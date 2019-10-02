@@ -27,8 +27,7 @@
                                 :border-radius "0px"}]
   ["::-webkit-scrollbar-thumb" {:cursor "pointer"
                                 :border-radius (px 5)
-                                :background (rgb 255 255 255 0.25)
-                                :transition "color 0.2sec ease"}])
+                                :background (rgb 255 255 255 0.25)}])
 
 (defgroup root-style
   {:container {:background-color "#262626"}})

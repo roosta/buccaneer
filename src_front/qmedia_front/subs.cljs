@@ -132,3 +132,11 @@
    (when-let [data (:omdb/search-result data)]
      (when-let [genre (:Genre data)]
        genre))))
+
+(reg-sub
+ :media.active/description
+ :<- [:media/active]
+ (fn [data]
+   (when-let [data (:omdb/search-result data)]
+     (when-let [plot (:Plot data)]
+       plot))))
