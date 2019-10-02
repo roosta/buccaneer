@@ -163,6 +163,6 @@
  :color.primary/brightness
  :<- [:color/primary]
  (fn [rgb]
-   (if (and rgb (< (clog (brightness rgb)) 128))
+   (if (and rgb (< (brightness rgb) 128))
      :dark
      :light)))
