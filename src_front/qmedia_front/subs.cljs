@@ -162,20 +162,7 @@
 (reg-sub
  :color.primary/brightness
  :<- [:color/primary]
- (fn [rgb _]
-   (when rgb
-     (brightness rgb))))
-
-(reg-sub
- :color.primary/dark?
- :<- [:color.primary/brightness]
- (fn [b]
-   (when b
-     (< b 128))))
-
-(reg-sub
- :color.primary/light?
- :<- [:color.primary/brightness]
- (fn [b]
-   (when b
-     (>= b 128))))
+ (fn [rgb]
+   (if (and rgb (< (clog (brightness rgb)) 128))
+     :dark
+     :light)))

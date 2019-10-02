@@ -61,24 +61,24 @@
   {:grid {:padding [[(px 16) 0]]}})
 
 (defn title []
-  (let [theme @(rf/subscribe [:theme])]
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [Grid {:container true
            :align-items :flex-end
            :justify :space-between}
      [Grid {:item true
             :xs 9}
       [Typography {:variant :h2
-                   :color :dark}
+                   :color brightness}
        @(rf/subscribe [:media.active/title])]]
      [Grid {:item true
             :x 3}
       [Typography {:variant :h4
-                   :color theme}
+                   :color brightness}
        @(rf/subscribe [:media.active/year])]
       ]]))
 
 (defn ratings []
-  (let [theme @(rf/subscribe [:theme])]
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [:div {:class (<class rating-style :container)}
      (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
        [:div {:class (<class rating-style :column)}
@@ -86,13 +86,13 @@
         [Typography {:class (<class rating-style :rating)
                      :variant :h6
                      :no-wrap true
-                     :color theme}
+                     :color brightness}
          (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
      (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
         [Typography {:variant :h6
-                     :color theme
+                     :color brightness
                      :no-wrap true
                      :class (<class rating-style :rating)}
          (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
@@ -100,13 +100,13 @@
        [:div {:class (<class rating-style :column)}
         [icons/tomato {:class (<class rating-style :icon)}]
         [Typography {:variant :h6
-                     :color theme
+                     :color brightness
                      :no-wrap true
                      :class (<class rating-style :rating)}
          rating]])]))
 
 (defn info []
-  (let [theme @(rf/subscribe [:theme])]
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [Grid {:container true
            :justify :space-between
            :align-items :center
@@ -116,21 +116,21 @@
       [ratings]]
      (when-let [runtime @(rf/subscribe [:media.active/runtime])]
        [Typography {:variant :h6
-                    :color theme}
+                    :color brightness}
         runtime])
      (when-let [genre @(rf/subscribe [:media.active/genre])]
        [Grid {:item true
               :xs 3}
         [Typography {:variant :h6
                      :align :right
-                     :color theme}
+                     :color brightness}
          genre]])]))
 
 (defn description []
-  (let [theme @(rf/subscribe [:theme])]
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
     (when-let [description @(rf/subscribe [:media.active/description])]
       [Typography {:variant :subtitle1
-                   :color theme}
+                   :color brightness}
        description]))
    )
 
