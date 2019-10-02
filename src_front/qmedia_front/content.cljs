@@ -21,7 +21,7 @@
                       :top 0
                       :bottom 0
                       :right 0
-                      :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0%" (rgb 38 38 38 1) "100%")}}}
+                      :background-image (linear-gradient "to bottom" (rgb 0 0 0 0) "0" (rgb 38 38 38 1) "95%")}}}
    {:position "absolute"
     :left 0
     :right 0
