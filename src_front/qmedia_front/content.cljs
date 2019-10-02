@@ -44,18 +44,24 @@
    :subheading {:margin 0}})
 
 (defgroup rating-style
-  {:icon {:margin-right (px 8)
-          :color :yellow
-          :width (px 32)
-          :height (px 32)}
-   :tmdb-icon {:margin-right (px 8)
-               :width (px 24)
-               :height (px 24)}
-   :column {:display :flex
-            :margin-right (px 16)
-            :align-items :center}
-   :container {:display :flex}
-   :rating {:margin 0}})
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
+    {:icon {:margin-right (px 8)
+            :color (if (= brightness :dark)
+                     "#FBB829"
+                     "#D29004")
+            :width (px 32)
+            :height (px 32)}
+     :tmdb-icon {:margin-right (px 8)
+                 :width (px 24)
+                 :color (if (= brightness :dark)
+                          "#01d277"
+                          "#01844B")
+                 :height (px 24)}
+     :column {:display :flex
+              :margin-right (px 16)
+              :align-items :center}
+     :container {:display :flex}
+     :rating {:margin 0}}))
 
 (defgroup info-styles
   {:grid {:padding [[(px 16) 0]]}})
