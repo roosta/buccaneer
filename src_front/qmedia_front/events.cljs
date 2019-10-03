@@ -81,7 +81,7 @@
     :moviedb/config nil
     :fs/media {:dir (:root-dir db/default-db)
                :on-success [::set-media]
-               :on-failure [::set-error]}}))
+               :on-failure [:set-error]}}))
 
 (reg-event-fx
  :media.active/set-title
