@@ -6,6 +6,7 @@
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
              [tincture.typography :refer [Typography]]
+             [qmedia-front.input :refer [Input]]
              [tincture.cssfns :refer [rgb]]
              [qmedia-front.icons :as icons]
              [reagent.debug :refer [log]]
@@ -52,19 +53,33 @@
                 :color :dark}
     (str "Error: " error)]])
 
+(defgroup select-path-styles
+  {:container {:background-color "#262626"
+               :height "100vh"}})
+
+(defn select-path
+  []
+  [Grid {:class (<class select-path-styles :container)
+         :justify :center
+         :align-items :center
+         :container true}
+   [Input]]
+  )
+
 (defn root-component []
   (let [path @(rf/subscribe [:root-dir])
         error @(rf/subscribe [:error])]
-    (if error
-      [error-component error]
-      [Grid {:container true
-             :class (<class root-style :container)}
-       [Grid {:item true
-              :xs 2}
-        [sidebar]]
-       [Grid {:item true
-              :xs 10}
-        [content]]])))
+    (cond
+      error [error-component error]
+      path [Grid {:container true
+                  :class (<class root-style :container)}
+            [Grid {:item true
+                   :xs 2}
+             [sidebar]]
+            [Grid {:item true
+                   :xs 10}
+             [content]]]
+      :else [select-path])))
 
 (defn mount-root [setting]
   (r/render [root-component]
