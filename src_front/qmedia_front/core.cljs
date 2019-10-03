@@ -5,7 +5,9 @@
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
+             [tincture.typography :refer [Typography]]
              [tincture.cssfns :refer [rgb]]
+             [qmedia-front.icons :as icons]
              [reagent.debug :refer [log]]
              [garden.units :refer [px]]
              [qmedia-front.subs]
@@ -32,16 +34,37 @@
 (defgroup root-style
   {:container {:background-color "#262626"}})
 
+(defgroup error-style
+  {:container {:background-color "#262626"
+               :height "100vh"}
+   :icon {:color "white"
+          :width "32px"
+          :margin (px 8)
+          :height "32px"}})
+
+(defn error-component [error]
+  [Grid {:class (<class error-style :container)
+         :justify :center
+         :align-items :center
+         :container true}
+   [icons/error {:class (<class error-style :icon)}]
+   [Typography {:variant :h6
+                :color :dark}
+    (str "Error: " error)]])
+
 (defn root-component []
-  (let [path @(rf/subscribe [:root-dir])]
-    [Grid {:container true
-           :class (<class root-style :container)}
-     [Grid {:item true
-            :xs 2}
-      [sidebar]]
-     [Grid {:item true
-            :xs 10}
-      [content]]]))
+  (let [path @(rf/subscribe [:root-dir])
+        error @(rf/subscribe [:error])]
+    (if error
+      [error-component error]
+      [Grid {:container true
+             :class (<class root-style :container)}
+       [Grid {:item true
+              :xs 2}
+        [sidebar]]
+       [Grid {:item true
+              :xs 10}
+        [content]]])))
 
 (defn mount-root [setting]
   (r/render [root-component]

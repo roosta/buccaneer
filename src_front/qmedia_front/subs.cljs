@@ -166,3 +166,8 @@
    (if (and rgb (>= (brightness rgb) 128))
      :light
      :dark)))
+
+(reg-sub
+ :error
+ (fn [db]
+   (-> db :error)))
