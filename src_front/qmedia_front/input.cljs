@@ -1,6 +1,8 @@
 (ns qmedia-front.input
   (:require [herb.core :refer [<class defgroup]]
+            [re-frame.core :as rf]
             [reagent.core :as r]
+            [goog.object :as gobj]
             [debux.cs.core :refer [clog]]
             [goog.dom :as dom]))
 
@@ -25,7 +27,11 @@
        [:input {:type "file"
                 :id "path-input"
                 :on-change (fn [event]
-                             (.log js/console event))
+                             (let [input (dom/getElement "path-input")]
+                               (rf/dispatch [:root-dir/set (-> input
+                                                               (gobj/get "files")
+                                                               (gobj/get 0)
+                                                               (gobj/get "path"))])))
                 :webkitdirectory ""
                 :directory ""
                 :class (<class input-styles :input)}]]))

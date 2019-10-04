@@ -79,7 +79,16 @@
  (fn []
    {:db db/default-db
     :moviedb/config nil
-    :fs/media {:dir (:root-dir db/default-db)
+    ;; :fs/media {:dir (:root-dir db/default-db)
+    ;;            :on-success [::set-media]
+    ;;            :on-failure [:set-error]}
+    }))
+
+(reg-event-fx
+ :root-dir/set
+ (fn [{:keys [db]} [_ v]]
+   {:db (assoc db :root-dir v)
+    :fs/media {:dir v
                :on-success [::set-media]
                :on-failure [:set-error]}}))
 
