@@ -88,4 +88,4 @@
 (defn init! [setting]
   (rf/dispatch-sync [:initialize-db])
   (mount-root setting)
-  (t/init!))
+  (t/init! {:font-family ["Lato" "Helvetica Neue" "Arial" "Helvetica" "sans-serif"]}))
