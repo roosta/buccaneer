@@ -67,14 +67,14 @@
                              :movie? false}})))
                 (into {}))]
      (-> (assoc db :media media)
-         (assoc :loading false)))))
+         (assoc :loading? false)))))
 
 (reg-event-db
  :set-error
  (fn [db [_ e]]
    (error e)
    (-> (assoc db :error e)
-       (assoc :loading false))))
+       (assoc :loading? false))))
 
 ;; add handler ::fetch-files
 ;; try to fetch from local storage
@@ -90,7 +90,7 @@
  :root-dir/set
  (fn [{:keys [db]} [_ v]]
    {:db (-> (assoc db :root-dir v)
-            (assoc :loading true))
+            (assoc :loading? true))
     :fs/media {:dir v
                :on-success [::set-media]
                :on-failure [:set-error]}}))

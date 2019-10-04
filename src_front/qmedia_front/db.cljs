@@ -3,5 +3,5 @@
 (def default-db
   {:media nil
    :theme :dark
-   :loading false
+   :loading? false
    :root-dir nil})

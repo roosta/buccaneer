@@ -73,7 +73,7 @@
   )
 
 (defn main-component []
-  (let [loading? @(rf/subscribe [:loading])]
+  (let [loading? @(rf/subscribe [:loading?])]
     (if loading?
       [load-component]
       [Grid {:container true

@@ -173,6 +173,6 @@
    (-> db :error)))
 
 (reg-sub
- :loading
+ :loading?
  (fn [db]
-   (-> db :loading)))
+   (-> db :loading?)))
