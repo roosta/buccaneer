@@ -10,10 +10,6 @@
 (defgroup input-styles
   {:input {:display "none"}})
 
-(defgroup button-styles
-  {:button {:cursor "pointer"
-            }})
-
 (defn button []
   [sa/Button  {:icon true
                :label-position "left"
