@@ -84,11 +84,7 @@
  :initialize-db
  (fn []
    {:db db/default-db
-    :moviedb/config nil
-    ;; :fs/media {:dir (:root-dir db/default-db)
-    ;;            :on-success [::set-media]
-    ;;            :on-failure [:set-error]}
-    }))
+    :moviedb/config nil}))
 
 (reg-event-fx
  :root-dir/set
