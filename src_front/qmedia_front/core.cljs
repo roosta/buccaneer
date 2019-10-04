@@ -23,12 +23,12 @@
 (defglobal global-style
   [:body {:box-sizing "border-box"
           :margin 0}]
-  ["::-webkit-scrollbar" {:-webkit-appearance "none"
+  #_["::-webkit-scrollbar" {:-webkit-appearance "none"
                           :width "10px"
                           :height "10px"}]
-  ["::-webkit-scrollbar-track" {:background (rgb 255 255 255 0.1)
+  #_["::-webkit-scrollbar-track" {:background (rgb 255 255 255 0.1)
                                 :border-radius "0px"}]
-  ["::-webkit-scrollbar-thumb" {:cursor "pointer"
+  #_["::-webkit-scrollbar-thumb" {:cursor "pointer"
                                 :border-radius (px 5)
                                 :background (rgb 255 255 255 0.25)}])
 

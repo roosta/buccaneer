@@ -3,6 +3,7 @@
              [garden.units :refer [px percent]]
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
+             [soda-ash.core :as sa]
              [tincture.grid :refer [Grid]]
              [tincture.icons :as icons]
              [tincture.typography :refer [Typography]]
@@ -25,9 +26,9 @@
     {:menu
      {:overflow-y "auto"
       :height "100vh"
-      :background (case theme
-                    :dark "#1B1C1D"
-                    :light "#fff")
+      ;; :background (case theme
+      ;;               :dark "#1B1C1D"
+      ;;               :light "#fff")
 
       :border-radius "0 !important"}}))
 
@@ -132,9 +133,12 @@
 
 (defn sidebar
   []
-  (let [media @(rf/subscribe [:media])]
-    [Grid {:container true
-           :class (<class sidebar-style :menu)}
+  (let [media @(rf/subscribe [:media])
+        theme @(rf/subscribe [:theme])]
+    [sa/Menu {:vertical true
+              :inverted (= theme :dark)
+              :fluid true
+              :class (<class sidebar-style :menu)}
      (doall
       (for [[title data] media]
         (if (:movie? data)
