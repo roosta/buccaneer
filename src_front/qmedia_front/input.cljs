@@ -11,14 +11,17 @@
   {:input {:display "none"}})
 
 (defgroup button-styles
-  {:button {}})
+  {:button {:cursor "pointer"
+            }})
 
 (defn button []
-  [:button  {:on-click (fn []
-                         (let [input (dom/getElement "path-input")]
-                           (.click input)))
-             :class (<class button-styles :button)}
-   "Select a location"])
+  [sa/Button  {:icon true
+               :label-position "left"
+               :on-click (fn []
+                           (let [input (dom/getElement "path-input")]
+                             (.click input)))}
+   [sa/Icon {:name "folder"}]
+   "Select a directory"])
 
 (defn Input []
   (let [path (r/atom nil)]
