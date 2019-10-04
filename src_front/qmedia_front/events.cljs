@@ -18,16 +18,20 @@
  :moviedb/store-movie
  (fn [{:keys [db]} [_ title query-result]]
    (let [results (:results query-result)]
-     (let [m (if (= (:total_results query-result) 1)
-               (first results)
-               (last (sort-by :vote_count results)))]
-       {:db (assoc-in db [:media title :moviedb/search-result] m)
-        :color/primary [(:backdrop_path m) title]}))))
+     (if (seq results)
+       (let [m (if (= (:total_results query-result) 1)
+                 (first results)
+                 (last (sort-by :vote_count results)))]
+         {:db (assoc-in db [:media title :moviedb/search-result] m)
+          :color/primary [(:backdrop_path m) title]})
+       {:db db}))))
 
 (reg-event-db
  :omdb/store-movie
  (fn [db [_ title query-result]]
-   (assoc-in db [:media title :omdb/search-result] query-result)))
+   (if (not= (:Response query-result) "False")
+     (assoc-in db [:media title :omdb/search-result] query-result)
+     db)))
 
 (reg-event-db
  :write-to
