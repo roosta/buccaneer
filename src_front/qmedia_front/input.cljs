@@ -27,11 +27,13 @@
        [:input {:type "file"
                 :id "path-input"
                 :on-change (fn [event]
-                             (let [input (dom/getElement "path-input")]
-                               (rf/dispatch [:root-dir/set (-> input
-                                                               (gobj/get "files")
-                                                               (gobj/get 0)
-                                                               (gobj/get "path"))])))
+                             (let [input (dom/getElement "path-input")
+                                   path (-> input
+                                            (gobj/get "files")
+                                            (gobj/get 0)
+                                            (gobj/get "path"))]
+                               (when path
+                                 (rf/dispatch [:root-dir/set path]))))
                 :webkitdirectory ""
                 :directory ""
                 :class (<class input-styles :input)}]]))
