@@ -171,3 +171,8 @@
  :error
  (fn [db]
    (-> db :error)))
+
+(reg-sub
+ :loading
+ (fn [db]
+   (-> db :loading)))

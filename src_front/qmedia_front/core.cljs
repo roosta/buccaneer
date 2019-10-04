@@ -4,6 +4,7 @@
              [herb.core :as herb :refer-macros [<class <id defgroup defglobal]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [tincture.core :as t]
+             [soda-ash.core :as sa]
              [tincture.grid :refer [Grid]]
              [tincture.typography :refer [Typography]]
              [qmedia-front.input :refer [Input]]
@@ -32,38 +33,57 @@
                                 :border-radius (px 5)
                                 :background (rgb 255 255 255 0.25)}])
 
-(defgroup root-style
+(defgroup main-style
   {:container {:background-color "#262626"}})
 
-(defgroup error-style
-  {:container {:background-color "#262626"
-               :height "100vh"}
-   :icon {:color "white"
-          :width "32px"
-          :margin (px 8)
-          :height "32px"}})
+(defn container-style []
+  {:background-color "#262626"
+   :height "100vh"})
+
+(defn icon-style []
+  {:color "white"
+   :width "32px"
+   :margin (px 8)
+   :height "32px"})
 
 (defn error-component [error]
-  [Grid {:class (<class error-style :container)
+  [Grid {:class (<class container-style)
          :justify :center
          :align-items :center
          :container true}
-   [icons/error {:class (<class error-style :icon)}]
+   [icons/error {:class (<class icon-style)}]
    [Typography {:variant :h6
                 :color :dark}
     (str "Error: " error)]])
 
-(defgroup select-path-styles
-  {:container {:background-color "#262626"
-               :height "100vh"}})
+(defn load-component []
+  [Grid {:class (<class container-style)
+         :justify :center
+         :container true
+         :align-items :center}
+   [sa/Dimmer {:active true}
+    [sa/Loader]]])
 
-(defn select-path
-  []
-  [Grid {:class (<class select-path-styles :container)
+(defn select-path []
+  [Grid {:class (<class container-style)
          :justify :center
          :align-items :center
          :container true}
    [Input]]
+  )
+
+(defn main-component []
+  (let [loading? @(rf/subscribe [:loading])]
+    (if loading?
+      [load-component]
+      [Grid {:container true
+             :class (<class main-style :container)}
+       [Grid {:item true
+              :xs 2}
+        [sidebar]]
+       [Grid {:item true
+              :xs 10}
+        [content]]]))
   )
 
 (defn root-component []
@@ -71,14 +91,7 @@
         error @(rf/subscribe [:error])]
     (cond
       error [error-component error]
-      path [Grid {:container true
-                  :class (<class root-style :container)}
-            [Grid {:item true
-                   :xs 2}
-             [sidebar]]
-            [Grid {:item true
-                   :xs 10}
-             [content]]]
+      path  [main-component]
       :else [select-path])))
 
 (defn mount-root [setting]
