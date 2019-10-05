@@ -4,4 +4,5 @@
   {:media nil
    :theme :dark
    :loading? false
+   :sidebar/expanded #{}
    :root-dir nil})

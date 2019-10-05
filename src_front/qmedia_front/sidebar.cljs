@@ -19,6 +19,8 @@
 (def virtualized-list (r/adapt-react-class (gobj/get js/ReactVirtualized "List")))
 (def auto-sizer (r/adapt-react-class (gobj/get js/ReactVirtualized "AutoSizer")))
 
+(def row-height 45)
+
 (defn border-color
   []
   (let [theme @(rf/subscribe [:theme])]
@@ -81,15 +83,17 @@
   [open?]
   (let [base {:max-height "0px"
               :overflow "hidden"
-              :transition (t/create-transition {:properties ["max-height"]
-                                                :durations ["400ms"]
-                                                :easings [:ease-out-cubic]})
+              ;; :transition (t/create-transition {:properties ["max-height"]
+              ;;                                   :durations ["400ms"]
+              ;;                                   :easings [:ease-out-cubic]})
+
               :border "none"}]
     (with-meta
       (if open?
         (merge base {:max-height "5000px"
-                     :transition (t/create-transition {:properties ["max-height"]
-                                                       :durations ["400ms"]})})
+                     ;; :transition (t/create-transition {:properties ["max-height"]
+                     ;;                                   :durations ["400ms"]})
+                     })
         base)
       {:key open?})))
 
@@ -110,24 +114,28 @@
   (rf/dispatch [:media.active/set-title title data]))
 
 (defn series-item
-  [title {:keys [parsed]}]
-  (let [open? (r/atom false)]
-    (fn []
-      [:div {:class (<class series-style :container)}
-       [menu-item {:class (<class series-style :title)
-                   :on-click #(swap! open? not)}
-        title
-        (if @open?
-          [icons/ExpandLess {:class (<class series-style :icon)}]
-          [icons/ExpandMore {:class (<class series-style :icon)}])]
-       [Grid {:container true
-              :class (<class collapse @open?)}
-        (doall
-         (for [p parsed]
-           (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
-             ^{:key (:full p)}
-             [menu-item {:class (<class series-style :nested-item)}
-              sub-title])))]])))
+  [title parsed]
+  (let [open? @(rf/subscribe [:sidebar.item/expanded? title])]
+    [:div {:class (<class series-style :container)}
+     [menu-item {:class (<class series-style :title)
+                 :on-click (fn []
+                             (let [ref @(rf/subscribe [:sidebar/ref])]
+                               (rf/dispatch-sync [:sidebar.item/toggle-expanded title])
+                               (.recomputeRowHeights ref)
+                               (.forceUpdate ref))
+                             )}
+      title
+      (if open?
+        [icons/ExpandLess {:class (<class series-style :icon)}]
+        [icons/ExpandMore {:class (<class series-style :icon)}])]
+     [Grid {:container true
+            :class (<class collapse open?)}
+      (doall
+       (for [p parsed]
+         (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
+           ^{:key (:full p)}
+           [menu-item {:class (<class series-style :nested-item)}
+            sub-title])))]]))
 
 (defn movie-item
   [title data]
@@ -149,6 +157,17 @@
         ^{:key title}
         [series-item title parsed])])))
 
+(defn index->row-height [params]
+  (let [media @(rf/subscribe [:media])
+        index (gobj/get params "index")
+        {:keys [parsed title]} (get media index)
+        expanded? @(rf/subscribe [:sidebar.item/expanded? title])]
+    (if expanded?
+      (->> row-height
+           (* (count parsed))
+           (+ row-height))
+      row-height)))
+
 (defn sidebar
   []
   (let [media @(rf/subscribe [:media])]
@@ -158,6 +177,7 @@
         (r/as-element
          [virtualized-list {:width (gobj/get props "width")
                             :height (gobj/get props "height")
+                            :ref #(rf/dispatch [:sidebar/set-ref %])
                             :row-count (count media)
-                            :row-height 44
+                            :row-height index->row-height
                             :row-renderer row-renderer}]))]]))

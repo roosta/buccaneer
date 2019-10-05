@@ -176,3 +176,19 @@
  :loading?
  (fn [db]
    (-> db :loading?)))
+
+(reg-sub
+ :sidebar/expanded
+ (fn [db]
+   (-> db :sidebar/expanded)))
+
+(reg-sub
+ :sidebar.item/expanded?
+ :<- [:sidebar/expanded]
+ (fn [expanded [_ title]]
+   (contains? expanded title)))
+
+(reg-sub
+ :sidebar/ref
+ (fn [db]
+   (-> db :sidebar/ref)))

@@ -116,3 +116,22 @@
          (assoc m :moviedb/search-movie {:title title :year year})
          :else m)
        m))))
+
+(reg-event-db
+ :sidebar.item/toggle-expanded
+ (fn [db [_ title]]
+   (if (contains? (:sidebar/expanded db) title)
+     (update db :sidebar/expanded disj title)
+     (update db :sidebar/expanded conj title))))
+
+(reg-event-db
+ :sidebar/set-ref
+ (fn [db [_ ref]]
+   (assoc db :sidebar/ref ref)))
+
+#_(reg-event-db
+ :sidebar.item/set-expanded
+ (fn [db [_ index]]
+   (let [media (-> db :media)]
+     ())
+   ))
