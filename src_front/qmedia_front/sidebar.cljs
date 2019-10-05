@@ -101,8 +101,8 @@
            :xs 12
            :class [(<class menu-item-style :container active) class]}
      (into [Typography {:color theme
-                  :variant :subtitle1
-                  :class (<class menu-item-style :title)}]
+                        :variant :subtitle1
+                        :class (<class menu-item-style :title)}]
            (r/children (r/current-component)))])
   )
 (defn on-click
@@ -159,5 +159,5 @@
          [virtualized-list {:width (gobj/get props "width")
                             :height (gobj/get props "height")
                             :row-count (count media)
-                            :row-height 42
+                            :row-height 44
                             :row-renderer row-renderer}]))]]))
