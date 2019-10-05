@@ -28,17 +28,17 @@
       :dark "1px solid rgba(255,255,255,.08)"
       :light "1px solid rgba(34,36,38,.1)")))
 
+
 (defgroup sidebar-style
   (let [theme @(rf/subscribe [:theme])]
-    {:menu
-     {:overflow-y "auto"
-      :height "100vh"
-      :background (case theme
-                    :dark "#1B1C1D"
-                    :light "#fff")
+    {:menu {:overflow-y "auto"
+            :height "100vh"
+            :background (case theme
+                          :dark "#1B1C1D"
+                          :light "#fff")
 
-      :border-radius "0 !important"}}))
-
+            :border-radius "0 !important"}
+     :list {:outline "none"}}))
 (defn active-background-color []
   (let [theme @(rf/subscribe [:theme])]
     (case theme
@@ -178,6 +178,7 @@
          [virtualized-list {:width (gobj/get props "width")
                             :height (gobj/get props "height")
                             :ref #(rf/dispatch [:sidebar/set-ref %])
+                            :class (<class sidebar-style :list)
                             :row-count (count media)
                             :row-height index->row-height
                             :row-renderer row-renderer}]))]]))
