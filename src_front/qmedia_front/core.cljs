@@ -24,14 +24,8 @@
 (defglobal global-style
   [:body {:box-sizing "border-box"
           :margin 0}]
-  #_["::-webkit-scrollbar" {:-webkit-appearance "none"
-                          :width "10px"
-                          :height "10px"}]
-  #_["::-webkit-scrollbar-track" {:background (rgb 255 255 255 0.1)
-                                :border-radius "0px"}]
-  #_["::-webkit-scrollbar-thumb" {:cursor "pointer"
-                                :border-radius (px 5)
-                                :background (rgb 255 255 255 0.25)}])
+  ["::-webkit-scrollbar-track" {:background (str "rgba(255,255,255,0.1) !important")}]
+  ["::-webkit-scrollbar-thumb" {:background (str "rgba(255,255,255,0.25) !important")}])
 
 (defgroup main-style
   {:container {:background-color "#262626"}})
