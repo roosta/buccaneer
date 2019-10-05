@@ -45,7 +45,7 @@
 
 (defn files
   [dir]
-  (let [not-anime? #(not (anime? %))
+  (let [not-anime? (complement anime?)
         filtered (filter (every-pred file? not-anime? ignore?) (file-seq dir))]
     (map (fn [file]
            (let [ext (str (first (re-seq #"\.[0-9a-z]+$" file)))]
