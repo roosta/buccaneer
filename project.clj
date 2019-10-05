@@ -10,6 +10,7 @@
                  [day8.re-frame/http-fx "0.1.6"]
                  [ring/ring-core "1.7.1"]
                  [tincture "0.3.3-SNAPSHOT" :exclusions [herb]]
+                 [cljsjs/react-virtualized "9.21.1-0"]
                  [soda-ash "0.83.0"]
                  [herb "0.10.1-SNAPSHOT"]
                  [cljs-ajax "0.8.0"]

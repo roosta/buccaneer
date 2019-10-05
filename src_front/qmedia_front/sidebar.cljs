@@ -3,6 +3,7 @@
              [garden.units :refer [px percent]]
              [herb.core :refer-macros [<class defgroup]]
              [tincture.core :as t]
+             [cljsjs.react-virtualized]
              [soda-ash.core :as sa]
              [tincture.grid :refer [Grid]]
              [tincture.icons :as icons]
@@ -10,9 +11,13 @@
              [tincture.cssfns :refer [rgb]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
              [reagent.debug :refer [log]]
+             [goog.object :as gobj]
              [cljs.nodejs :as nodejs]
              [re-frame.core :as rf]))
 
+
+(def virtualized-list (r/adapt-react-class (gobj/get js/ReactVirtualized "List")))
+(def auto-sizer (r/adapt-react-class (gobj/get js/ReactVirtualized "AutoSizer")))
 
 (defn border-color
   []
@@ -26,9 +31,9 @@
     {:menu
      {:overflow-y "auto"
       :height "100vh"
-      ;; :background (case theme
-      ;;               :dark "#1B1C1D"
-      ;;               :light "#fff")
+      :background (case theme
+                    :dark "#1B1C1D"
+                    :light "#fff")
 
       :border-radius "0 !important"}}))
 
@@ -131,19 +136,28 @@
                 :active (= active-title title)}
      title]))
 
+(defn row-renderer [props]
+  (let [media @(rf/subscribe [:media])
+        {:keys [index style isScrolling isVisible key parent]} (js->clj props :keywordize-keys true)
+        {:keys [title parsed movie?]} (get media index)]
+    (r/as-element
+     [:div {:key key
+            :style style}
+      (if movie?
+        ^{:key title}
+        [movie-item title parsed]
+        ^{:key title}
+        [series-item title parsed])])))
+
 (defn sidebar
   []
-  (let [media @(rf/subscribe [:media])
-        theme @(rf/subscribe [:theme])]
-    [sa/Menu {:vertical true
-              :inverted (= theme :dark)
-              :fluid true
-              :class (<class sidebar-style :menu)}
-     (doall
-      (for [[title data] media]
-        (if (:movie? data)
-          ^{:key title}
-          [movie-item title data]
-          ^{:key title}
-          [series-item title data]
-          )))]))
+  (let [media @(rf/subscribe [:media])]
+    [:div {:class (<class sidebar-style :menu)}
+     [auto-sizer
+      (fn [props]
+        (r/as-element
+         [virtualized-list {:width (gobj/get props "width")
+                            :height (gobj/get props "height")
+                            :row-count (count media)
+                            :row-height 42
+                            :row-renderer row-renderer}]))]]))

@@ -52,20 +52,20 @@
  ::set-media
  (fn [db [_ files]]
    (let [media (->>
-                (map (fn [file]
+                (mapv (fn [file]
                        (let [m (-> (ptn (:basename file))
                                    (js->clj :keywordize-keys true))]
                          (into file m)))
                      files)
-                doall
                 (group-by :title)
-                (map (fn [[k v]]
+                (mapv (fn [[k v]]
                        (if (= (count v) 1)
-                         {k {:parsed (first v)
-                             :movie? true}}
-                         {k {:parsed v
-                             :movie? false}})))
-                (into {}))]
+                         {:parsed (first v)
+                          :title k
+                          :movie? true}
+                         {:parsed v
+                          :title k
+                          :movie? false}))))]
      (-> (assoc db :media media)
          (assoc :loading? false)))))
 
