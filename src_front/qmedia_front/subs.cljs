@@ -72,14 +72,25 @@
      (get results title))))
 
 (reg-sub
- :active/poster-url
- :<- [:active/media]
+ :active.results/moviedb
  :<- [:active/results]
+ (fn [results]
+   (:moviedb/search-result results)))
+
+(reg-sub
+ :active.results/omdb
+ :<- [:active/results]
+ (fn [results]
+   (:omdb/search-result results)))
+
+(reg-sub
+ :active/poster-url
+ :<- [:active.results/moviedb]
  :<- [:themoviedb/config]
- (fn [[data config] [_ width]]
-   (when (and (:moviedb/search-result data) config)
+ (fn [[results config] [_ width]]
+   (when (and results config)
      (let [base-url (-> config :images :base_url)
-           path (-> data :moviedb/search-result :poster_path)
+           path (:poster_path results)
            sizes (into #{} (-> config :images :poster_sizes))
            size (get sizes width)]
        (if size
@@ -89,12 +100,12 @@
 
 (reg-sub
  :active/backdrop-url
- :<- [:active/media]
+ :<- [:active.results/moviedb]
  :<- [:themoviedb/config]
- (fn [[data config] [_ width]]
-   (when (and (:moviedb/search-result data) config)
+ (fn [[results config] [_ width]]
+   (when (and results config)
      (let [base-url (-> config :images :base_url)
-           path (-> data :moviedb/search-result :backdrop_path)
+           path (:backdrop_path results)
            sizes (into #{} (-> config :images :backdrop_sizes))
            size (get sizes width)]
        (if size
@@ -103,39 +114,38 @@
 
 (reg-sub
  :active/imdb-rating
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (-> data :imdbRating))))
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (-> results :imdbRating))))
 
 (reg-sub
  :active/imdb-votes
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (-> data :imdbVotes))))
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (-> results :imdbVotes))))
 
 (reg-sub
  :active/rotten-tomato-rating
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
-     )))
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings results)))))))
 
 (reg-sub
  :active/moviedb-rating
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:moviedb/search-result data)]
-     (:vote_average data))))
+ :<- [:active.results/moviedb]
+ (fn [results]
+   (when results
+     (:vote_average results))))
 
 (reg-sub
  :active/moviedb-votes
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:moviedb/search-result data)]
-     (:vote_count data))))
+ :<- [:active.results/moviedb]
+ (fn [results]
+   (when results
+     (:vote_count results))))
 
 (reg-sub
  :active/year

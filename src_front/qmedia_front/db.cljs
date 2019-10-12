@@ -4,7 +4,7 @@
   {:files nil
    :theme :dark
    :loading? false
-   :results nil
+   :results {}
    :sidebar/expanded #{}
    :active/title nil
    :active/index nil
