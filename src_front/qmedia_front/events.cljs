@@ -41,7 +41,7 @@
 (reg-event-db
  :write-color
  (fn [db [_ title rgb]]
-   (assoc-in db [:media title :color/primary] rgb)))
+   (assoc-in db [:colors title] rgb)))
 
 (reg-event-db
  :cleanup

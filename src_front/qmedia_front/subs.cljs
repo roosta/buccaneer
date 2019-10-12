@@ -171,10 +171,16 @@
        plot))))
 
 (reg-sub
+ :colors
+ (fn [db]
+   (-> db :colors)))
+
+(reg-sub
  :color/primary
- :<- [:active/media]
- (fn [data]
-   (-> data :color/primary)))
+ :<- [:colors]
+ :<- [:active/title]
+ (fn [[colors title]]
+   (get colors title)))
 
 (reg-sub
  :color.primary/brightness
