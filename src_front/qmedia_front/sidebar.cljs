@@ -130,11 +130,12 @@
 )
 
 (defn icon-button [open? title]
-  [:div {:on-click (fn []
+  [:div {:on-click (fn [event]
                      (let [ref @(rf/subscribe [:sidebar/ref])]
                        (rf/dispatch-sync [:sidebar.item/toggle-expanded title])
                        (.recomputeRowHeights ref)
-                       (.forceUpdate ref)))
+                       (.forceUpdate ref)
+                       (.stopPropagation event)))
          :class (<class icon-styles :container)}
    (if open?
      [icons/ExpandLess {:class (<class icon-styles :icon)}]
