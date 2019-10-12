@@ -155,10 +155,10 @@
 
 (reg-sub
  :active/runtime
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (when-let [runtime (:Runtime data)]
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (when-let [runtime (:Runtime results)]
        (when-let [n (parse-number (re-find #"\d+" runtime))]
          (let [hours (.floor js/Math (/ n 60))
                minutes (mod n 60)]
@@ -166,18 +166,18 @@
 
 (reg-sub
  :active/genre
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (when-let [genre (:Genre data)]
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (when-let [genre (:Genre results)]
        genre))))
 
 (reg-sub
  :active/description
- :<- [:active/media]
- (fn [data]
-   (when-let [data (:omdb/search-result data)]
-     (when-let [plot (:Plot data)]
+ :<- [:active.results/omdb]
+ (fn [results]
+   (when results
+     (when-let [plot (:Plot results)]
        plot))))
 
 (reg-sub
