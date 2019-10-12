@@ -148,7 +148,7 @@
     [:div {:class (<class series-style :container)}
      [menu-item {:class (<class series-style :title)
                  :title title
-                 :on-click (fn [] nil)}
+                 :on-click #(on-click file index)}
       [icon-button open? title]]
      [Grid {:container true
             :class (<class collapse open?)}
