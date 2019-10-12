@@ -27,7 +27,7 @@
        {:db db}))))
 
 (reg-event-db
- :omdb/store-movie
+ :omdb/store-media
  (fn [db [_ title query-result]]
    (if (not= (:Response query-result) "False")
      (assoc-in db [:results title :omdb/search-result] query-result)
