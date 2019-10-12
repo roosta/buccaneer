@@ -59,13 +59,10 @@
                      files)
                 (group-by :title)
                 (mapv (fn [[k v]]
-                       (if (= (count v) 1)
-                         {:parsed (first v)
-                          :title k
-                          :movie? true}
-                         {:parsed v
-                          :title k
-                          :movie? false}))))]
+                        (cond-> {:parsed v
+                                 :title k
+                                 :movie? true}
+                          (> (count v) 1) (assoc :movie? false)))))]
      (-> (assoc db :media media)
          (assoc :loading? false)))))
 

@@ -124,7 +124,7 @@
  :media.active/year
  :<- [:media/active]
  (fn [data]
-   (-> data :parsed :year)))
+   (-> data :parsed first :year)))
 
 (reg-sub
  :media.active/runtime
