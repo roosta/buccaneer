@@ -110,11 +110,11 @@
            (r/children (r/current-component)))])
   )
 (defn on-click
-  [title data]
-  (rf/dispatch [:media.active/set-title title data]))
+  [title data index]
+  (rf/dispatch [:media.active/set-title title data index]))
 
 (defn series-item
-  [title parsed]
+  [title parsed index]
   (let [open? @(rf/subscribe [:sidebar.item/expanded? title])]
     [:div {:class (<class series-style :container)}
      [menu-item {:class (<class series-style :title)
@@ -122,8 +122,7 @@
                              (let [ref @(rf/subscribe [:sidebar/ref])]
                                (rf/dispatch-sync [:sidebar.item/toggle-expanded title])
                                (.recomputeRowHeights ref)
-                               (.forceUpdate ref))
-                             )}
+                               (.forceUpdate ref)))}
       title
       (if open?
         [icons/ExpandLess {:class (<class series-style :icon)}]
@@ -138,9 +137,9 @@
             sub-title])))]]))
 
 (defn movie-item
-  [title data]
+  [title data index]
   (let [active-title @(rf/subscribe [:media.active/title])]
-    [menu-item {:on-click #(on-click title data)
+    [menu-item {:on-click #(on-click title data index)
                 :active (= active-title title)}
      title]))
 
@@ -153,9 +152,9 @@
             :style style}
       (if movie?
         ^{:key title}
-        [movie-item title parsed]
+        [movie-item title parsed index]
         ^{:key title}
-        [series-item title parsed])])))
+        [series-item title parsed index])])))
 
 (defn index->row-height [params]
   (let [media @(rf/subscribe [:media])

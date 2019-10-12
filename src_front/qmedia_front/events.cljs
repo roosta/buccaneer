@@ -94,9 +94,10 @@
 
 (reg-event-fx
  :media.active/set-title
- (fn [{:keys [db]} [_ title data]]
-   (let [m {:db (assoc db :media.active/title title)}
-         year (-> data :parsed :year)
+ (fn [{:keys [db]} [_ title data index]]
+   (let [m {:db (assoc db :media.active/title title
+                       :media.active/index index)}
+         year (-> data :parsed first :year)
          moviedb (get-in db [:media title :moviedb/search-result])
          omdb (get-in db [:media title :omdb/search-result])]
      (if (:movie? data)
