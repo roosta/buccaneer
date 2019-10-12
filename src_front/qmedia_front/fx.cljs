@@ -62,12 +62,23 @@
  (fn [{:keys [title year]}]
    (GET omdb-base-url {:params {:apikey (env :omdb-api-key)
                                 :t title
+                                :type "movie"
                                 :y year}
                        :response-format :json
                        :keywords? true
                        :error-handler #(rf/dispatch [:set-error %])
                        :handler #(rf/dispatch [:omdb/store-media title %])})))
 
+(reg-fx
+ :omdb/search-tv
+ (fn [{:keys [title]}]
+   (GET omdb-base-url {:params {:apikey (env :omdb-api-key)
+                                :t title
+                                :type "series"}
+                       :response-format :json
+                       :keywords? true
+                       :error-handler #(rf/dispatch [:set-error %])
+                       :handler #(rf/dispatch [:omdb/store-media title %])})))
 (reg-fx
  :color/primary
  (fn [[url title]]

@@ -107,7 +107,8 @@
          (not moviedb) (assoc :moviedb/search-movie {:title title :year year})
          (not omdb) (assoc :omdb/search-movie {:title title :year year}))
        (cond-> m
-         (not moviedb) (assoc :moviedb/search-tv {:title title}))))))
+         (not moviedb) (assoc :moviedb/search-tv {:title title})
+         (not moviedb) (assoc :omdb/search-tv {:title title}))))))
 
 (reg-event-db
  :sidebar.item/toggle-expanded
