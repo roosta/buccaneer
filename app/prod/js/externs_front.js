@@ -1,9 +1,13 @@
 var TopLevel = {
 "basename" : function () {},
+"catch" : function () {},
+"click" : function () {},
 "dirname" : function () {},
 "document" : function () {},
 "existsSync" : function () {},
 "floor" : function () {},
+"forceUpdate" : function () {},
+"getColor" : function () {},
 "getElementById" : function () {},
 "isDirectory" : function () {},
 "isFile" : function () {},
@@ -12,5 +16,9 @@ var TopLevel = {
 "lstatSync" : function () {},
 "Math" : function () {},
 "parseInt" : function () {},
-"readdirSync" : function () {}
+"ReactVirtualized" : function () {},
+"readdirSync" : function () {},
+"recomputeRowHeights" : function () {},
+"stopPropagation" : function () {},
+"then" : function () {}
 }
