@@ -21,7 +21,7 @@
 
 (def colorthief (nodejs/require "colorthief"))
 
-(reg-fx :fs/media fs/effect)
+(reg-fx :fs/files fs/effect)
 
 (reg-fx
  :moviedb/search-movie

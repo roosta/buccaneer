@@ -29,9 +29,9 @@
    (:root-dir db)))
 
 (reg-sub
- :media
+ :files
  (fn [db]
-   (:media db)))
+   (:files db)))
 
 (reg-sub
  :themoviedb/config
@@ -50,7 +50,7 @@
 
 (reg-sub
  :media/active
- :<- [:media]
+ :<- [:files]
  :<- [:media.active/title]
  (fn [[media active-title]]
    (get media active-title)))

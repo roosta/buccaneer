@@ -22,7 +22,7 @@
        (let [m (if (= (:total_results query-result) 1)
                  (first results)
                  (last (sort-by :vote_count results)))]
-         {:db (assoc-in db [:media title :moviedb/search-result] m)
+         {:db (assoc-in db [:results title :moviedb/search-result] m)
           :color/primary [(:backdrop_path m) title]})
        {:db db}))))
 
@@ -30,7 +30,7 @@
  :omdb/store-movie
  (fn [db [_ title query-result]]
    (if (not= (:Response query-result) "False")
-     (assoc-in db [:media title :omdb/search-result] query-result)
+     (assoc-in db [:results title :omdb/search-result] query-result)
      db)))
 
 (reg-event-db
@@ -49,9 +49,9 @@
    (assoc-in db path nil)))
 
 (reg-event-db
- ::set-media
+ ::set-files
  (fn [db [_ files]]
-   (let [media (->>
+   (let [files (->>
                 (mapv (fn [file]
                        (let [m (-> (ptn (:basename file))
                                    (js->clj :keywordize-keys true))]
@@ -63,7 +63,7 @@
                                  :title k
                                  :movie? true}
                           (> (count v) 1) (assoc :movie? false)))))]
-     (-> (assoc db :media media)
+     (-> (assoc db :files files)
          (assoc :loading? false)))))
 
 (reg-event-db
@@ -88,8 +88,8 @@
  (fn [{:keys [db]} [_ v]]
    {:db (-> (assoc db :root-dir v)
             (assoc :loading? true))
-    :fs/media {:dir v
-               :on-success [::set-media]
+    :fs/files {:dir v
+               :on-success [::set-files]
                :on-failure [:set-error]}}))
 
 (reg-event-fx

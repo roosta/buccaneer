@@ -144,7 +144,7 @@
      title]))
 
 (defn row-renderer [props]
-  (let [media @(rf/subscribe [:media])
+  (let [media @(rf/subscribe [:files])
         {:keys [index style isScrolling isVisible key parent]} (js->clj props :keywordize-keys true)
         {:keys [title parsed movie?]} (get media index)]
     (r/as-element
@@ -157,7 +157,7 @@
         [series-item title parsed index])])))
 
 (defn index->row-height [params]
-  (let [media @(rf/subscribe [:media])
+  (let [media @(rf/subscribe [:files])
         index (gobj/get params "index")
         {:keys [parsed title]} (get media index)
         expanded? @(rf/subscribe [:sidebar.item/expanded? title])]
@@ -169,7 +169,7 @@
 
 (defn sidebar
   []
-  (let [media @(rf/subscribe [:media])]
+  (let [media @(rf/subscribe [:files])]
     [:div {:class (<class sidebar-style :menu)}
      [auto-sizer
       (fn [props]
