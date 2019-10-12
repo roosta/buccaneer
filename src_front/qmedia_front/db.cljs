@@ -6,6 +6,6 @@
    :loading? false
    :results nil
    :sidebar/expanded #{}
-   :media.active/title nil
-   :media.active/index nil
+   :active/title nil
+   :active/index nil
    :root-dir nil})

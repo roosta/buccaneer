@@ -111,7 +111,7 @@
   )
 (defn on-click
   [title data index]
-  (rf/dispatch [:media.active/set-title title data index]))
+  (rf/dispatch [:active/set-title title data index]))
 
 (defn series-item
   [title parsed index]
@@ -138,7 +138,7 @@
 
 (defn movie-item
   [title data index]
-  (let [active-title @(rf/subscribe [:media.active/title])]
+  (let [active-title @(rf/subscribe [:active/title])]
     [menu-item {:on-click #(on-click title data index)
                 :active (= active-title title)}
      title]))

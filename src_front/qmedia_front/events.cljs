@@ -93,13 +93,13 @@
                :on-failure [:set-error]}}))
 
 (reg-event-fx
- :media.active/set-title
+ :active/set-title
  (fn [{:keys [db]} [_ title data index]]
-   (let [m {:db (assoc db :media.active/title title
-                       :media.active/index index)}
+   (let [m {:db (assoc db :active/title title
+                       :active/index index)}
          year (-> data :parsed first :year)
-         moviedb (get-in db [:media title :moviedb/search-result])
-         omdb (get-in db [:media title :omdb/search-result])]
+         moviedb (get-in db [:results title :moviedb/search-result])
+         omdb (get-in db [:results title :omdb/search-result])]
      (if (:movie? data)
        (cond
          (and (not moviedb) (not omdb))

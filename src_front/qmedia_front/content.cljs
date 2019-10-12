@@ -75,34 +75,34 @@
             :xs 9}
       [Typography {:variant :h2
                    :color brightness}
-       @(rf/subscribe [:media.active/title])]]
+       @(rf/subscribe [:active/title])]]
      [Grid {:item true
             :x 3}
       [Typography {:variant :h4
                    :color brightness}
-       @(rf/subscribe [:media.active/year])]
+       @(rf/subscribe [:active/year])]
       ]]))
 
 (defn ratings []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [:div {:class (<class rating-style :container)}
-     (when-let [rating @(rf/subscribe [:media.active/imdb-rating])]
+     (when-let [rating @(rf/subscribe [:active/imdb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/imdb {:class (<class rating-style :icon)}]
         [Typography {:class (<class rating-style :rating)
                      :variant :h6
                      :no-wrap true
                      :color brightness}
-         (str rating " / " @(rf/subscribe [:media.active/imdb-votes]))]])
-     (when-let [rating @(rf/subscribe [:media.active/moviedb-rating])]
+         (str rating " / " @(rf/subscribe [:active/imdb-votes]))]])
+     (when-let [rating @(rf/subscribe [:active/moviedb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
         [Typography {:variant :h6
                      :color brightness
                      :no-wrap true
                      :class (<class rating-style :rating)}
-         (str rating " / " @(rf/subscribe [:media.active/moviedb-votes]))]])
-     (when-let [rating @(rf/subscribe [:media.active/rotten-tomato-rating])]
+         (str rating " / " @(rf/subscribe [:active/moviedb-votes]))]])
+     (when-let [rating @(rf/subscribe [:active/rotten-tomato-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tomato {:class (<class rating-style :icon)}]
         [Typography {:variant :h6
@@ -120,11 +120,11 @@
      [Grid {:item true
             :xs 5}
       [ratings]]
-     (when-let [runtime @(rf/subscribe [:media.active/runtime])]
+     (when-let [runtime @(rf/subscribe [:active/runtime])]
        [Typography {:variant :h6
                     :color brightness}
         runtime])
-     (when-let [genre @(rf/subscribe [:media.active/genre])]
+     (when-let [genre @(rf/subscribe [:active/genre])]
        [Grid {:item true
               :xs 3}
         [Typography {:variant :h6
@@ -134,14 +134,14 @@
 
 (defn description []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
-    (when-let [description @(rf/subscribe [:media.active/description])]
+    (when-let [description @(rf/subscribe [:active/description])]
       [Typography {:variant :subtitle1
                    :color brightness}
        description]))
    )
 
 (defn backdrop []
-  (let [url @(rf/subscribe [:media.active/backdrop-url "original"])
+  (let [url @(rf/subscribe [:active/backdrop-url "original"])
         rgb @(rf/subscribe [:color/primary])]
     (when rgb
       [:div {:class (<class backdrop-container-style rgb)}
@@ -149,7 +149,7 @@
               :src url}]])))
 
 (defn content []
-  (let [active @(rf/subscribe [:media/active])]
+  (let [active @(rf/subscribe [:active])]
     (when active
       [:div {:class (<class root-style :container)}
        [backdrop]

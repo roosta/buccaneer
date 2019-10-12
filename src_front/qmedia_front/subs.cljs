@@ -39,9 +39,9 @@
    (:themoviedb/config db)))
 
 (reg-sub
- :media.active/title
+ :active/title
  (fn [db]
-   (:media.active/title db)))
+   (:active/title db)))
 
 (reg-sub
  :theme
@@ -49,15 +49,15 @@
    (:theme db)))
 
 (reg-sub
- :media/active
+ :active
  :<- [:files]
- :<- [:media.active/title]
+ :<- [:active/title]
  (fn [[media active-title]]
    (get media active-title)))
 
 (reg-sub
- :media.active/poster-url
- :<- [:media/active]
+ :active/poster-url
+ :<- [:active]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
    (when (and (:moviedb/search-result data) config)
@@ -71,8 +71,8 @@
        ))))
 
 (reg-sub
- :media.active/backdrop-url
- :<- [:media/active]
+ :active/backdrop-url
+ :<- [:active]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
    (when (and (:moviedb/search-result data) config)
@@ -85,50 +85,50 @@
          (error "Unsupported backdrop width, pick one of these: " (str/join ", " sizes)))))))
 
 (reg-sub
- :media.active/imdb-rating
- :<- [:media/active]
+ :active/imdb-rating
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (-> data :imdbRating))))
 
 (reg-sub
- :media.active/imdb-votes
- :<- [:media/active]
+ :active/imdb-votes
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (-> data :imdbVotes))))
 
 (reg-sub
- :media.active/rotten-tomato-rating
- :<- [:media/active]
+ :active/rotten-tomato-rating
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
      )))
 
 (reg-sub
- :media.active/moviedb-rating
- :<- [:media/active]
+ :active/moviedb-rating
+ :<- [:active]
  (fn [data]
    (when-let [data (:moviedb/search-result data)]
      (:vote_average data))))
 
 (reg-sub
- :media.active/moviedb-votes
- :<- [:media/active]
+ :active/moviedb-votes
+ :<- [:active]
  (fn [data]
    (when-let [data (:moviedb/search-result data)]
      (:vote_count data))))
 
 (reg-sub
- :media.active/year
- :<- [:media/active]
+ :active/year
+ :<- [:active]
  (fn [data]
    (-> data :parsed first :year)))
 
 (reg-sub
- :media.active/runtime
- :<- [:media/active]
+ :active/runtime
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [runtime (:Runtime data)]
@@ -138,16 +138,16 @@
            (str hours " hr " minutes " min")))))))
 
 (reg-sub
- :media.active/genre
- :<- [:media/active]
+ :active/genre
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [genre (:Genre data)]
        genre))))
 
 (reg-sub
- :media.active/description
- :<- [:media/active]
+ :active/description
+ :<- [:active]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [plot (:Plot data)]
@@ -155,7 +155,7 @@
 
 (reg-sub
  :color/primary
- :<- [:media/active]
+ :<- [:active]
  (fn [data]
    (-> data :color/primary)))
 
