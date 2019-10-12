@@ -15,7 +15,7 @@
 (def ptn (nodejs/require "parse-torrent-name"))
 
 (reg-event-fx
- :moviedb/store-movie
+ :moviedb/store-media
  (fn [{:keys [db]} [_ title query-result]]
    (let [results (:results query-result)]
      (if (seq results)

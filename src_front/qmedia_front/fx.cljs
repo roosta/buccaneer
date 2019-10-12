@@ -37,6 +37,17 @@
                :handler #(rf/dispatch [:moviedb/store-movie title %])}))))
 
 (reg-fx
+ :moviedb/search-tv
+ (fn [{:keys [title]}]
+   (let [url (str moviedb-base-url "search/tv")]
+     (GET url {:params {:api_key (env :moviedb-api-key)
+                        :query title}
+               :response-format :json
+               :error-handler #(rf/dispatch [:set-error %])
+               :keywords? true
+               :handler #(rf/dispatch [:moviedb/store-media title %])}))))
+
+(reg-fx
  :moviedb/config
  (fn []
    (let [url (str moviedb-base-url "configuration")]
@@ -55,7 +66,7 @@
                        :response-format :json
                        :keywords? true
                        :error-handler #(rf/dispatch [:set-error %])
-                       :handler #(rf/dispatch [:omdb/store-movie title %])})))
+                       :handler #(rf/dispatch [:omdb/store-media title %])})))
 
 (reg-fx
  :color/primary
