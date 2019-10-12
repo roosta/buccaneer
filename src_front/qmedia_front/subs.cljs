@@ -59,9 +59,9 @@
    (:theme db)))
 
 (reg-sub
- :active/file
+ :active/media
  (fn [db]
-   (-> db :active/file)))
+   (:active/media db)))
 
 (reg-sub
  :active/results
@@ -73,7 +73,7 @@
 
 (reg-sub
  :active/poster-url
- :<- [:active/file]
+ :<- [:active/media]
  :<- [:active/results]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
@@ -89,7 +89,7 @@
 
 (reg-sub
  :active/backdrop-url
- :<- [:active/file]
+ :<- [:active/media]
  :<- [:themoviedb/config]
  (fn [[data config] [_ width]]
    (when (and (:moviedb/search-result data) config)
@@ -103,21 +103,21 @@
 
 (reg-sub
  :active/imdb-rating
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (-> data :imdbRating))))
 
 (reg-sub
  :active/imdb-votes
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (-> data :imdbVotes))))
 
 (reg-sub
  :active/rotten-tomato-rating
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (:Value (first (filter (comp #{"Rotten Tomatoes"} :Source) (:Ratings data))))
@@ -125,27 +125,27 @@
 
 (reg-sub
  :active/moviedb-rating
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:moviedb/search-result data)]
      (:vote_average data))))
 
 (reg-sub
  :active/moviedb-votes
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:moviedb/search-result data)]
      (:vote_count data))))
 
 (reg-sub
  :active/year
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (-> data :parsed first :year)))
 
 (reg-sub
  :active/runtime
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [runtime (:Runtime data)]
@@ -156,7 +156,7 @@
 
 (reg-sub
  :active/genre
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [genre (:Genre data)]
@@ -164,7 +164,7 @@
 
 (reg-sub
  :active/description
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (when-let [data (:omdb/search-result data)]
      (when-let [plot (:Plot data)]
@@ -172,7 +172,7 @@
 
 (reg-sub
  :color/primary
- :<- [:active/file]
+ :<- [:active/media]
  (fn [data]
    (-> data :color/primary)))
 

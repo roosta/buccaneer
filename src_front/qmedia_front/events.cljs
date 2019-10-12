@@ -94,13 +94,15 @@
 
 (reg-event-fx
  :active/set
- (fn [{:keys [db]} [_ title data index]]
-   (let [m {:db (assoc db :active/title title
-                       :active/index index)}
-         year (-> data :parsed first :year)
+ (fn [{:keys [db]} [_ media index]]
+   (let [m {:db (assoc db :active/title (:title media)
+                       :active/index index
+                       :active/media media)}
+         year (-> media :parsed first :year)
+         title (:title media)
          moviedb (get-in db [:results title :moviedb/search-result])
          omdb (get-in db [:results title :omdb/search-result])]
-     (if (:movie? data)
+     (if (:movie? media)
        (cond
          (and (not moviedb) (not omdb))
          (-> m

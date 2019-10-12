@@ -107,15 +107,16 @@
      (into [Typography {:color theme
                         :variant :subtitle1
                         :class (<class menu-item-style :title)}]
-           (r/children (r/current-component)))])
-  )
+           (r/children (r/current-component)))]))
+
 (defn on-click
-  [title data index]
-  (rf/dispatch [:active/set-title title data index]))
+  [file index]
+  (rf/dispatch [:active/set file index]))
 
 (defn series-item
-  [title parsed index]
-  (let [open? @(rf/subscribe [:sidebar.item/expanded? title])]
+  [file index]
+  (let [title (:title file)
+        open? @(rf/subscribe [:sidebar.item/expanded? title])]
     [:div {:class (<class series-style :container)}
      [menu-item {:class (<class series-style :title)
                  :on-click (fn []
@@ -130,31 +131,32 @@
      [Grid {:container true
             :class (<class collapse open?)}
       (doall
-       (for [p parsed]
+       (for [p (:parsed file)]
          (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
            ^{:key (:full p)}
            [menu-item {:class (<class series-style :nested-item)}
             sub-title])))]]))
 
 (defn movie-item
-  [title data index]
-  (let [active-title @(rf/subscribe [:active/title])]
-    [menu-item {:on-click #(on-click title data index)
-                :active (= active-title title)}
-     title]))
+  [file index]
+  (let [file-title (:title file)
+        active-title @(rf/subscribe [:active/title])]
+    [menu-item {:on-click #(on-click file index)
+                :active (= active-title file-title)}
+     file-title]))
 
 (defn row-renderer [props]
   (let [media @(rf/subscribe [:files])
         {:keys [index style isScrolling isVisible key parent]} (js->clj props :keywordize-keys true)
-        {:keys [title parsed movie?]} (get media index)]
+        {:keys [title movie?] :as file} (get media index)]
     (r/as-element
      [:div {:key key
             :style style}
       (if movie?
         ^{:key title}
-        [movie-item title parsed index]
+        [movie-item file index]
         ^{:key title}
-        [series-item title parsed index])])))
+        [series-item file index])])))
 
 (defn index->row-height [params]
   (let [media @(rf/subscribe [:files])
