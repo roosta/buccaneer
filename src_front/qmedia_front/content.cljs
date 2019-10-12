@@ -149,7 +149,7 @@
               :src url}]])))
 
 (defn content []
-  (let [active @(rf/subscribe [:active])]
+  (let [active @(rf/subscribe [:active/file])]
     (when active
       [:div {:class (<class root-style :container)}
        [backdrop]

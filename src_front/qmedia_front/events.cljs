@@ -93,7 +93,7 @@
                :on-failure [:set-error]}}))
 
 (reg-event-fx
- :active/set-title
+ :active/set
  (fn [{:keys [db]} [_ title data index]]
    (let [m {:db (assoc db :active/title title
                        :active/index index)}
