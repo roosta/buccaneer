@@ -103,19 +103,11 @@
          moviedb (get-in db [:results title :moviedb/search-result])
          omdb (get-in db [:results title :omdb/search-result])]
      (if (:movie? media)
-       (cond
-         (and (not moviedb) (not omdb))
-         (-> m
-             (assoc :moviedb/search-movie {:title title :year year})
-             (assoc :omdb/search-movie {:title title :year year}))
-
-         (and (not moviedb) omdb)
-         (assoc m :omdb/search-movie {:title title :year year})
-
-         (and moviedb (not omdb))
-         (assoc m :moviedb/search-movie {:title title :year year})
-         :else m)
-       m))))
+       (cond-> m
+         (not moviedb) (assoc :moviedb/search-movie {:title title :year year})
+         (not omdb) (assoc :omdb/search-movie {:title title :year year}))
+       (cond-> m
+         (not moviedb) (assoc :moviedb/search-tv {:title title}))))))
 
 (reg-event-db
  :sidebar.item/toggle-expanded
