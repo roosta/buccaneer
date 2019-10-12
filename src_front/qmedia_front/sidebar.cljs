@@ -39,6 +39,7 @@
 
             :border-radius "0 !important"}
      :list {:outline "none"}}))
+
 (defn active-background-color []
   (let [theme @(rf/subscribe [:theme])]
     (case theme
@@ -47,7 +48,7 @@
 
 (defgroup menu-item-style
   (let [theme @(rf/subscribe [:theme])]
-    {:container
+    {:row
      ^{:pseudo {:hover {:cursor "pointer"
                         :background (case theme
                                       :dark (rgb 255 255 255 0.08)
@@ -67,13 +68,6 @@
     {:title {:position "relative"
              :display "flex"
              :align-items "center"}
-     :icon  {:color (case theme
-                      :dark "white"
-                      :light "black")
-             :width (px 24)
-             :height (px 24)
-             :position "absolute"
-             :right "0"}
      :container {}
      :nested-item {:padding-left "24px !important"}
      :collapsing-container {:height 0
@@ -98,20 +92,54 @@
       {:key open?})))
 
 
-(defn menu-item [{:keys [on-click active class]}]
+(defn menu-item [{:keys [on-click active class title]}]
   (let [theme @(rf/subscribe [:theme])]
     [Grid {:item true
            :on-click on-click
            :xs 12
-           :class [(<class menu-item-style :container active) class]}
-     (into [Typography {:color theme
-                        :variant :subtitle1
-                        :class (<class menu-item-style :title)}]
+           :class [(<class menu-item-style :row active) class]}
+     (into [Grid {:container true
+                  :align-items :center
+                  :justify :space-between}
+            [Typography {:color theme
+                         :variant :subtitle1
+                         :class (<class menu-item-style :title)}
+             title]]
            (r/children (r/current-component)))]))
 
 (defn on-click
   [file index]
   (rf/dispatch [:active/set file index]))
+
+;; TODO Light theme
+(defgroup icon-styles
+  (let [theme @(rf/subscribe [:theme])]
+    {:container
+     ^{:pseudo {:hover {:transform "scale(1.35)"
+                        :background (rgb 255 255 255 0.1)}}}
+     {:width (px 32)
+      :background (rgb 255 255 255 0)
+      :transition (t/create-transition {:property [:transform :background]
+                                        :duration 50})
+      :border-radius "50%"
+      :margin-right (px 8)
+      :height (px 32)}
+     :icon {:color (case theme
+                     :dark (rgb 255 255 255 0.85)
+                     :light "black")}})
+)
+
+(defn icon-button [open? title]
+  [:div {:on-click (fn []
+                     (let [ref @(rf/subscribe [:sidebar/ref])]
+                       (rf/dispatch-sync [:sidebar.item/toggle-expanded title])
+                       (.recomputeRowHeights ref)
+                       (.forceUpdate ref)))
+         :class (<class icon-styles :container)}
+   (if open?
+     [icons/ExpandLess {:class (<class icon-styles :icon)}]
+     [icons/ExpandMore {:class (<class icon-styles :icon)}])]
+  )
 
 (defn series-item
   [file index]
@@ -119,31 +147,25 @@
         open? @(rf/subscribe [:sidebar.item/expanded? title])]
     [:div {:class (<class series-style :container)}
      [menu-item {:class (<class series-style :title)
-                 :on-click (fn []
-                             (let [ref @(rf/subscribe [:sidebar/ref])]
-                               (rf/dispatch-sync [:sidebar.item/toggle-expanded title])
-                               (.recomputeRowHeights ref)
-                               (.forceUpdate ref)))}
-      title
-      (if open?
-        [icons/ExpandLess {:class (<class series-style :icon)}]
-        [icons/ExpandMore {:class (<class series-style :icon)}])]
+                 :title title
+                 :on-click (fn [] nil)}
+      [icon-button open? title]]
      [Grid {:container true
             :class (<class collapse open?)}
       (doall
        (for [p (:parsed file)]
          (let [sub-title (str (:title p) " - S" (:season p) "E" (:episode p))]
            ^{:key (:full p)}
-           [menu-item {:class (<class series-style :nested-item)}
-            sub-title])))]]))
+           [menu-item {:title sub-title
+                       :class (<class series-style :nested-item)}])))]]))
 
 (defn movie-item
   [file index]
   (let [file-title (:title file)
         active-title @(rf/subscribe [:active/title])]
     [menu-item {:on-click #(on-click file index)
-                :active (= active-title file-title)}
-     file-title]))
+                :title file-title
+                :active (= active-title file-title)}]))
 
 (defn row-renderer [props]
   (let [media @(rf/subscribe [:files])
