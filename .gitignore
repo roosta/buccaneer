@@ -27,3 +27,5 @@ app/dev/js/out_main
 app/prod/js/out_front
 app/prod/js/out_main
 qmedia-linux-x64
+app/dev/node_modules
+app/prod/node_modules

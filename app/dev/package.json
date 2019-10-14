@@ -1,5 +1,9 @@
 {
   "name": "qmedia",
   "version": "0.1.0",
-  "main": "js/main.js"
+  "main": "js/main.js",
+  "dependencies": {
+    "colorthief": "^2.3.0",
+    "parse-torrent-name": "^0.5.4"
+  }
 }

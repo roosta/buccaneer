@@ -9,9 +9,5 @@
         "grunt-download-electron": "^2.1.4"
     },
     "license": "MIT",
-    "repository": "https://github.com/roosta/qmedia",
-    "dependencies": {
-        "colorthief": "^2.3.0",
-        "parse-torrent-name": "^0.5.4"
-    }
+    "repository": "https://github.com/roosta/qmedia"
 }
