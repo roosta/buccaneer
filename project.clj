@@ -36,7 +36,8 @@
   :aliases {"release" ["do"
                        ["clean"]
                        ["cljsbuild" "once" "frontend-release"]
-                       ["cljsbuild" "once" "electron-release"]]}
+                       ["cljsbuild" "once" "electron-release"]]
+            "externs" ["externs" "frontend-release" "resources/cljs-externs/gen.js"]}
 
   :clean-targets ^{:protect false} ["resources/main.js"
                                     "resources/public/js/ui-core.js"
@@ -81,7 +82,7 @@
                 :compiler {:output-to "resources/public/js/ui-core.js"
                            :output-dir "resources/public/js/ui-release-out"
                            :source-map "resources/public/js/ui-core.js.map"
-                           :externs ["cljs-externs/common.js"]
+                           :externs ["cljs-externs/common.js"  "cljs-externs/gen.js"]
                            :optimizations :advanced
                            :cache-analysis true
                            :infer-externs true
