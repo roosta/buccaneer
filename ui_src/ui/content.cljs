@@ -4,6 +4,7 @@
              [garden.units :refer [px percent]]
              [ui.icons :as icons]
              [herb.core :refer-macros [<class defgroup]]
+             [soda-ash.core :as sa]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
              [tincture.typography :refer [Typography]]
@@ -132,10 +133,14 @@
                      :color brightness}
          genre]])]))
 
+(defn description-style []
+  {:padding-bottom (px 16)})
+
 (defn description []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     (when-let [description @(rf/subscribe [:active/description])]
       [Typography {:variant :subtitle1
+                   :class (<class description-style)
                    :color brightness}
        description]))
    )
@@ -147,6 +152,12 @@
       [:div {:class (<class backdrop-container-style rgb)}
        [:img {:class (<class image-style)
               :src url}]])))
+
+(defn play-button []
+  (let [brightness @(rf/subscribe [:color.primary/brightness])]
+    [sa/Button {:inverted (= brightness :dark)
+                :icon true}
+     [sa/Icon {:name "play"}]]))
 
 (defn content []
   (let [active @(rf/subscribe [:active/media])]
@@ -162,4 +173,5 @@
                :xs 9}
          [title]
          [info]
-         [description]]]])))
+         [description]
+         [play-button]]]])))
