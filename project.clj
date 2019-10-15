@@ -1,13 +1,11 @@
-(defproject qmedia "0.1.0-SNAPSHOT"
+(defproject buccaneer "0.1.0-SNAPSHOT"
   :description "View media meta data"
-  :url "https://github.com/roosta/qmedia"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :url "https://github.com/roosta/buccaneer"
+  :license {:name "The MIT License"
+            :url "https://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [org.clojure/clojurescript "1.10.520" :exclusions [org.apache.ant/ant]]
-                 [org.clojure/core.async "0.4.500"]
+                 [org.clojure/clojurescript "1.10.520"]
                  [reagent "0.8.1"]
-                 [day8.re-frame/http-fx "0.1.6"]
                  [ring/ring-core "1.7.1"]
                  [tincture "0.3.3-SNAPSHOT" :exclusions [herb]]
                  [cljsjs/react-virtualized "9.21.1-0"]
@@ -16,117 +14,69 @@
                  [cljs-ajax "0.8.0"]
                  [hodgepodge "0.1.3"]
                  [clojure-csv/clojure-csv "2.0.2"]
-                 [day8.re-frame/http-fx "0.1.6"]
                  [re-frame "0.10.9"]
-                 [org.clojure/tools.reader "1.3.2"]]
 
-  :profiles {:dev {:dependencies [[day8.re-frame/re-frame-10x "0.4.3"]
-                                  [figwheel-sidecar "0.5.19"]
-                                  [figwheel "0.5.19"]
-                                  [philoskim/debux "0.5.6"]
-                                  [binaryage/devtools "0.9.10"]]
-
-                   :plugins [[lein-figwheel "0.5.19" :exclusions [org.clojure/core.cache]]]}}
+                 ;; dev
+                 [day8.re-frame/re-frame-10x "0.4.3"]
+                 [figwheel-sidecar "0.5.19"]
+                 [figwheel "0.5.19"]
+                 [philoskim/debux "0.5.6"]
+                 [binaryage/devtools "0.9.10"]
+                 ]
 
   :plugins [[lein-cljsbuild "1.1.7"]
+            [lein-cooper "1.2.2"]
+            [lein-figwheel "0.5.19"]
             [lein-externs "0.1.6"]
             [lein-shell "0.5.0"]]
 
-  :source-paths ["src_tools" "src_front"]
-  :aliases {"descjop-help" ["new" "descjop" "help"]
-            "descjop-version" ["new" "descjop" "version"]
-            "descjop-init" ["do"
-                            ["shell" "npm" "install"]
-                            ["shell" "grunt" "download-electron"]]
-            "descjop-init-win" ["do"
-                            ["shell" "cmd.exe" "/c" "npm" "install"]
-                            ["shell" "cmd.exe" "/c" "grunt" "download-electron"]]
-            "descjop-externs" ["do"
-                               ["externs" "dev-main" "app/dev/js/externs.js"]
-                               ["externs" "dev-front" "app/dev/js/externs_front.js"]
-                               ["externs" "prod-main" "app/prod/js/externs.js"]
-                               ["externs" "prod-front" "app/prod/js/externs_front.js"]]
-            "descjop-externs-dev" ["do"
-                                   ["externs" "dev-main" "app/dev/js/externs.js"]
-                                   ["externs" "dev-front" "app/dev/js/externs_front.js"]]
-            "descjop-externs-prod" ["do"
-                                    ["externs" "prod-main" "app/prod/js/externs.js"]
-                                    ["externs" "prod-front" "app/prod/js/externs_front.js"]]
-            "descjop-figwheel" ["trampoline" "figwheel" "dev-front"]
-            "descjop-once" ["do"
-                            ["cljsbuild" "once" "dev-main"]
-                            ["cljsbuild" "once" "dev-front"]
-                            ["cljsbuild" "once" "prod-main"]
-                            ["cljsbuild" "once" "prod-front"]]
-            "descjop-once-dev" ["do"
-                                ["cljsbuild" "once" "dev-main"]
-                                ["cljsbuild" "once" "dev-front"]]
-            "descjop-once-prod" ["do"
-                                 ["cljsbuild" "once" "prod-main"]
-                                 ["cljsbuild" "once" "prod-front"]]
-            ;; electron packager for production
-            "descjop-uberapp-osx" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=darwin" "--arch=x64" "--electron-version=6.0.12"]
-            "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=mas" "--arch=x64" "--electron-version=6.0.12"]
-            "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "qmedia" "--platform=linux" "--arch=x64" "--electron-version=6.0.12"]
-            "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "qmedia" "--platform=win32" "--arch=x64" "--electron-version=6.0.12"]
-            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "qmedia" "--platform=win32" "--arch=ia32" "--electron-version=6.0.12"]}
 
-  :clean-targets ^{:protect false}
-  [:target-path
-   [:cljsbuild :builds :dev-main :compiler :output-dir]
-   [:cljsbuild :builds :dev-main :compiler :output-to]
-   [:cljsbuild :builds :dev-front :compiler :output-dir]
-   [:cljsbuild :builds :dev-front :compiler :output-to]
-   [:cljsbuild :builds :prod-main :compiler :output-to]
-   [:cljsbuild :builds :prod-main :compiler :output-dir]
-   [:cljsbuild :builds :prod-front :compiler :output-dir]
-   [:cljsbuild :builds :prod-front :compiler :output-to]]
+  :source-paths ["src"]
 
-  :hooks [leiningen.cljsbuild]
-  :cljsbuild {:builds {:dev-main {:source-paths ["src"]
-                                  :jar true
-                                  :compiler {:output-to "app/dev/js/cljsbuild-main.js"
-                                             :externs ["app/dev/js/externs.js"
-                                                       "node_modules/closurecompiler-externs/path.js"
-                                                       "node_modules/closurecompiler-externs/process.js"]
-                                             :target :nodejs
-                                             :output-dir "app/dev/js/out_main"
-                                             :optimizations :simple
-                                             ;;:source-map "app/dev/js/test.js.map"
-                                             :pretty-print true}}
-                       :dev-front {:source-paths ["src_front" "src_front_profile/qmedia_front/dev"]
-                                   :figwheel {:on-jsload qmedia-front.init/on-jsload}
-                                   :jar true
-                                   :compiler {:output-to "app/dev/js/front.js"
-                                              :externs ["app/dev/js/externs_front.js"]
-                                              :main qmedia-front.init
-                                              :asset-path "js/out_front"
-                                              :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
-                                              :preloads [day8.re-frame-10x.preload]
-                                              :optimizations :none
-                                              :output-dir "app/dev/js/out_front"
-                                              ;;:source-map "app/dev/js/test.js.map"
-                                              :pretty-print true}}
-                       :prod-main {:source-paths ["src"]
-                                   :jar true
-                                   :compiler {:output-to "app/prod/js/cljsbuild-main.js"
-                                              :externs ["app/prod/js/externs.js"
-                                                        "node_modules/closurecompiler-externs/path.js"
-                                                        "node_modules/closurecompiler-externs/process.js"]
-                                              :elide-asserts true
-                                              :target :nodejs
-                                              :output-dir "app/prod/js/out_main"
-                                              :optimizations :simple
-                                              :output-wrapper true}}
-                       :prod-front {:source-paths ["src_front" "src_front_profile/qmedia_front/prod"]
-                                    :jar true
-                                    :compiler {:output-to "app/prod/js/front.js"
-                                               :externs ["app/prod/js/externs_front.js"]
-                                               :elide-asserts true
-                                               :output-dir "app/prod/js/out_front"
-                                               :optimizations :simple
-                                               ;;:source-map "app/prod/js/test.js.map"
-                                               :output-wrapper true}}}}
+  :clean-targets ^{:protect false} ["resources/main.js"
+                                    "resources/public/js/ui-core.js"
+                                    "resources/public/js/ui-core.js.map"
+                                    "resources/public/js/ui-out"]
+
   :figwheel {:http-server-root "public"
-             :ring-handler figwheel-middleware/app
-             :server-port 3449})
+             :css-dirs ["resources/public/css"]
+             :ring-handler tools.figwheel-middleware/app
+             :server-port 3449}
+
+  :cljsbuild {:builds
+              [{:source-paths ["electron_src"]
+                :id "electron-dev"
+                :compiler {:output-to "resources/main.js"
+                           :output-dir "resources/public/js/electron-dev"
+                           :optimizations :simple
+                           :pretty-print true
+                           :cache-analysis true}}
+               {:source-paths ["ui_src" "dev_src"]
+                :id "frontend-dev"
+                :figwheel {:on-jsload dev.core/on-jsload}
+                :compiler {:output-to "resources/public/js/ui-core.js"
+                           :output-dir "resources/public/js/ui-out"
+                           :source-map true
+                           :asset-path "js/ui-out"
+                           :optimizations :none
+                           :cache-analysis true
+                           :main "dev.core"}}
+               {:source-paths ["electron_src"]
+                :id "electron-release"
+                :compiler {:output-to "resources/main.js"
+                           :output-dir "resources/public/js/electron-release"
+                           :externs ["cljs-externs/common.js"]
+                           :optimizations :advanced
+                           :cache-analysis true
+                           :infer-externs true}}
+               {:source-paths ["ui_src" "prod_src"]
+                :id "frontend-release"
+                :compiler {:output-to "resources/public/js/ui-core.js"
+                           :output-dir "resources/public/js/ui-release-out"
+                           :source-map "resources/public/js/ui-core.js.map"
+                           :externs ["cljs-externs/common.js"]
+                           :optimizations :advanced
+                           :cache-analysis true
+                           :infer-externs true
+                           :process-shim false
+                           :main "prod.core"}}]})

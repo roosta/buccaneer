@@ -1,13 +1,9 @@
 {
-    "name": "qmedia",
-    "version": "0.1.0",
-    "description": "",
-    "devDependencies": {
-        "closurecompiler-externs": "^1.0.4",
-        "electron-packager": "^14.0.6",
-        "grunt": "^1.0.4",
-        "grunt-download-electron": "^2.1.4"
-    },
-    "license": "MIT",
-    "repository": "https://github.com/roosta/qmedia"
+  "name": "buccaneer",
+  "version": "0.1.0",
+  "main": "resources/main.js",
+  "dependencies": {
+    "colorthief": "^2.3.0",
+    "parse-torrent-name": "^0.5.4"
+  }
 }

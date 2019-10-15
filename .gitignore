@@ -22,10 +22,7 @@ front.js
 checkouts
 resources/imdb
 config.edn
-app/dev/js/out_front
-app/dev/js/out_main
-app/prod/js/out_front
-app/prod/js/out_main
-qmedia-linux-x64
-app/dev/node_modules
-app/prod/node_modules
+resources/public/js/
+resources/main.js
+*-init.clj
+figwheel_server.log
