@@ -102,6 +102,7 @@
                   :align-items :center
                   :justify :space-between}
             [Typography {:color theme
+                         :no-wrap true
                          :variant :subtitle1
                          :class (<class menu-item-style :title)}
              title]]
