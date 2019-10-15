@@ -4,6 +4,7 @@
   "main": "resources/main.js",
   "dependencies": {
     "colorthief": "^2.3.0",
+    "electron": "^6.0.12",
     "parse-torrent-name": "^0.5.4"
   }
 }
