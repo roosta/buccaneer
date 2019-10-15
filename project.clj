@@ -33,6 +33,11 @@
 
   :source-paths ["src"]
 
+  :aliases {"release" ["do"
+                       ["clean"]
+                       ["cljsbuild" "once" "frontend-release"]
+                       ["cljsbuild" "once" "electron-release"]]}
+
   :clean-targets ^{:protect false} ["resources/main.js"
                                     "resources/public/js/ui-core.js"
                                     "resources/public/js/ui-core.js.map"
