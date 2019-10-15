@@ -84,7 +84,7 @@
  (fn [[url title]]
    (let [config @(rf/subscribe [:themoviedb/config])
          base-url (-> config :images :base_url)]
-     (when config
+     (when (and url config)
        (-> (.getColor colorthief (str base-url "w300" url))
            (.then #(rf/dispatch [:write-color title (js->clj %)]))
            (.catch #(rf/dispatch [:set-error %])))))))
