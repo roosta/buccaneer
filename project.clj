@@ -57,6 +57,8 @@
                 :compiler {:output-to "resources/public/js/ui-core.js"
                            :output-dir "resources/public/js/ui-out"
                            :source-map true
+                           :preloads [day8.re-frame-10x.preload]
+                           :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                            :asset-path "js/ui-out"
                            :optimizations :none
                            :cache-analysis true
