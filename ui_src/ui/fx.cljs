@@ -20,6 +20,7 @@
 (def omdb-base-url "http://www.omdbapi.com/")
 
 (def colorthief (nodejs/require "colorthief"))
+(def shell (.-shell (nodejs/require "electron")))
 
 (reg-fx :fs/files fs/effect)
 
@@ -88,3 +89,9 @@
        (-> (.getColor colorthief (str base-url "w300" url))
            (.then #(rf/dispatch [:write-color title (js->clj %)]))
            (.catch #(rf/dispatch [:set-error %])))))))
+
+(reg-fx
+ :file/open
+ (fn [file]
+   (let [path (:full file)]
+     (.openItem shell path))))

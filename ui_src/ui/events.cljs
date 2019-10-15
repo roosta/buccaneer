@@ -110,6 +110,15 @@
          (not moviedb) (assoc :moviedb/search-tv {:title title})
          (not omdb) (assoc :omdb/search-tv {:title title}))))))
 
+(reg-event-fx
+ :active/play
+ (fn [{:keys [db]}]
+   (let [media (-> db :active/media)]
+     (if (and media (= (count (:parsed media)) 1))
+       {:db db
+        :file/open (first (:parsed media))}
+       {:db db}))))
+
 (reg-event-db
  :sidebar.item/toggle-expanded
  (fn [db [_ title]]

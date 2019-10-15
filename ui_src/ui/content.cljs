@@ -156,6 +156,7 @@
 (defn play-button []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [sa/Button {:inverted (= brightness :dark)
+                :on-click #(rf/dispatch [:active/play])
                 :icon true}
      [sa/Icon {:name "play"}]]))
 
