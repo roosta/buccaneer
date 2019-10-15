@@ -18,6 +18,7 @@ API](https://www.omdbapi.com/) key to their respective places:
 {:moviedb-api-key "Your themoviedb.org API key"
  :omdb-api-key "Your omdbapi.com API key"}
 ```
+Save as config.edn in root folder
 
 ## Running it
 
