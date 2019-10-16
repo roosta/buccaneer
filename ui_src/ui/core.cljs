@@ -28,7 +28,7 @@
   ["::-webkit-scrollbar-thumb" {:background (str "rgba(255,255,255,0.25) !important")}])
 
 (defgroup main-style
-  {:container {:background-color "#262626"}})
+  {:container {}})
 
 (defn container-style []
   {:background-color "#262626"
