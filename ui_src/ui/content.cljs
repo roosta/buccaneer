@@ -4,7 +4,6 @@
              [garden.units :refer [px percent]]
              [ui.icons :as icons]
              [herb.core :refer-macros [<class defgroup]]
-             [garden.color :as gc]
              [soda-ash.core :as sa]
              [tincture.core :as t]
              [tincture.grid :refer [Grid]]
@@ -38,15 +37,12 @@
    :z-index 1})
 
 (defgroup root-style
-  (let [color @(rf/subscribe [:color/primary])
-        hex (when color (-> color gc/rgb gc/as-hex))]
-    {:container {:position "relative"
-                 :background (or hex "#262626")
-                 :overflow-y "hidden"}
-     :grid {:height "100vh"
-            :overflow-y "auto"}
-     :column {:z-index 2}
-     :subheading {:margin 0}}))
+  {:container {:position "relative"
+               :overflow-y "hidden"}
+   :grid {:height "100vh"
+          :overflow-y "auto"}
+   :column {:z-index 2}
+   :subheading {:margin 0}})
 
 (defgroup rating-style
   (let [brightness @(rf/subscribe [:color.primary/brightness])]

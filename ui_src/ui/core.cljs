@@ -3,6 +3,7 @@
   (:require  [reagent.core :as r]
              [herb.core :as herb :refer-macros [<class <id defgroup defglobal]]
              [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break]]
+             [garden.color :as gc]
              [tincture.core :as t]
              [soda-ash.core :as sa]
              [tincture.grid :refer [Grid]]
@@ -28,7 +29,9 @@
   ["::-webkit-scrollbar-thumb" {:background (str "rgba(255,255,255,0.25) !important")}])
 
 (defgroup main-style
-  {:container {}})
+  (let [color @(rf/subscribe [:color/primary])
+        hex (when color (-> color gc/rgb gc/as-hex))]
+    {:container {:background (or hex "#262626")}}))
 
 (defn container-style []
   {:background-color "#262626"
