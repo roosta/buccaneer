@@ -78,12 +78,12 @@
            :justify :space-between}
      [Grid {:item true
             :xs 9}
-      [Typography {:variant :h2
+      [Typography {:variant :h1
                    :color brightness}
        @(rf/subscribe [:active/title])]]
      [Grid {:item true
             :x 3}
-      [Typography {:variant :h4
+      [Typography {:variant :h2
                    :color brightness}
        @(rf/subscribe [:active/year])]
       ]]))
@@ -95,14 +95,14 @@
        [:div {:class (<class rating-style :column)}
         [icons/imdb {:class (<class rating-style :icon)}]
         [Typography {:class (<class rating-style :rating)
-                     :variant :h6
+                     :variant :h5
                      :no-wrap true
                      :color brightness}
          (str rating " / " @(rf/subscribe [:active/imdb-votes]))]])
      (when-let [rating @(rf/subscribe [:active/moviedb-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tmdb {:class (<class rating-style :tmdb-icon)}]
-        [Typography {:variant :h6
+        [Typography {:variant :h5
                      :color brightness
                      :no-wrap true
                      :class (<class rating-style :rating)}
@@ -110,7 +110,7 @@
      (when-let [rating @(rf/subscribe [:active/rotten-tomato-rating])]
        [:div {:class (<class rating-style :column)}
         [icons/tomato {:class (<class rating-style :icon)}]
-        [Typography {:variant :h6
+        [Typography {:variant :h5
                      :color brightness
                      :no-wrap true
                      :class (<class rating-style :rating)}
@@ -126,13 +126,13 @@
             :xs 5}
       [ratings]]
      (when-let [runtime @(rf/subscribe [:active/runtime])]
-       [Typography {:variant :h6
+       [Typography {:variant :h5
                     :color brightness}
         runtime])
      (when-let [genre @(rf/subscribe [:active/genre])]
        [Grid {:item true
               :xs 3}
-        [Typography {:variant :h6
+        [Typography {:variant :h5
                      :align :right
                      :color brightness}
          genre]])]))
@@ -143,7 +143,7 @@
 (defn description []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     (when-let [description @(rf/subscribe [:active/description])]
-      [Typography {:variant :subtitle1
+      [Typography {:variant :h6
                    :class (<class description-style)
                    :color brightness}
        description]))
