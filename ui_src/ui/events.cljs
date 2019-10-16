@@ -52,17 +52,19 @@
  ::set-files
  (fn [db [_ files]]
    (let [files (->>
-                (mapv (fn [file]
+                (map (fn [file]
                        (let [m (-> (ptn (:basename file))
                                    (js->clj :keywordize-keys true))]
                          (into file m)))
                      files)
                 (group-by :title)
-                (mapv (fn [[k v]]
+                (map (fn [[k v]]
                         (cond-> {:parsed v
                                  :title k
                                  :movie? true}
-                          (> (count v) 1) (assoc :movie? false)))))]
+                          (> (count v) 1) (assoc :movie? false))))
+                (sort-by :title)
+                (into []))]
      (-> (assoc db :files files)
          (assoc :loading? false)))))
 
