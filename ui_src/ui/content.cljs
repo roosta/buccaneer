@@ -61,15 +61,21 @@
      :column {:display :flex
               :margin-right (px 16)
               :align-items :center}
-     :container {:display :flex}
+     :container {:display :flex
+                 :padding-bottom (px 16)}
      :rating {:margin 0}}))
 
 (defgroup info-styles
-  {:grid {:padding [[(px 16) 0]]}})
+  {:grid {}
+   :type {:padding-bottom (px 16)}})
+
+(defgroup title-style
+  {:container {:padding-bottom (px 16)}})
 
 (defn title []
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [Grid {:container true
+           :class (<class title-style :container)
            :align-items :flex-end
            :justify :space-between}
      [Grid {:item true
@@ -113,23 +119,28 @@
          rating]])]))
 
 (defn info []
-  (let [brightness @(rf/subscribe [:color.primary/brightness])]
+  (let [brightness @(rf/subscribe [:color.primary/brightness])
+        md-down? @(rf/subscribe [:tincture/breakpoint-down :md])]
     [Grid {:container true
            :justify :space-between
            :align-items :center
            :class (<class info-styles :grid)}
      [Grid {:item true
-            :xs 5}
+            :md 12
+            :lg 5}
       [ratings]]
      (when-let [runtime @(rf/subscribe [:active/runtime])]
        [Typography {:variant :h5
+                    :class (<class info-styles :type)
                     :color brightness}
         runtime])
      (when-let [genre @(rf/subscribe [:active/genre])]
        [Grid {:item true
-              :xs 3}
+              :md 12
+              :lg 3}
         [Typography {:variant :h5
-                     :align :right
+                     :class (<class info-styles :type)
+                     :align (if md-down? :right :left)
                      :color brightness}
          genre]])]))
 

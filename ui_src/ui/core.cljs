@@ -76,10 +76,14 @@
       [Grid {:container true
              :class (<class main-style :container)}
        [Grid {:item true
-              :xs 2}
+              :sm 5
+              :md 3
+              :lg 2}
         [sidebar]]
        [Grid {:item true
-              :xs 10}
+              :sm 7
+              :md 9
+              :lg 10}
         [content]]]))
   )
 
