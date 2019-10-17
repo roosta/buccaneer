@@ -15,6 +15,7 @@
                  [hodgepodge "0.1.3"]
                  [clojure-csv/clojure-csv "2.0.2"]
                  [re-frame "0.10.9"]
+                 ;; [cljsjs/react-transition-group "4.3.0-0" :exclusions [cljsjs/react cljsjs/react-dom]]
 
                  ;; dev
                  [day8.re-frame/re-frame-10x "0.4.3"]
