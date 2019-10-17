@@ -140,7 +140,7 @@
               :lg 3}
         [Typography {:variant :h5
                      :class (<class info-styles :type)
-                     :align (if md-down? :right :left)
+                     :align (if md-down? :left :right)
                      :color brightness}
          genre]])]))
 
