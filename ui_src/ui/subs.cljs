@@ -225,3 +225,9 @@
  :sidebar/ref
  (fn [db]
    (-> db :sidebar/ref)))
+
+(reg-sub
+ :active.play/button-disabled?
+ :<- [:active/media]
+ (fn [media]
+   (> (count (:parsed media)) 1)))

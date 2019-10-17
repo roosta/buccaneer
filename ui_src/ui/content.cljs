@@ -168,6 +168,7 @@
   (let [brightness @(rf/subscribe [:color.primary/brightness])]
     [sa/Button {:inverted (= brightness :dark)
                 :on-click #(rf/dispatch [:active/play])
+                :disabled @(rf/subscribe [:active.play/button-disabled?])
                 :size "massive"
                 :icon true}
      [sa/Icon {:name "play"}]]))
