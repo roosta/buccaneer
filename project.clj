@@ -1,4 +1,4 @@
-(defproject buccaneer "0.1.0-SNAPSHOT"
+(defproject buccaneer "0.1.0"
   :description "View media meta data"
   :url "https://github.com/roosta/buccaneer"
   :license {:name "The MIT License"
