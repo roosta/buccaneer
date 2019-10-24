@@ -4,7 +4,25 @@
 
 <!-- ![](https://raw.githubusercontent.com/Gonzih/cljs-electron/master/demo.gif) -->
 
-Media data viewer built using [ClojureScript](https://clojurescript.org/) and [Electron](https://electronjs.org/)
+Ripped media data viewer built using [ClojureScript](https://clojurescript.org/) and [Electron](https://electronjs.org/)
+
+## Features
+* View media information from downloaded media (movie, tv-show)
+* Expects a single folder containing media, no sorting required
+* Uses [themoviedb](https://www.themoviedb.org/), and
+  [OMDb](https://www.omdbapi.com/) to fetch information
+* KISS, keeping it simple, this about all that Buccaneer does
+
+## Download
+Go to [releases](https://github.com/roosta/buccaneer/releases), pick
+the latest release and under `assets` is prebuilt binaries for windows
+and linux. Download and run.
+
+## Usage
+Pass a directory containing `proper` downloaded media, and Buccaneer
+will try to parse filenames and get relevant data for each entry,
+presented as a sidebar of media and a content section for displaying
+fetched data.
 
 ## Configuration
 
